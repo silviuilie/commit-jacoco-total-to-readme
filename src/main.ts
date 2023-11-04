@@ -8,9 +8,13 @@ import { wait } from './wait'
 export async function run(): Promise<void> {
   try {
     const ms: string = core.getInput('milliseconds')
+    const fileName: string = core.getInput('fileName')
+    const type: string = core.getInput('type')
 
     // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    core.debug(`Waiting ${ms} milliseconds ...`) 
+    core.debug(`Waiting ${fileName} milliseconds ...`) 
+    core.debug(`Waiting ${type} milliseconds ...`)
 
     // Log the current timestamp, wait, then log the new timestamp
     core.debug(new Date().toTimeString())
