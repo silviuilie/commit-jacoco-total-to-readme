@@ -1,7 +1,7 @@
 # Commits the jacoco coverage to readme file as badge 
 
 todo : 
-  - add paramter, readme.md `file name` 
+  - add paramter, readme.md `fileName` 
   - add parameter, `type` of coverage to commit :
     - `text` (total percent)
     - `badge` with img.shields.io/badge
