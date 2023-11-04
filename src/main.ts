@@ -1,5 +1,4 @@
 import * as core from '@actions/core'
-import { wait } from './wait'
 
 /**
  * @returns {Promise<void>} Resolves when the action is complete
@@ -15,7 +14,7 @@ export async function run(): Promise<void> {
 
     // Log the current timestamp, wait, then log the new timestamp
     // core.debug(new Date().toTimeString())
-      //await wait(parseInt(ms, 10))
+    //await wait(parseInt(ms, 10))
     // core.debug(new Date().toTimeString())
 
     // Set outputs for other workflow steps to use
