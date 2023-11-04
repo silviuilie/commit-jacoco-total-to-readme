@@ -1,5 +1,12 @@
 # Commits the jacoco coverage to readme file as badge 
 
+todo : 
+  - add paramter, readme.md file name 
+  - add parameter, type of coverage to commit :
+    - text (total percent)
+    - badge with img.shields.io/badge
+    - svg badge 
+
 javascript github action that implements with javascript the folowing :
 
     - name: commit coverage to README file
