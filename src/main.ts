@@ -1,8 +1,7 @@
 import * as core from '@actions/core'
 import { wait } from './wait'
 
-/**
- * The main function for the action.
+/** 
  * @returns {Promise<void>} Resolves when the action is complete.
  */
 export async function run(): Promise<void> {
@@ -11,10 +10,9 @@ export async function run(): Promise<void> {
     const fileName: string = core.getInput('fileName')
     const type: string = core.getInput('type')
 
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`) 
-    core.debug(`Waiting ${fileName} milliseconds ...`) 
-    core.debug(`Waiting ${type} milliseconds ...`)
+    core.debug(`Waiting ${ms} milliseconds ...`)
+    core.debug(`filename is  ${fileName}`)
+    core.debug(`type is ${type}`)
 
     // Log the current timestamp, wait, then log the new timestamp
     core.debug(new Date().toTimeString())
