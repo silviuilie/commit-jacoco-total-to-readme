@@ -1,6 +1,6 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'commit jacoco total to some file (readme.md?)'
+description: 'commits jacoco total coverage to a speficied file (or default readme.md)'
+author: 'poor man`s tools'
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
