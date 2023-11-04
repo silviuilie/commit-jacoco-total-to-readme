@@ -35,6 +35,7 @@ javascript github action that implements with javascript the folowing :
 
 
 
+------
 
 generated with 'use this template' template : 
 
