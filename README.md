@@ -1,5 +1,33 @@
 # Commits the jacoco coverage to readme file as badge 
 
+javascript github action that implements with javascript the folowing :
+
+    - name: commit coverage to README file
+      run: |
+         oldCov=$(grep -Po '(?<=Coverage-).*(?=-)'  README.md)
+         echo "oldCov $oldCov"
+         totalCov=$(grep -Po '(?<=</package><counter type="INSTRUCTION").*(?=/><counter type="BRANCH")'  target/site/jacoco/jacoco.xml)
+         eval $totalCov
+         total=$((missed+covered))
+         echo "missed : $missed, covered   : $covered, total     : $total"
+         newCov=$(echo "scale=2; ($covered / $total) * 100" | bc)
+         echo " newCov :[$newCov]" 
+         echo " oldCov :[$oldCov]"
+         color="critical"
+         if (( $(echo "$newCov > $oldCov" | bc -l) )); then
+           color="success"
+         fi
+         coverageBadge="![Code Coverage](https://img.shields.io/badge/Code%20Coverage-$newCov-$color?style=flat)"
+         sed -i "s|!\[Code\ Coverage\]\(.*\)|$coverageBadge|" README.md
+         head -12 README.md
+         git config user.name silviuilie
+         git config user.email silviuilie@gmail.com
+         git add README.md
+         git commit -m "coverage update"
+         git push 
+
+
+
 
 generated with template : 
 
