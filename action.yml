@@ -13,16 +13,11 @@ inputs:
     description: 'name of the file that contains the (previous) coverage badge - to be replaced by the new one'
     required: false
     default: 'readme.md'
-  fileName:
-    description: 'name of the file that contains the (previous) coverage badge - to be replaced by the new one'
+  type:
+    description: 'flavour of the badge; svg, text or img.shields.io/badge'
     required: false
     default: 'readme.md'
-
-# Define your outputs here.
-outputs:
-  time:
-    description: 'Your output description here'
-
+  
 runs:
   using: node20
   main: dist/index.js
