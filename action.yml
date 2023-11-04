@@ -1,6 +1,6 @@
 name: 'commit jacoco total to some file (readme.md?)'
 description: 'commits jacoco total coverage badge to a speficied file (or default readme.md)'
-author: 'poor man`s tools'
+author: 'silviuilie'
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
