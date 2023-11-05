@@ -1,11 +1,11 @@
 /**
- * Unit tests for src/wait.ts
+ * Unit tests for src/wait.ts-removed
  */
 
 import { wait } from '../src/wait'
 import { expect } from '@jest/globals'
 
-describe('wait.ts', () => {
+describe('wait.ts-removed', () => {
   it('throws an invalid number', async () => {
     const input = parseInt('foo', 10)
     expect(isNaN(input)).toBe(true)
