@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import * as fileUtils from "./files"
+import * as fileUtils from './files'
 
 /**
  * @returns {Promise<void>} Resolves when the action is complete
@@ -34,4 +34,3 @@ export async function run(): Promise<void> {
     if (error instanceof Error) core.setFailed(error.message)
   }
 }
-
