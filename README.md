@@ -3,9 +3,9 @@
 todo : 
   - add paramter, readme.md `fileName` 
   - add parameter, `type` of coverage to commit :
+    - `svg` badge 
     - `text` (total percent)
     - `badge` with img.shields.io/badge
-    - `svg` badge 
 
 javascript github action that implements with javascript the folowing :
 
