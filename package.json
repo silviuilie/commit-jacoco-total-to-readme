@@ -71,8 +71,8 @@
     "n": "^9.2.0",
     "node": "^21.1.0"
   },
-  "devDependencies": {
-    "@types/jest": "^29.5.7",
+  "devDependencies": { 
+    "@types/jest": "^29.5.8",
     "@types/node": "^20.9.0",
     "@types/glob": "^8.1.0",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
