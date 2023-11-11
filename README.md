@@ -12,6 +12,7 @@ javascript github action that implements with javascript the folowing :
 
 
 
+
     - name: commit coverage to README file
       run: |
          oldCov=$(grep -Po '(?<=Coverage-).*(?=-)'  README.md) 
