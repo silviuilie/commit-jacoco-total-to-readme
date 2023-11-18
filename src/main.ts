@@ -8,7 +8,9 @@ export async function run(): Promise<void> {
   try {
     //const ms: string = core.getInput('milliseconds')
     const fileName: string = core.getInput('fileName')
+    core.debug(`fileName : ${fileName}`)
     const type: string = core.getInput('type')
+    core.debug(`type : ${type}`)
 
     core.debug(`filename is ${fileName}`)
     core.debug(`type is ${type}`)
