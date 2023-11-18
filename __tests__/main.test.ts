@@ -52,19 +52,6 @@ describe('action', () => {
     // Verify that all of the core library functions were called correctly
     expect(debugMock).toHaveBeenNthCalledWith(1, 'filename is readme.MD')
     expect(debugMock).toHaveBeenNthCalledWith(2, 'type is txt')
-    // expect(debugMock).toHaveBeenNthCalledWith(
-    //   2,
-    //   expect.stringMatching(timeRegex)
-    // )
-    // expect(debugMock).toHaveBeenNthCalledWith(
-    //   3,
-    //   expect.stringMatching(timeRegex)
-    // )
-    // expect(setOutputMock).toHaveBeenNthCalledWith(
-    //   1,
-    //   'time',
-    //   expect.stringMatching(timeRegex)
-    // )
     expect(errorMock).not.toHaveBeenCalled()
   })
 
