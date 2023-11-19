@@ -29128,7 +29128,9 @@ async function run() {
     try {
         //const ms: string = core.getInput('milliseconds')
         const fileName = core.getInput('fileName');
+        core.debug(`fileName : ${fileName}`);
         const type = core.getInput('type');
+        core.debug(`type : ${type}`);
         core.debug(`filename is ${fileName}`);
         core.debug(`type is ${type}`);
         const fileFound = await fileUtils.checkExistence(fileName);
