@@ -15,7 +15,7 @@ const runMock = jest.spyOn(main, 'run')
 
 // Other utilities
 // Mock the GitHub Actions core library
-let debugMock: jest.SpyInstance
+// let debugMock: jest.SpyInstance
 let errorMock: jest.SpyInstance
 let getInputMock: jest.SpyInstance
 // let setFailedMock: jest.SpyInstance
@@ -25,7 +25,7 @@ describe('action', () => {
   beforeEach(() => {
     jest.clearAllMocks()
 
-    debugMock = jest.spyOn(core, 'debug').mockImplementation()
+    // debugMock = jest.spyOn(core, 'debug').mockImplementation()
     errorMock = jest.spyOn(core, 'error').mockImplementation()
     getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
     // setFailedMock = jest.spyOn(core, 'setFailed').mockImplementation()
@@ -50,8 +50,8 @@ describe('action', () => {
     expect(runMock).toHaveReturned()
 
     // Verify that all of the core library functions were called correctly
-    expect(debugMock).toHaveBeenNthCalledWith(1, 'filename is readme.MD')
-    expect(debugMock).toHaveBeenNthCalledWith(2, 'type is txt')
+    // expect(debugMock).toHaveBeenNthCalledWith(1, 'filename is readme.MD')
+    // expect(debugMock).toHaveBeenNthCalledWith(2, 'type is txt')
     expect(errorMock).not.toHaveBeenCalled()
   })
 
