@@ -16,7 +16,7 @@ export async function run(): Promise<void> {
     core.debug(`type is ${type}`)
 
     const fileFound = await fileUtils.checkExistence(fileName)
-    core.debug(`file not found : ${fileFound}`)
+    core.debug(`file found : ${fileFound}`)
     if (!fileFound) {
       core.setFailed(`file not found : ${fileFound}`)
     } else {
