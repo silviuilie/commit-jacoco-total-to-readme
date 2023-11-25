@@ -4,7 +4,7 @@ import * as fs from 'fs';
 
 export async function printFile(fileName: string) {
   const content = fs.readFileSync(fileName, 'utf-8');
-  core.info(`#printFile : ${printFile}`)
+  core.info(`#printFile : ${content}`)
 }
 
 export async function checkExistence(pattern: string): Promise<boolean> {
