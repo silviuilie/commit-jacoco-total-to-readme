@@ -29128,18 +29128,16 @@ async function run() {
     try {
         //const ms: string = core.getInput('milliseconds')
         const fileName = core.getInput('fileName');
-        core.debug(`fileName : ${fileName}`);
         const type = core.getInput('type');
-        core.debug(`type : ${type}`);
-        core.debug(`filename is ${fileName}`);
-        core.debug(`type is ${type}`);
+        core.info(`filename is ${fileName}`);
+        core.info(`type is ${type}`);
         const fileFound = await fileUtils.checkExistence(fileName);
-        core.debug(`file found : ${fileFound}`);
+        core.info(`file found : ${fileFound}`);
         if (!fileFound) {
-            core.setFailed(`file found : ${fileFound}`);
+            core.setFailed(`file not found : ${fileFound}`);
         }
         else {
-            core.debug(`file found : ${fileFound}`);
+            core.info(`file found : ${fileFound}`);
         }
         // Log the current timestamp, wait, then log the new timestamp
         // core.debug(new Date().toTimeString())
