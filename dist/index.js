@@ -29065,9 +29065,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkExistence = void 0;
+exports.checkExistence = exports.printFile = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const glob_1 = __importDefault(__nccwpck_require__(1957));
+const fs = __importStar(__nccwpck_require__(7147));
+async function printFile(fileName) {
+    const content = fs.readFileSync(fileName, 'utf-8');
+    core.info(`#printFile : ${printFile}`);
+}
+exports.printFile = printFile;
 async function checkExistence(pattern) {
     const globOptions = {
         follow: !((core.getInput('follow_symlinks') || 'true').toUpperCase() === 'FALSE'),
@@ -29126,29 +29132,22 @@ const fileUtils = __importStar(__nccwpck_require__(7255));
  */
 async function run() {
     try {
-        //const ms: string = core.getInput('milliseconds')
         const fileName = core.getInput('fileName');
         const type = core.getInput('type');
-        core.info(`filename is ${fileName}`);
-        core.info(`type is ${type}`);
+        core.info(`#run filename is ${fileName}`);
+        core.info(`#run type is ${type}`);
         const fileFound = await fileUtils.checkExistence(fileName);
-        core.info(`file found : ${fileFound}`);
+        core.info(`#run file ${fileName} found : ${fileFound}`);
         if (!fileFound) {
             core.setFailed(`file not found : ${fileFound}`);
         }
         else {
-            core.info(`file found : ${fileFound}`);
+            core.info(`#run read file ${fileName}`);
+            await fileUtils.printFile(fileName);
         }
-        // Log the current timestamp, wait, then log the new timestamp
-        // core.debug(new Date().toTimeString())
-        //await wait(parseInt(ms, 10))
-        // core.debug(new Date().toTimeString())
-        // Set outputs for other workflow steps to use
-        // core.setOutput('time', new Date().toTimeString())
     }
     catch (error) {
         // Fail the workflow run if an error occurs
-        //if (error instanceof Error) core.setFailed(error.message)
         if (error instanceof Error)
             core.setFailed(error.message);
     }
