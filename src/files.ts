@@ -22,6 +22,7 @@ export function findPreviousCoverage(
     content.lastIndexOf(rightPattern)
   )
 
+  core.info(`foundCoverage.length : [${foundCoverage.length}]`)
   core.info(`foundCoverage : [${foundCoverage}]`)
 
   return foundCoverage;
