@@ -37,7 +37,7 @@ describe('action', () => {
     // Set the action's inputs as return values from core.getInput()
     getInputMock.mockImplementation((name: string): string => {
       switch (name) {
-        case 'fileName':
+        case 'readmeFileName':
           return 'readme.MD'
         case 'type':
           return 'txt'
@@ -59,7 +59,7 @@ describe('action', () => {
     // Set the action's inputs as return values from core.getInput()
     getInputMock.mockImplementation((name: string): string => {
       switch (name) {
-        case 'fileName':
+        case 'readmeFileName':
           return '@%^#'
         default:
           return ''
@@ -70,7 +70,7 @@ describe('action', () => {
       return new Promise<boolean>((resolve, reject) => {
         process.nextTick(() => {
           switch (name) {
-            case 'fileName':
+            case 'readmeFileName':
               resolve(true)
               break
             default:
