@@ -2,7 +2,7 @@
 
 TODOs : 
   - add parameter, readme.md `readmeFileName` - defaults to `readme.md`
-  - add parameter, readme.md `coverageFileName` - defaults to `target/site/jacoco/jacoco.xml`
+  - add parameter, readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
   - add parameter, `type` of coverage to commit :
     - `svg` badge 
     - `text` (total percent)
