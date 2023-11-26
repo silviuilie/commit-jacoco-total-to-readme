@@ -7,6 +7,17 @@ export async function printFile(fileName: string) {
   core.info(`#printFile : ${content}`)
 }
 
+export  function findLast(fileName: string, leftPattern: string, rightPattern: string) {
+  core.info(`find coverage for [${fileName}] and patterns L: [${leftPattern}] and R: [${rightPattern}]`)
+  const content = fs.readFileSync(fileName, 'utf-8');
+  core.info(`file content : ${content}`)
+
+  return content.substring(
+    content.lastIndexOf(leftPattern),
+    content.lastIndexOf(rightPattern)
+  )
+}
+
 export async function checkExistence(pattern: string): Promise<boolean> {
   const globOptions = {
     follow: !(

@@ -1,7 +1,13 @@
 import * as core from '@actions/core'
 import * as fileUtils from './files'
 
+/*
+  total coverage value from jacoco is contained between the following patterns:
+ */
+const _jacocoTotalCoverageStart = "</package><counter type=\"INSTRUCTION\"";
+const _jacocoTotalCoverageEnd = "/><counter type=\"BRANCH\"";
 
+const _defaultReadmeName = "readme.md"
 
 /**
  * @returns {Promise<void>} Resolves when the action is complete
@@ -18,9 +24,16 @@ export async function run(): Promise<void> {
     core.info(`#run file ${fileName} found : ${fileFound}`)
     if (!fileFound) {
       core.setFailed(`file not found : ${fileFound}`)
+      core.warning(`#run file not found : ${fileName} using ${_defaultReadmeName}`)
+
     } else {
       core.info(`#run read file ${fileName}`)
-      await fileUtils.printFile(fileName)
+      const newTotal = fileUtils.findLast(
+        fileName || _defaultReadmeName,
+        _jacocoTotalCoverageStart,
+        _jacocoTotalCoverageEnd
+      );
+      await fileUtils.printFile(`new total : ${fileName}`)
     }
 
   } catch (error) {
