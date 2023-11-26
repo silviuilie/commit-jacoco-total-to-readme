@@ -29077,8 +29077,8 @@ exports.printFile = printFile;
 function findPreviousCoverage(fileName, leftPattern, rightPattern) {
     core.info(`find coverage for [${fileName}] and patterns L: [${leftPattern}] and R: [${rightPattern}]`);
     const content = fs.readFileSync(fileName, 'utf-8');
-    core.info(`file content : ${content}`);
     const foundCoverage = content.substring(content.lastIndexOf(leftPattern) + leftPattern.length, content.lastIndexOf(rightPattern));
+    core.info(`foundCoverage.length : [${foundCoverage.length}]`);
     core.info(`foundCoverage : [${foundCoverage}]`);
     return foundCoverage;
 }
