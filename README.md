@@ -10,7 +10,7 @@ todo :
   defaults to `svg`
   - add parameter, `minim` - defaults to 0.6    
 
-javascript github action that implements with javascript the following :
+javascript github action that implements the following :
 
 ---
 
