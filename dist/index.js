@@ -29065,15 +29065,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkExistence = exports.printFile = void 0;
+exports.checkExistence = exports.findPreviousCoverage = exports.printFile = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const glob_1 = __importDefault(__nccwpck_require__(1957));
 const fs = __importStar(__nccwpck_require__(7147));
-async function printFile(fileName) {
+function printFile(fileName) {
     const content = fs.readFileSync(fileName, 'utf-8');
     core.info(`#printFile : ${content}`);
 }
 exports.printFile = printFile;
+function findPreviousCoverage(fileName, leftPattern, rightPattern) {
+    core.info(`find coverage for [${fileName}] and patterns L: [${leftPattern}] and R: [${rightPattern}]`);
+    const content = fs.readFileSync(fileName, 'utf-8');
+    core.info(`file content : ${content}`);
+    const foundCoverage = content.substring(content.lastIndexOf(leftPattern) + leftPattern.length, content.lastIndexOf(rightPattern));
+    core.info(`foundCoverage : [${foundCoverage}]`);
+    return foundCoverage;
+}
+exports.findPreviousCoverage = findPreviousCoverage;
 async function checkExistence(pattern) {
     const globOptions = {
         follow: !((core.getInput('follow_symlinks') || 'true').toUpperCase() === 'FALSE'),
@@ -29127,29 +29136,55 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const fileUtils = __importStar(__nccwpck_require__(7255));
+/*
+  total coverage value from jacoco is contained between the following patterns:
+ */
+const _jacocoTotalCoverageStart = '</package><counter type="INSTRUCTION"';
+const _jacocoTotalCoverageEnd = '/><counter type="BRANCH"';
+const _defaultReadmeName = 'readme.md';
+const _defaultJacocoFileName = 'target/site/jacoco/jacoco.xml';
+const _defaultType = 'svg';
+const _defaultMinim = '0.6';
 /**
  * @returns {Promise<void>} Resolves when the action is complete
  */
 async function run() {
     try {
-        const fileName = core.getInput('fileName');
-        const type = core.getInput('type');
-        core.info(`#run filename is ${fileName}`);
+        const readmeFileName = resolveFile(core.getInput('readmeFileName') || _defaultReadmeName);
+        const jacocoFileName = resolveFile(core.getInput('jacocoFileName') || _defaultJacocoFileName);
+        const type = core.getInput('type') || _defaultType;
+        const minim = core.getInput('minim') || _defaultMinim;
+        core.info(`#run filename is ${readmeFileName}`);
+        core.info(`#run type is ${jacocoFileName}`);
         core.info(`#run type is ${type}`);
-        const fileFound = await fileUtils.checkExistence(fileName);
-        core.info(`#run file ${fileName} found : ${fileFound}`);
+        core.info(`#run minimum is ${minim}`);
+        const fileFound = await fileUtils.checkExistence(readmeFileName);
+        core.info(`#run file ${readmeFileName} found : ${fileFound}`);
         if (!fileFound) {
-            core.setFailed(`file not found : ${fileFound}`);
+            core.setFailed(`required coverage report target file not found : ${fileFound}`);
+            core.warning(`#run file not found : ${readmeFileName} using ${_defaultReadmeName}`);
         }
         else {
-            core.info(`#run read file ${fileName}`);
-            await fileUtils.printFile(fileName);
+            core.info(`#run read file ${readmeFileName}`);
+            // TODO : if type is 'svg', extract the previous value svg file name ([![Coverage](<coverage-svg-file>)] and value (file from aria-label="Coverage: <VALUE>%")
+            // TODO : if type is 'text' or 'badge' extract the previous value
+            const oldTotal = fileUtils.findPreviousCoverage(readmeFileName || _defaultReadmeName, _jacocoTotalCoverageStart, _jacocoTotalCoverageEnd);
+            fileUtils.printFile(`old total : ${oldTotal}`);
         }
     }
     catch (error) {
         // Fail the workflow run if an error occurs
         if (error instanceof Error)
             core.setFailed(error.message);
+    }
+    function resolveFile(fileName) {
+        let resolvedName = fileName;
+        const fileFound = fileUtils.checkExistence(resolvedName);
+        if (!fileFound) {
+            core.warning(`#run file not found : [${resolvedName}]`);
+            core.setFailed(`required file not found : ${resolvedName}`);
+        }
+        return resolvedName;
     }
 }
 exports.run = run;

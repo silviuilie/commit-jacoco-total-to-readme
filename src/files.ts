@@ -1,22 +1,31 @@
 import * as core from '@actions/core'
 import glob from 'glob'
-import * as fs from 'fs';
+import * as fs from 'fs'
 
-export async function printFile(fileName: string) {
-  const content = fs.readFileSync(fileName, 'utf-8');
+export function printFile(fileName: string): void {
+  const content = fs.readFileSync(fileName, 'utf-8')
   core.info(`#printFile : ${content}`)
 }
 
-export  function findPreviousCoverage(fileName: string, leftPattern: string, rightPattern: string) {
-
-  core.info(`find coverage for [${fileName}] and patterns L: [${leftPattern}] and R: [${rightPattern}]`)
-  const content = fs.readFileSync(fileName, 'utf-8');
+export function findPreviousCoverage(
+  fileName: string,
+  leftPattern: string,
+  rightPattern: string
+): string {
+  core.info(
+    `find coverage for [${fileName}] and patterns L: [${leftPattern}] and R: [${rightPattern}]`
+  )
+  const content = fs.readFileSync(fileName, 'utf-8')
   core.info(`file content : ${content}`)
 
-  return content.substring(
-    content.lastIndexOf(leftPattern),
+  const foundCoverage =  content.substring(
+    content.lastIndexOf(leftPattern) + leftPattern.length,
     content.lastIndexOf(rightPattern)
   )
+
+  core.info(`foundCoverage : [${foundCoverage}]`)
+
+  return foundCoverage;
 }
 
 export async function checkExistence(pattern: string): Promise<boolean> {

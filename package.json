@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "typescript-action",
   "description": "GitHub Actions TypeScript template",
   "version": "0.0.1",
