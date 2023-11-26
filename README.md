@@ -7,6 +7,7 @@ TODOs :
     - `svg` badge 
     - `text` (total percent)
     - `badge` with img.shields.io/badge
+      
   defaults to `svg`
   - add parameter, `minim` - defaults to 0.6
 
