@@ -21,6 +21,10 @@ inputs:
     description: 'flavour of the badge; svg, text or img.shields.io/badge'
     required: false
     default: 'svg'
+  minim:
+    description: 'coverage minimum; defaults to 0.6'
+    required: false
+    default: '0.6'
   
 runs:
   using: node20
