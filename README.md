@@ -8,7 +8,9 @@ todo :
     - `text` (total percent)
     - `badge` with img.shields.io/badge
   defaults to `svg`
-  - add parameter, `minim` - defaults to 0.6    
+  - add parameter, `minim` - defaults to 0.6
+
+coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
 
 javascript github action that implements the following :
 
