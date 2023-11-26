@@ -28,7 +28,11 @@ export async function run(): Promise<void> {
 
     } else {
       core.info(`#run read file ${fileName}`)
-      const newTotal = fileUtils.findLast(
+
+      // TODO : if type is 'svg', extract the previous value svg file name ([![Coverage](<coverage-svg-file>)] and value (file from aria-label="Coverage: <VALUE>%")
+      // TODO : if type is 'text' or 'badge' extract the previous value
+
+      const newTotal = fileUtils.findPreviousCoverage(
         fileName || _defaultReadmeName,
         _jacocoTotalCoverageStart,
         _jacocoTotalCoverageEnd

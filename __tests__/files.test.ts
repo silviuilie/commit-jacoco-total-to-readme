@@ -14,7 +14,7 @@ jest.mock('fs', () => {
 });
 
 // Mock the action's entrypoint
-const findLastMock = jest.spyOn(files, "findLast");
+const findLastMock = jest.spyOn(files, "findPreviousCoverage");
 
 
 let readFileSyncMock: jest.SpyInstance;
@@ -45,7 +45,7 @@ describe("test findLast coverage", () => {
           }
         });
 
-      files.findLast("readme.md","a","b")
+      files.findPreviousCoverage("readme.md","a","b")
 
       expect(readFileSyncMock).toHaveBeenCalled()
       expect(findLastMock).toHaveReturned()
