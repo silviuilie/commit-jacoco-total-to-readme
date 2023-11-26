@@ -34,8 +34,7 @@ javascript github action that implements the following :
            color="success"
          fi
          coverageBadge="![Code Coverage](https://img.shields.io/badge/Code%20Coverage-$newCov-$color?style=flat)"
-         sed -i "s|!\[Code\ Coverage\]\(.*\)|$coverageBadge|" README.md
-         head -12 README.md
+         sed -i "s|!\[Code\ Coverage\]\(.*\)|$coverageBadge|" README.md 
          git config user.name silviuilie
          git config user.email silviuilie@gmail.com
          git add README.md
