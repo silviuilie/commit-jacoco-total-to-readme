@@ -16,7 +16,6 @@ export function findPreviousCoverage(
     `find coverage for [${fileName}] and patterns L: [${leftPattern}] and R: [${rightPattern}]`
   )
   const content = fs.readFileSync(fileName, 'utf-8')
-  core.info(`file content : ${content}`)
 
   const foundCoverage =  content.substring(
     content.lastIndexOf(leftPattern) + leftPattern.length,
