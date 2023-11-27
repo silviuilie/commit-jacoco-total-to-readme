@@ -4,11 +4,12 @@ TODOs :
   - add parameter, readme.md `readmeFileName` - defaults to `readme.md`
   - add parameter, readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
   - add parameter, `type` of coverage to commit :
-    - `svg` badge 
-    - `text` (total percent)
+    - `svg` badge,
+    - `text` (total percent),
     - `badge` with img.shields.io/badge
       
      defaults to `svg`
+    
   - add parameter, `minim` - defaults to 0.6
 
 coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
