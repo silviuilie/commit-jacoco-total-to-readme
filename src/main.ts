@@ -7,6 +7,9 @@ import * as fileUtils from './files'
 const _jacocoTotalCoverageStart = '</package><counter type="INSTRUCTION"'
 const _jacocoTotalCoverageEnd = '/><counter type="BRANCH"'
 
+const _readmeTotalCoverageStart = '[![Coverage Status]('
+const _readmeTotalCoverageEnd = ')'
+
 const _defaultReadmeName = 'readme.md'
 const _defaultJacocoFileName = 'target/site/jacoco/jacoco.xml'
 const _defaultType = 'svg'
@@ -51,8 +54,8 @@ export async function run(): Promise<void> {
 
       const oldTotal = fileUtils.findPreviousCoverage(
         readmeFileName || _defaultReadmeName,
-        _jacocoTotalCoverageStart,
-        _jacocoTotalCoverageEnd
+        _readmeTotalCoverageStart,
+        _readmeTotalCoverageEnd
       )
       fileUtils.printFile(`old total : ${oldTotal}`)
     }

@@ -29142,6 +29142,8 @@ const fileUtils = __importStar(__nccwpck_require__(7255));
  */
 const _jacocoTotalCoverageStart = '</package><counter type="INSTRUCTION"';
 const _jacocoTotalCoverageEnd = '/><counter type="BRANCH"';
+const _readmeTotalCoverageStart = '[![Coverage Status](';
+const _readmeTotalCoverageEnd = ')';
 const _defaultReadmeName = 'readme.md';
 const _defaultJacocoFileName = 'target/site/jacoco/jacoco.xml';
 const _defaultType = 'svg';
@@ -29169,7 +29171,7 @@ async function run() {
             core.info(`#run read file ${readmeFileName}`);
             // TODO : if type is 'svg', extract the previous value svg file name ([![Coverage](<coverage-svg-file>)] and value (file from aria-label="Coverage: <VALUE>%")
             // TODO : if type is 'text' or 'badge' extract the previous value
-            const oldTotal = fileUtils.findPreviousCoverage(readmeFileName || _defaultReadmeName, _jacocoTotalCoverageStart, _jacocoTotalCoverageEnd);
+            const oldTotal = fileUtils.findPreviousCoverage(readmeFileName || _defaultReadmeName, _readmeTotalCoverageStart, _readmeTotalCoverageEnd);
             fileUtils.printFile(`old total : ${oldTotal}`);
         }
     }
