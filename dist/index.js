@@ -29070,14 +29070,15 @@ const core = __importStar(__nccwpck_require__(2186));
 const glob_1 = __importDefault(__nccwpck_require__(1957));
 const fs = __importStar(__nccwpck_require__(7147));
 function printFile(fileName) {
-    const content = fs.readFileSync(fileName, 'utf-8');
+    const content = fs.readFileSync(fileName, "utf-8");
     core.info(`#printFile : ${content}`);
 }
 exports.printFile = printFile;
 function findPreviousCoverage(fileName, leftPattern, rightPattern) {
     core.info(`find coverage for [${fileName}] and patterns L: [${leftPattern}] and R: [${rightPattern}]`);
-    const content = fs.readFileSync(fileName, 'utf-8');
-    const foundCoverage = content.substring(content.lastIndexOf(leftPattern) + leftPattern.length, content.lastIndexOf(rightPattern));
+    const content = fs.readFileSync(fileName, "utf-8");
+    const start = content.lastIndexOf(leftPattern);
+    const foundCoverage = content.substring(start + leftPattern.length, content.indexOf(rightPattern, start));
     core.info(`foundCoverage.length : [${foundCoverage.length}]`);
     core.info(`foundCoverage : [${foundCoverage}]`);
     return foundCoverage;
@@ -29085,8 +29086,8 @@ function findPreviousCoverage(fileName, leftPattern, rightPattern) {
 exports.findPreviousCoverage = findPreviousCoverage;
 async function checkExistence(pattern) {
     const globOptions = {
-        follow: !((core.getInput('follow_symlinks') || 'true').toUpperCase() === 'FALSE'),
-        nocase: (core.getInput('ignore_case') || 'false').toUpperCase() === 'TRUE'
+        follow: !((core.getInput("follow_symlinks") || "true").toUpperCase() === "FALSE"),
+        nocase: (core.getInput("ignore_case") || "false").toUpperCase() === "TRUE"
     };
     return new Promise((resolve, reject) => {
         (0, glob_1.default)(pattern, globOptions, (err, files) => {
