@@ -29160,7 +29160,7 @@ async function run() {
         _supportedTypes.forEach(function (value) {
             console.log(`${oldCoverage} vs ${value}`);
             if (oldCoverage.includes(value)) {
-                console.log('#isSupported returns false');
+                console.log('#isSupported returns true');
                 return true;
             }
         });
@@ -29189,7 +29189,7 @@ async function run() {
             const oldCoverage = fileUtils.findPreviousCoverage(readmeFileName || _defaultReadmeName, _readmeTotalCoverageStart, _readmeTotalCoverageEnd);
             core.info('is supported ?');
             if (isSupported(oldCoverage)) {
-                fileUtils.printFile(`old total : ${oldCoverage}`);
+                //fileUtils.printFile(`old total : ${oldCoverage}`)
             }
             else {
                 const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;
