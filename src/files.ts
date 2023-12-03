@@ -7,6 +7,9 @@ export function printFile(fileName: string): void {
   core.info(`#printFile : ${content}`);
 }
 
+/**
+ * finds last occurrence of any coverage badge (as defined by left/right pattern).
+ */
 export function findPreviousCoverage(
   fileName: string,
   leftPattern: string,

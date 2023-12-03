@@ -22,6 +22,7 @@ const _defaultMinim = '0.6'
 export async function run(): Promise<void> {
   function isSupported(oldCoverage: string): boolean  {
     _supportedTypes.forEach(function (value){
+      console.log(`${oldCoverage} vs ${value}`)
         if (oldCoverage.includes(value)) {
           console.log('#isSupported returns false')
           return true;
@@ -73,8 +74,8 @@ export async function run(): Promise<void> {
       if (isSupported(oldCoverage)) {
         fileUtils.printFile(`old total : ${oldCoverage}`)
       } else {
-        const recomendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`
-        const notSupportedOldCoverage = `failed to match old coverage [${oldCoverage}] to supported coverage badge types : ${_supportedTypes}. You have to add a supported coverage badge to your ${readmeFileName} so it can be replaced by this action.${recomendedFix}`;
+        const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`
+        const notSupportedOldCoverage = `failed to match old coverage [${oldCoverage}] to supported coverage badge types : ${_supportedTypes}. You have to add a supported coverage badge to your ${readmeFileName} so it can be replaced by this action.${recommendedFix}`;
         core.warning(notSupportedOldCoverage)
         core.error(notSupportedOldCoverage)
       }
