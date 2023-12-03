@@ -29188,7 +29188,7 @@ async function run() {
                 fileUtils.printFile(`old total : ${oldCoverage}`);
             }
             else {
-                const recomendedFix = `You can add "${_readmeTotalCoverageStart}no-coverage${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;
+                const recomendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;
                 const notSupportedOldCoverage = `failed to match old coverage [${oldCoverage}] to supported coverage badge types : ${_supportedTypes}. You have to add a supported coverage badge to your ${readmeFileName} so it can be replaced by this action.${recomendedFix}`;
                 core.warning(notSupportedOldCoverage);
                 core.error(notSupportedOldCoverage);
