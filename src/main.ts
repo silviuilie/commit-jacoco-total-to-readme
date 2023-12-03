@@ -21,15 +21,15 @@ const _defaultMinim = '0.6'
  */
 export async function run(): Promise<void> {
   function isSupported(oldCoverage: string): boolean  {
-    _supportedTypes.forEach(function (value){
-      console.log(`${oldCoverage} vs ${value}`)
-        if (oldCoverage.includes(value)) {
-          console.log('#isSupported returns true')
-          return true;
-        }
-    })
+    var supported = false;
+    for (let supportedType of _supportedTypes) {
+      if (oldCoverage.includes(supportedType)) {
+        console.log('#isSupported returns true')
+        supported = true; break;
+      }
+    }
     console.log('#isSupported returns false')
-    return false;
+    return supported;
   }
 
   try {

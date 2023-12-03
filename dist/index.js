@@ -29157,15 +29157,16 @@ const _defaultMinim = '0.6';
  */
 async function run() {
     function isSupported(oldCoverage) {
-        _supportedTypes.forEach(function (value) {
-            console.log(`${oldCoverage} vs ${value}`);
-            if (oldCoverage.includes(value)) {
+        var supported = false;
+        for (let supportedType of _supportedTypes) {
+            if (oldCoverage.includes(supportedType)) {
                 console.log('#isSupported returns true');
-                return true;
+                supported = true;
+                break;
             }
-        });
+        }
         console.log('#isSupported returns false');
-        return false;
+        return supported;
     }
     try {
         const readmeFileName = resolveFile(core.getInput('readmeFileName') || _defaultReadmeName);
