@@ -29143,15 +29143,26 @@ const fileUtils = __importStar(__nccwpck_require__(7255));
 const _jacocoTotalCoverageStart = '</package><counter type="INSTRUCTION"';
 const _jacocoTotalCoverageEnd = '/><counter type="BRANCH"';
 const _readmeTotalCoverageStart = '[![Coverage Status](';
-const _readmeTotalCoverageEnd = ')';
+const _readmeTotalCoverageEnd = ')]';
 const _defaultReadmeName = 'readme.md';
 const _defaultJacocoFileName = 'target/site/jacoco/jacoco.xml';
+const _supportedTypes = ['svg', 'text', 'badge'];
 const _defaultType = 'svg';
 const _defaultMinim = '0.6';
 /**
  * @returns {Promise<void>} Resolves when the action is complete
  */
 async function run() {
+    function isSupported(oldCoverage) {
+        _supportedTypes.forEach(function (value) {
+            if (oldCoverage.includes(value)) {
+                console.log('#isSupported returns false');
+                return true;
+            }
+        });
+        console.log('#isSupported returns false');
+        return false;
+    }
     try {
         const readmeFileName = resolveFile(core.getInput('readmeFileName') || _defaultReadmeName);
         const jacocoFileName = resolveFile(core.getInput('jacocoFileName') || _defaultJacocoFileName);
@@ -29171,12 +29182,22 @@ async function run() {
             core.info(`#run read file ${readmeFileName}`);
             // TODO : if type is 'svg', extract the previous value svg file name ([![Coverage](<coverage-svg-file>)] and value (file from aria-label="Coverage: <VALUE>%")
             // TODO : if type is 'text' or 'badge' extract the previous value
-            const oldTotal = fileUtils.findPreviousCoverage(readmeFileName || _defaultReadmeName, _readmeTotalCoverageStart, _readmeTotalCoverageEnd);
-            fileUtils.printFile(`old total : ${oldTotal}`);
+            const oldCoverage = fileUtils.findPreviousCoverage(readmeFileName || _defaultReadmeName, _readmeTotalCoverageStart, _readmeTotalCoverageEnd);
+            core.info('is supported ?');
+            if (isSupported(oldCoverage)) {
+                fileUtils.printFile(`old total : ${oldCoverage}`);
+            }
+            else {
+                const recomendedFix = `You can add "${_readmeTotalCoverageStart}no-coverage${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;
+                const notSupportedOldCoverage = `failed to match old coverage [${oldCoverage}] to supported coverage badge types : ${_supportedTypes}. You have to add a supported coverage badge to your ${readmeFileName} so it can be replaced by this action.${recomendedFix}`;
+                core.warning(notSupportedOldCoverage);
+                core.error(notSupportedOldCoverage);
+            }
         }
     }
     catch (error) {
         // Fail the workflow run if an error occurs
+        core.debug(error);
         if (error instanceof Error)
             core.setFailed(error.message);
     }

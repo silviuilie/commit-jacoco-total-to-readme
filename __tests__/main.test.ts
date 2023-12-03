@@ -56,6 +56,53 @@ describe("action", () => {
     expect(errorMock).not.toHaveBeenCalled();
   });
 
+  it("old doc file (readme) contains a non compatible coverage badge", async () => {
+    // Set the action's inputs as return values from core.getInput()
+    getInputMock.mockImplementation((name: string): string => {
+      switch (name) {
+        case "readmeFileName":
+          return "readme.md";
+        case "jacocoFileName":
+          return "invalid-file-name";
+        default:
+          return "";
+      }
+    });
+
+    checkFileExistenceMock.mockImplementation(async (name: string): Promise<boolean> => {
+      return new Promise<boolean>((resolve, reject) => {
+        process.nextTick(() => {
+          console.log(`fileUtilsMock.mockImplementation name : ${name}`);
+          switch (name) {
+            case "readme.md":
+              resolve(true);
+              break;
+            case "invalid-file-name":
+              resolve(false);
+              break;
+            default:
+              const err = `File ${name} not found`;
+              console.log(err);
+              reject(Error(err));
+          }
+        });
+      });
+    });
+
+    fileUtilsFindPreviousCoverageMock.mockImplementation((readmeFileName: string,
+                                                          left: string,
+                                                          right: string): string => {
+      return "https://coveralls.io/repos/silviuilie/reload-log4j/badge.png?branch=master";
+    });
+
+    await main.run();
+    expect(getInputMock).toHaveReturned();
+    expect(checkFileExistenceMock).toHaveReturned();
+    expect(fileUtilsFindPreviousCoverageMock).toHaveReturned();
+    expect(runMock).toHaveReturned();
+
+  });
+
   it("sets a failed status", async () => {
     // Set the action's inputs as return values from core.getInput()
     getInputMock.mockImplementation((name: string): string => {
@@ -82,7 +129,7 @@ describe("action", () => {
               break;
             default:
               const err = `File ${name} not found`;
-              console.log(err)
+              console.log(err);
               reject(Error(err));
           }
         });
