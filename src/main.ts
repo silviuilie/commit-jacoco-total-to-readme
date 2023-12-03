@@ -24,11 +24,10 @@ export async function run(): Promise<void> {
     var supported = false;
     for (let supportedType of _supportedTypes) {
       if (oldCoverage.includes(supportedType)) {
-        console.log('#isSupported returns true')
         supported = true; break;
       }
     }
-    console.log('#isSupported returns false')
+    console.log(`#isSupported returns ${supported}`)
     return supported;
   }
 
@@ -70,7 +69,6 @@ export async function run(): Promise<void> {
         _readmeTotalCoverageStart,
         _readmeTotalCoverageEnd
       )
-      core.info('is supported ?')
       if (isSupported(oldCoverage)) {
         //fileUtils.printFile(`old total : ${oldCoverage}`)
       } else {
