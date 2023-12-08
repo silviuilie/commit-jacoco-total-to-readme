@@ -12,7 +12,7 @@ const _readmeTotalCoverageEnd = ')]'
 
 const _defaultReadmeName = 'readme.md'
 const _defaultJacocoFileName = 'target/site/jacoco/jacoco.xml'
-const _supportedTypes = ['svg','text','badge'];
+const _supportedTypes = ['svg', 'text', 'badge']
 const _defaultType = 'svg'
 const _defaultMinim = '0.6'
 
@@ -20,15 +20,16 @@ const _defaultMinim = '0.6'
  * @returns {Promise<void>} Resolves when the action is complete
  */
 export async function run(): Promise<void> {
-  function isSupported(oldCoverage: string): boolean  {
-    var supported = false;
-    for (let supportedType of _supportedTypes) {
+  function isSupported(oldCoverage: string): boolean {
+    let supported = false
+    for (const supportedType of _supportedTypes) {
       if (oldCoverage.includes(supportedType)) {
-        supported = true; break;
+        supported = true
+        break
       }
     }
     console.log(`#isSupported returns ${supported}`)
-    return supported;
+    return supported
   }
 
   try {
@@ -73,25 +74,22 @@ export async function run(): Promise<void> {
         //fileUtils.printFile(`old total : ${oldCoverage}`)
       } else {
         const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`
-        const notSupportedOldCoverage = `failed to match old coverage [${oldCoverage}] to supported coverage badge types : ${_supportedTypes}. You have to add a supported coverage badge to your ${readmeFileName} so it can be replaced by this action.${recommendedFix}`;
+        const notSupportedOldCoverage = `failed to match old coverage [${oldCoverage}] to supported coverage badge types : ${_supportedTypes}. You have to add a supported coverage badge to your ${readmeFileName} so it can be replaced by this action.${recommendedFix}`
         core.warning(notSupportedOldCoverage)
         core.error(notSupportedOldCoverage)
       }
-
     }
-  } catch (error : any) {
+  } catch (error: any) {
     // Fail the workflow run if an error occurs
     core.debug(error)
     if (error instanceof Error) core.setFailed(error.message)
   }
 
   function resolveFile(fileName: string): string {
-    let resolvedName = fileName
+    const resolvedName = fileName
     const fileFound = fileUtils.checkExistence(resolvedName)
     if (!fileFound) {
-      core.warning(
-        `#run file not found : [${resolvedName}]`
-      )
+      core.warning(`#run file not found : [${resolvedName}]`)
       core.setFailed(`required file not found : ${resolvedName}`)
     }
 
