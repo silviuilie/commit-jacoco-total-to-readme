@@ -10,7 +10,7 @@ TODOs :
       - when `svg` extract previous coverage
     - `text` (total percent),
       
-     defaults to `svg` or `badge` ?
+     should default to `svg` or `badge` ?
     
   - add parameter, `minim` - defaults to 0.6
 
