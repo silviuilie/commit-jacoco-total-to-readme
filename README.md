@@ -2,9 +2,11 @@
 
   - add parameter, readme.md `readmeFileName` - defaults to `readme.md`
   - add parameter, readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
-TODOs : 
+TODOs :
+
   - add parameter, `type` of coverage to commit :
     - `svg` badge,
+      - when `svg` extract previous coverage
     - `text` (total percent),
     - `badge` with img.shields.io/badge
       
