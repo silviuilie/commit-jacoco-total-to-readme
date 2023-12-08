@@ -5,10 +5,10 @@
 TODOs :
 
   - add parameter, `type` of coverage to commit :
+    - `badge` with img.shields.io/badge
     - `svg` badge,
       - when `svg` extract previous coverage
     - `text` (total percent),
-    - `badge` with img.shields.io/badge
       
      defaults to `svg`
     
