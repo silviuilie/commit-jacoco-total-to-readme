@@ -29147,6 +29147,8 @@ const _jacocoTotalCoverageStart = '</package><counter type="INSTRUCTION"';
 const _jacocoTotalCoverageEnd = '/><counter type="BRANCH"';
 const _readmeTotalCoverageStart = '[![Coverage Status](';
 const _readmeTotalCoverageEnd = ')]';
+const _badgeSvgTotalCoverageStart = '<title>Coverage: '; //51.00%
+const _badgeSvgTotalCoverageEnd = '</title>';
 const _defaultReadmeName = 'readme.md';
 const _defaultJacocoFileName = 'target/site/jacoco/jacoco.xml';
 const _supportedTypes = ['svg', 'text', 'badge'];
@@ -29191,7 +29193,8 @@ async function run() {
             if (isSupported(oldCoverage)) {
                 //fileUtils.printFile(`old total : ${oldCoverage}`)
                 core.info(`handle supported coverage type ${oldCoverage}`);
-                fileUtils.printFile(oldCoverage);
+                const oldCoverageValue = fileUtils.findPreviousCoverage(oldCoverage, _badgeSvgTotalCoverageStart, _badgeSvgTotalCoverageEnd);
+                core.info(`handle supported oldCoverageValue type ${oldCoverageValue}`);
             }
             else {
                 const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;

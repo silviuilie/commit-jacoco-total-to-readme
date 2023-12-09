@@ -10,6 +10,9 @@ const _jacocoTotalCoverageEnd = '/><counter type="BRANCH"'
 const _readmeTotalCoverageStart = '[![Coverage Status]('
 const _readmeTotalCoverageEnd = ')]'
 
+const _badgeSvgTotalCoverageStart = '<title>Coverage: ' //51.00%
+const _badgeSvgTotalCoverageEnd = '</title>'
+
 const _defaultReadmeName = 'readme.md'
 const _defaultJacocoFileName = 'target/site/jacoco/jacoco.xml'
 const _supportedTypes = ['svg', 'text', 'badge']
@@ -75,7 +78,13 @@ export async function run(): Promise<void> {
       if (isSupported(oldCoverage)) {
         //fileUtils.printFile(`old total : ${oldCoverage}`)
         core.info(`handle supported coverage type ${oldCoverage}`)
-        fileUtils.printFile(oldCoverage)
+
+        const oldCoverageValue = fileUtils.findPreviousCoverage(
+          oldCoverage,
+          _badgeSvgTotalCoverageStart,
+          _badgeSvgTotalCoverageEnd
+        )
+        core.info(`handle supported oldCoverageValue type ${oldCoverageValue}`)
       } else {
         const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`
         const notSupportedOldCoverage = `failed to match old coverage [${oldCoverage}] to supported coverage badge types : ${_supportedTypes}. You have to add a supported coverage badge to your ${readmeFileName} so it can be replaced by this action.${recommendedFix}`
