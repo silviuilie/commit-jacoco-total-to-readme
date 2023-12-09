@@ -29065,7 +29065,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkExistence = exports.findPreviousCoverage = exports.printFile = void 0;
+exports.checkExistence = exports.findInFile = exports.printFile = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const glob_1 = __importDefault(__nccwpck_require__(1957));
 const fs = __importStar(__nccwpck_require__(7147));
@@ -29077,7 +29077,7 @@ exports.printFile = printFile;
 /**
  * finds last occurrence of any coverage badge (as defined by left/right pattern).
  */
-function findPreviousCoverage(fileName, leftPattern, rightPattern) {
+function findInFile(fileName, leftPattern, rightPattern) {
     core.info(`find coverage for [${fileName}] and patterns L: [${leftPattern}] and R: [${rightPattern}]`);
     const content = fs.readFileSync(fileName, 'utf-8');
     const start = content.lastIndexOf(leftPattern);
@@ -29086,7 +29086,7 @@ function findPreviousCoverage(fileName, leftPattern, rightPattern) {
     core.info(`foundCoverage : [${foundCoverage}]`);
     return foundCoverage;
 }
-exports.findPreviousCoverage = findPreviousCoverage;
+exports.findInFile = findInFile;
 async function checkExistence(pattern) {
     const globOptions = {
         follow: !((core.getInput('follow_symlinks') || 'true').toUpperCase() === 'FALSE'),
@@ -29188,13 +29188,15 @@ async function run() {
             core.info(`#run read file ${readmeFileName}`);
             // TODO : if type is 'svg', extract the previous value svg file name ([![Coverage](<coverage-svg-file>)] and value (file from aria-label="Coverage: <VALUE>%")
             // TODO : if type is 'text' or 'badge' extract the previous value
-            const oldCoverage = fileUtils.findPreviousCoverage(readmeFileName || _defaultReadmeName, _readmeTotalCoverageStart, _readmeTotalCoverageEnd);
+            const oldCoverage = fileUtils.findInFile(readmeFileName || _defaultReadmeName, _readmeTotalCoverageStart, _readmeTotalCoverageEnd);
             core.info(`#run oldCoverage is ${oldCoverage}`);
             if (isSupported(oldCoverage)) {
                 //fileUtils.printFile(`old total : ${oldCoverage}`)
                 core.info(`handle supported coverage type ${oldCoverage}`);
-                const oldCoverageValue = fileUtils.findPreviousCoverage(oldCoverage, _badgeSvgTotalCoverageStart, _badgeSvgTotalCoverageEnd);
+                const oldCoverageValue = fileUtils.findInFile(oldCoverage, _badgeSvgTotalCoverageStart, _badgeSvgTotalCoverageEnd);
                 core.info(`handle supported oldCoverageValue type ${oldCoverageValue}`);
+                const currentBuildCoverage = fileUtils.findInFile(_defaultJacocoFileName, _jacocoTotalCoverageStart, _jacocoTotalCoverageEnd);
+                core.info(`handle supported currentBuildCoverage type ${currentBuildCoverage}`);
             }
             else {
                 const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;

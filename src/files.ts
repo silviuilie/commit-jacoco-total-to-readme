@@ -10,7 +10,7 @@ export function printFile(fileName: string): void {
 /**
  * finds last occurrence of any coverage badge (as defined by left/right pattern).
  */
-export function findPreviousCoverage(
+export function findInFile(
   fileName: string,
   leftPattern: string,
   rightPattern: string

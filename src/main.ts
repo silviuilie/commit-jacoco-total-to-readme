@@ -68,7 +68,7 @@ export async function run(): Promise<void> {
       // TODO : if type is 'svg', extract the previous value svg file name ([![Coverage](<coverage-svg-file>)] and value (file from aria-label="Coverage: <VALUE>%")
       // TODO : if type is 'text' or 'badge' extract the previous value
 
-      const oldCoverage = fileUtils.findPreviousCoverage(
+      const oldCoverage = fileUtils.findInFile(
         readmeFileName || _defaultReadmeName,
         _readmeTotalCoverageStart,
         _readmeTotalCoverageEnd
@@ -79,12 +79,21 @@ export async function run(): Promise<void> {
         //fileUtils.printFile(`old total : ${oldCoverage}`)
         core.info(`handle supported coverage type ${oldCoverage}`)
 
-        const oldCoverageValue = fileUtils.findPreviousCoverage(
+        const oldCoverageValue = fileUtils.findInFile(
           oldCoverage,
           _badgeSvgTotalCoverageStart,
           _badgeSvgTotalCoverageEnd
         )
         core.info(`handle supported oldCoverageValue type ${oldCoverageValue}`)
+
+        const currentBuildCoverage = fileUtils.findInFile(
+          _defaultJacocoFileName,
+          _jacocoTotalCoverageStart,
+          _jacocoTotalCoverageEnd
+        )
+        core.info(
+          `handle supported currentBuildCoverage type ${currentBuildCoverage}`
+        )
       } else {
         const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`
         const notSupportedOldCoverage = `failed to match old coverage [${oldCoverage}] to supported coverage badge types : ${_supportedTypes}. You have to add a supported coverage badge to your ${readmeFileName} so it can be replaced by this action.${recommendedFix}`

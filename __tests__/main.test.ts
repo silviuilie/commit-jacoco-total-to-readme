@@ -33,7 +33,7 @@ describe('action', () => {
       .spyOn(fileUtils, 'checkExistence')
       .mockImplementation()
     fileUtilsFindPreviousCoverageMock = jest
-      .spyOn(fileUtils, 'findPreviousCoverage')
+      .spyOn(fileUtils, 'findInFile')
       .mockImplementation()
     // setOutputMock = jest.spyOn(core, 'setOutput').mockImplementation()
   })

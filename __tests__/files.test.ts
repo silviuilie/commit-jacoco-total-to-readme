@@ -13,7 +13,7 @@ jest.mock('fs', () => {
 })
 
 // Mock the action's entrypoint
-const findLastMock = jest.spyOn(files, 'findPreviousCoverage')
+const findLastMock = jest.spyOn(files, 'findInFile')
 
 let readFileSyncMock: jest.SpyInstance
 
@@ -45,7 +45,7 @@ describe('test findLast coverage', () => {
       }
     )
 
-    const actualPrevCov = files.findPreviousCoverage(
+    const actualPrevCov = files.findInFile(
       'readme.md',
       '[![Coverage](',
       ')](./doc/badges/coverage.svg)'
