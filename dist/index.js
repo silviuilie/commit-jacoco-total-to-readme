@@ -29191,6 +29191,7 @@ async function run() {
             if (isSupported(oldCoverage)) {
                 //fileUtils.printFile(`old total : ${oldCoverage}`)
                 core.info(`handle supported coverage type ${oldCoverage}`);
+                fileUtils.printFile(oldCoverage);
             }
             else {
                 const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;
