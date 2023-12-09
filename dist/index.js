@@ -29070,7 +29070,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const glob_1 = __importDefault(__nccwpck_require__(1957));
 const fs = __importStar(__nccwpck_require__(7147));
 function printFile(fileName) {
-    const content = fs.readFileSync(fileName, "utf-8");
+    const content = fs.readFileSync(fileName, 'utf-8');
     core.info(`#printFile : ${content}`);
 }
 exports.printFile = printFile;
@@ -29079,7 +29079,7 @@ exports.printFile = printFile;
  */
 function findPreviousCoverage(fileName, leftPattern, rightPattern) {
     core.info(`find coverage for [${fileName}] and patterns L: [${leftPattern}] and R: [${rightPattern}]`);
-    const content = fs.readFileSync(fileName, "utf-8");
+    const content = fs.readFileSync(fileName, 'utf-8');
     const start = content.lastIndexOf(leftPattern);
     const foundCoverage = content.substring(start + leftPattern.length, content.indexOf(rightPattern, start));
     core.info(`foundCoverage.length : [${foundCoverage.length}]`);
@@ -29089,8 +29089,8 @@ function findPreviousCoverage(fileName, leftPattern, rightPattern) {
 exports.findPreviousCoverage = findPreviousCoverage;
 async function checkExistence(pattern) {
     const globOptions = {
-        follow: !((core.getInput("follow_symlinks") || "true").toUpperCase() === "FALSE"),
-        nocase: (core.getInput("ignore_case") || "false").toUpperCase() === "TRUE"
+        follow: !((core.getInput('follow_symlinks') || 'true').toUpperCase() === 'FALSE'),
+        nocase: (core.getInput('ignore_case') || 'false').toUpperCase() === 'TRUE'
     };
     return new Promise((resolve, reject) => {
         (0, glob_1.default)(pattern, globOptions, (err, files) => {
@@ -29157,15 +29157,14 @@ const _defaultMinim = '0.6';
  */
 async function run() {
     function isSupported(oldCoverage) {
-        var supported = false;
-        for (let supportedType of _supportedTypes) {
+        let supported = false;
+        for (const supportedType of _supportedTypes) {
             if (oldCoverage.includes(supportedType)) {
-                console.log('#isSupported returns true');
                 supported = true;
                 break;
             }
         }
-        console.log('#isSupported returns false');
+        console.log(`#isSupported returns ${supported}`);
         return supported;
     }
     try {
@@ -29188,7 +29187,7 @@ async function run() {
             // TODO : if type is 'svg', extract the previous value svg file name ([![Coverage](<coverage-svg-file>)] and value (file from aria-label="Coverage: <VALUE>%")
             // TODO : if type is 'text' or 'badge' extract the previous value
             const oldCoverage = fileUtils.findPreviousCoverage(readmeFileName || _defaultReadmeName, _readmeTotalCoverageStart, _readmeTotalCoverageEnd);
-            core.info('is supported ?');
+            core.info(`#run oldCoverage is ${oldCoverage}`);
             if (isSupported(oldCoverage)) {
                 //fileUtils.printFile(`old total : ${oldCoverage}`)
             }
@@ -29207,7 +29206,7 @@ async function run() {
             core.setFailed(error.message);
     }
     function resolveFile(fileName) {
-        let resolvedName = fileName;
+        const resolvedName = fileName;
         const fileFound = fileUtils.checkExistence(resolvedName);
         if (!fileFound) {
             core.warning(`#run file not found : [${resolvedName}]`);

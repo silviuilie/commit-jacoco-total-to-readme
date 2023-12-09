@@ -70,6 +70,8 @@ export async function run(): Promise<void> {
         _readmeTotalCoverageStart,
         _readmeTotalCoverageEnd
       )
+
+      core.info(`#run oldCoverage is ${oldCoverage}`)
       if (isSupported(oldCoverage)) {
         //fileUtils.printFile(`old total : ${oldCoverage}`)
       } else {
