@@ -74,6 +74,7 @@ export async function run(): Promise<void> {
       core.info(`#run oldCoverage is ${oldCoverage}`)
       if (isSupported(oldCoverage)) {
         //fileUtils.printFile(`old total : ${oldCoverage}`)
+        core.info(`handle supported coverage type ${oldCoverage}`)
       } else {
         const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`
         const notSupportedOldCoverage = `failed to match old coverage [${oldCoverage}] to supported coverage badge types : ${_supportedTypes}. You have to add a supported coverage badge to your ${readmeFileName} so it can be replaced by this action.${recommendedFix}`
