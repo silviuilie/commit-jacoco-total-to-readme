@@ -19,10 +19,10 @@ coverage badge will be 'green' when the total coverage > 'minim' configured valu
 
 javascript github action that implements the following :
 
----
-
 
 <!--
+---
+
 
 
 
