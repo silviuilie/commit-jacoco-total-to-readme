@@ -101,25 +101,26 @@ export async function run(): Promise<void> {
           keyValuePairs.forEach((pair) => {
             const [key, value] = pair.split("=");
             if (key && value) {
-              result[key] = +value.replaceAll('"','');
+              result[key] = +value.replaceAll("\"", "");
             }
           });
 
           return result;
         }
 
-        const jacocoNewCoverage : Record<string, number> = jacocoCoverage(currentBuildCoverage);
+        const jacocoNewCoverage: Record<string, number> = jacocoCoverage(currentBuildCoverage);
         core.info(
           `new jacocoNewCoverage :  ${jacocoNewCoverage.missed}: ${jacocoNewCoverage.covered}`
         );
-        const latestTotal: number = jacocoNewCoverage.missed + jacocoNewCoverage.covered
+        const latestTotal: number = jacocoNewCoverage.missed + jacocoNewCoverage.covered;
 
-        const latestCoverage: string = (jacocoNewCoverage.covered/latestTotal).toPrecision(2)
+        const latestCoverage: string = (jacocoNewCoverage.covered / latestTotal).toPrecision(2);
         core.info(
           `new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`
         );
 
-        fileUtils.replaceInFile(_defaultJacocoFileName,currentBuildCoverage,latestCoverage)
+        fileUtils.replaceInFile(oldCoverage, oldCoverageValue, latestCoverage+"%");
+        fileUtils.printFile(oldCoverage)
 
       } else {
         const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;

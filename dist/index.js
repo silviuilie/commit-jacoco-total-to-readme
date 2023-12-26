@@ -29217,7 +29217,7 @@ async function run() {
                     keyValuePairs.forEach((pair) => {
                         const [key, value] = pair.split("=");
                         if (key && value) {
-                            result[key] = +value.replaceAll('"', '');
+                            result[key] = +value.replaceAll("\"", "");
                         }
                     });
                     return result;
@@ -29227,7 +29227,8 @@ async function run() {
                 const latestTotal = jacocoNewCoverage.missed + jacocoNewCoverage.covered;
                 const latestCoverage = (jacocoNewCoverage.covered / latestTotal).toPrecision(2);
                 core.info(`new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`);
-                fileUtils.replaceInFile(_defaultJacocoFileName, currentBuildCoverage, latestCoverage);
+                fileUtils.replaceInFile(oldCoverage, oldCoverageValue, latestCoverage + "%");
+                fileUtils.printFile(oldCoverage);
             }
             else {
                 const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;
