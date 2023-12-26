@@ -29065,21 +29065,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkExistence = exports.findInFile = exports.printFile = void 0;
+exports.checkExistence = exports.findInFile = exports.replaceInFile = exports.printFile = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const glob_1 = __importDefault(__nccwpck_require__(1957));
 const fs = __importStar(__nccwpck_require__(7147));
 function printFile(fileName) {
-    const content = fs.readFileSync(fileName, 'utf-8');
+    const content = fs.readFileSync(fileName, "utf-8");
     core.info(`#printFile : ${content}`);
 }
 exports.printFile = printFile;
+function replaceInFile(fileName, findPattern, replacePattern) {
+    core.info(`#replaceInFile replace : ${findPattern} with ${replacePattern} in ${fileName}`);
+    fs.readFile(fileName, "utf8", function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        var result = data.replace(`/${findPattern}/g`, replacePattern);
+        fs.writeFile(fileName, result, "utf8", function (err) {
+            if (err)
+                return console.log(err);
+        });
+    });
+}
+exports.replaceInFile = replaceInFile;
 /**
  * finds last occurrence of any coverage badge (as defined by left/right pattern).
  */
 function findInFile(fileName, leftPattern, rightPattern) {
     core.info(`find coverage for [${fileName}] and patterns L: [${leftPattern}] and R: [${rightPattern}]`);
-    const content = fs.readFileSync(fileName, 'utf-8');
+    const content = fs.readFileSync(fileName, "utf-8");
     const start = content.lastIndexOf(leftPattern);
     const foundCoverage = content.substring(start + leftPattern.length, content.indexOf(rightPattern, start));
     core.info(`foundCoverage.length : [${foundCoverage.length}]`);
@@ -29089,8 +29103,8 @@ function findInFile(fileName, leftPattern, rightPattern) {
 exports.findInFile = findInFile;
 async function checkExistence(pattern) {
     const globOptions = {
-        follow: !((core.getInput('follow_symlinks') || 'true').toUpperCase() === 'FALSE'),
-        nocase: (core.getInput('ignore_case') || 'false').toUpperCase() === 'TRUE'
+        follow: !((core.getInput("follow_symlinks") || "true").toUpperCase() === "FALSE"),
+        nocase: (core.getInput("ignore_case") || "false").toUpperCase() === "TRUE"
     };
     return new Promise((resolve, reject) => {
         (0, glob_1.default)(pattern, globOptions, (err, files) => {
@@ -29211,8 +29225,9 @@ async function run() {
                 const jacocoNewCoverage = jacocoCoverage(currentBuildCoverage);
                 core.info(`new jacocoNewCoverage :  ${jacocoNewCoverage.missed}: ${jacocoNewCoverage.covered}`);
                 const latestTotal = jacocoNewCoverage.missed + jacocoNewCoverage.covered;
-                const latestCoverage = (latestTotal / jacocoNewCoverage.covered).toPrecision(2);
+                const latestCoverage = (jacocoNewCoverage.covered / latestTotal).toPrecision(2);
                 core.info(`new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`);
+                fileUtils.replaceInFile(_defaultJacocoFileName, currentBuildCoverage, latestCoverage);
             }
             else {
                 const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;

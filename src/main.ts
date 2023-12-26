@@ -114,10 +114,12 @@ export async function run(): Promise<void> {
         );
         const latestTotal: number = jacocoNewCoverage.missed + jacocoNewCoverage.covered
 
-        const latestCoverage: string = (latestTotal/ jacocoNewCoverage.covered).toPrecision(2)
+        const latestCoverage: string = (jacocoNewCoverage.covered/latestTotal).toPrecision(2)
         core.info(
           `new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`
         );
+
+        fileUtils.replaceInFile(_defaultJacocoFileName,currentBuildCoverage,latestCoverage)
 
       } else {
         const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;
