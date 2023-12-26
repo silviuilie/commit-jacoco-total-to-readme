@@ -29209,7 +29209,10 @@ async function run() {
                     return result;
                 }
                 const jacocoNewCoverage = jacocoCoverage(currentBuildCoverage);
-                core.info(`new jacocoNewCoverage :  ${jacocoNewCoverage}`);
+                Object.keys(jacocoNewCoverage).forEach(key => {
+                    const value = jacocoNewCoverage[key];
+                    core.info(`new jacocoNewCoverage :  ${key}: ${value}`);
+                });
             }
             else {
                 const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;
