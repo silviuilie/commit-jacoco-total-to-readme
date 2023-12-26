@@ -95,26 +95,29 @@ export async function run(): Promise<void> {
           `handle supported currentBuildCoverage type ${currentBuildCoverage}`
         );
 
-        function jacocoCoverage(input: string): Record<string, string> {
-          const result: Record<string, string> = {};
+        function jacocoCoverage(input: string): Record<string, number> {
+          const result: Record<string, number> = {};
           const keyValuePairs = input.split(" ");
           keyValuePairs.forEach((pair) => {
             const [key, value] = pair.split("=");
             if (key && value) {
-              result[key] = value;
+              result[key] = +value.replaceAll('"','');
             }
           });
 
           return result;
         }
 
-        const jacocoNewCoverage : Record<string, string> = jacocoCoverage(currentBuildCoverage);
-        Object.keys(jacocoNewCoverage).forEach(key => {
-          const value = jacocoNewCoverage[key];
-          core.info(
-            `new jacocoNewCoverage :  ${key}: ${value}`
-          );
-        });
+        const jacocoNewCoverage : Record<string, number> = jacocoCoverage(currentBuildCoverage);
+        core.info(
+          `new jacocoNewCoverage :  ${jacocoNewCoverage.missed}: ${jacocoNewCoverage.covered}`
+        );
+        const latestTotal: number = jacocoNewCoverage.missed + jacocoNewCoverage.covered
+
+        const latestCoverage: string = (latestTotal/ jacocoNewCoverage.covered).toPrecision(2)
+        core.info(
+          `new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`
+        );
 
       } else {
         const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;

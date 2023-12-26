@@ -29203,16 +29203,16 @@ async function run() {
                     keyValuePairs.forEach((pair) => {
                         const [key, value] = pair.split("=");
                         if (key && value) {
-                            result[key] = value;
+                            result[key] = +value.replaceAll('"', '');
                         }
                     });
                     return result;
                 }
                 const jacocoNewCoverage = jacocoCoverage(currentBuildCoverage);
-                Object.keys(jacocoNewCoverage).forEach(key => {
-                    const value = jacocoNewCoverage[key];
-                    core.info(`new jacocoNewCoverage :  ${key}: ${value}`);
-                });
+                core.info(`new jacocoNewCoverage :  ${jacocoNewCoverage.missed}: ${jacocoNewCoverage.covered}`);
+                const latestTotal = jacocoNewCoverage.missed + jacocoNewCoverage.covered;
+                const latestCoverage = (latestTotal / jacocoNewCoverage.covered).toPrecision(2);
+                core.info(`new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`);
             }
             else {
                 const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;
