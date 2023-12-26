@@ -19,9 +19,9 @@ coverage badge will be 'green' when the total coverage > 'minim' configured valu
 
 javascript github action that implements the following :
 
+
+<!--
 ---
-
-
 
 
 
@@ -44,7 +44,6 @@ javascript github action that implements the following :
          git add README.md
          git commit -m "coverage update"
          git push 
-
 
 
 
@@ -79,6 +78,14 @@ javascript github action that implements the following :
 
 
 ------
+
+
+-->
+
+
+
+
+
 <!--
 generated with 'use this template' template : 
 
