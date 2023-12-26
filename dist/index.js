@@ -29081,6 +29081,7 @@ function replaceInFile(fileName, findPattern, replacePattern) {
             return console.log(err);
         }
         var result = data.replace(`/${findPattern}/g`, replacePattern);
+        core.info(`replaced : ${result}`);
         fs.writeFile(fileName, result, "utf8", function (err) {
             if (err)
                 return console.log(err);
@@ -29225,7 +29226,7 @@ async function run() {
                 const jacocoNewCoverage = jacocoCoverage(currentBuildCoverage);
                 core.info(`new jacocoNewCoverage :  ${jacocoNewCoverage.missed}: ${jacocoNewCoverage.covered}`);
                 const latestTotal = jacocoNewCoverage.missed + jacocoNewCoverage.covered;
-                const latestCoverage = (jacocoNewCoverage.covered / latestTotal).toPrecision(2);
+                const latestCoverage = ((jacocoNewCoverage.covered / latestTotal) * 100).toPrecision(2);
                 core.info(`new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`);
                 fileUtils.replaceInFile(oldCoverage, oldCoverageValue, latestCoverage + "%");
                 fileUtils.printFile(oldCoverage);
