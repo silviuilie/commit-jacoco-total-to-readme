@@ -29143,17 +29143,17 @@ const fileUtils = __importStar(__nccwpck_require__(7255));
 /*
   total coverage value from jacoco is contained between the following patterns:
  */
-const _jacocoTotalCoverageStart = '</package><counter type="INSTRUCTION"';
-const _jacocoTotalCoverageEnd = '/><counter type="BRANCH"';
-const _readmeTotalCoverageStart = '[![Coverage Status](';
-const _readmeTotalCoverageEnd = ')]';
-const _badgeSvgTotalCoverageStart = '<title>Coverage: '; //51.00%
-const _badgeSvgTotalCoverageEnd = '</title>';
-const _defaultReadmeName = 'readme.md';
-const _defaultJacocoFileName = 'target/site/jacoco/jacoco.xml';
-const _supportedTypes = ['svg', 'text', 'badge'];
-const _defaultType = 'svg';
-const _defaultMinim = '0.6';
+const _jacocoTotalCoverageStart = "</package><counter type=\"INSTRUCTION\"";
+const _jacocoTotalCoverageEnd = "/><counter type=\"BRANCH\"";
+const _readmeTotalCoverageStart = "[![Coverage Status](";
+const _readmeTotalCoverageEnd = ")]";
+const _badgeSvgTotalCoverageStart = "<title>Coverage: "; //51.00%
+const _badgeSvgTotalCoverageEnd = "</title>";
+const _defaultReadmeName = "readme.md";
+const _defaultJacocoFileName = "target/site/jacoco/jacoco.xml";
+const _supportedTypes = ["svg", "text", "badge"];
+const _defaultType = "svg";
+const _defaultMinim = "0.6";
 /**
  * @returns {Promise<void>} Resolves when the action is complete
  */
@@ -29170,10 +29170,10 @@ async function run() {
         return supported;
     }
     try {
-        const readmeFileName = resolveFile(core.getInput('readmeFileName') || _defaultReadmeName);
-        const jacocoFileName = resolveFile(core.getInput('jacocoFileName') || _defaultJacocoFileName);
-        const type = core.getInput('type') || _defaultType;
-        const minim = core.getInput('minim') || _defaultMinim;
+        const readmeFileName = resolveFile(core.getInput("readmeFileName") || _defaultReadmeName);
+        const jacocoFileName = resolveFile(core.getInput("jacocoFileName") || _defaultJacocoFileName);
+        const type = core.getInput("type") || _defaultType;
+        const minim = core.getInput("minim") || _defaultMinim;
         core.info(`#run filename is ${readmeFileName}`);
         core.info(`#run type is ${jacocoFileName}`);
         core.info(`#run type is ${type}`);
@@ -29197,6 +29197,18 @@ async function run() {
                 core.info(`handle supported oldCoverageValue type ${oldCoverageValue}`);
                 const currentBuildCoverage = fileUtils.findInFile(_defaultJacocoFileName, _jacocoTotalCoverageStart, _jacocoTotalCoverageEnd);
                 core.info(`handle supported currentBuildCoverage type ${currentBuildCoverage}`);
+                function jacocoCoverage(input) {
+                    const result = {};
+                    const keyValuePairs = input.split(" ");
+                    keyValuePairs.forEach((pair) => {
+                        const [key, value] = pair.split("=");
+                        if (key && value) {
+                            result[key] = value;
+                        }
+                    });
+                    return result;
+                }
+                const jacocoNewCoverage = jacocoCoverage(currentBuildCoverage);
             }
             else {
                 const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;
