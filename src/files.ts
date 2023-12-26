@@ -18,7 +18,7 @@ export function replaceInFile(
     if (err) {
       return console.log(err);
     }
-    var result = data.replace(`/${findPattern}/g`, replacePattern);
+    var result = data.replace(new RegExp(`${findPattern}`,"g"), replacePattern);
 
     core.info(
       `replaced : ${result}`
