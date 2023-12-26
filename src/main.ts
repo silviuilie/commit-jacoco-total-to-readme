@@ -110,6 +110,9 @@ export async function run(): Promise<void> {
 
         const jacocoNewCoverage : Record<string, string> = jacocoCoverage(currentBuildCoverage);
 
+        core.info(
+          `new jacocoNewCoverage :  ${jacocoNewCoverage}`
+        );
 
       } else {
         const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;
