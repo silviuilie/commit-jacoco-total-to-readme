@@ -17,10 +17,10 @@ TODOs :
 
 coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
 
-javascript github action that implements the following :
-
 
 <!--
+javascript github action that implements the following :
+
 ---
 
 
