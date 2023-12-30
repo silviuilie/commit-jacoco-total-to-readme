@@ -5,6 +5,25 @@
     
 TODOs :
   - commit
+<!-- use github context : 
+
+   event.commits[0].author.email/name
+   event.commits[0].committer.email/name :
+
+      "commits": [
+        {
+          "author": {
+            "email": "silviu.ilie@gmail.com",
+            "name": "silviuilie",
+            "username": "silviuilie"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          
+  -->
   - add parameter, `type` of coverage to commit :
     - `badge` with img.shields.io/badge
     - `svg` badge,
