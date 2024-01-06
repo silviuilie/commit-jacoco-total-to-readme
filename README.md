@@ -24,6 +24,7 @@ TODOs :
           },
           
   -->
+  - add coverage summary ?
   - add parameter, `type` of coverage to commit :
     - `badge` with img.shields.io/badge
     - `svg` badge,
