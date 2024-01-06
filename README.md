@@ -25,6 +25,8 @@ TODOs :
           
   -->
   - add coverage summary ?
+    - modify original coverage (xml/html) summary to MD *or*
+    - export coverage to MD ?   
   - add parameter, `type` of coverage to commit :
     - `badge` with img.shields.io/badge
     - `svg` badge,
