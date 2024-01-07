@@ -52,8 +52,8 @@ export function commit(fileName: string) {
   core.info(`------`)
 
   core.info(`set user.name/user.email`);
-  exec(`git config user.name {userName}`)
-  exec(`git config user.email {userEmail}`)
+  exec('git config user.name ${GITHUB_ACTOR}')
+  exec('git config user.email ${GITHUB_ACTOR}@users.noreply.github.com')
   core.info(`git push ${fileName}`);
   exec(`git add ${fileName}`)
   exec('git commit -m "coverage update"')
