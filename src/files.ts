@@ -16,7 +16,7 @@ export function commit(fileName: string) {
 
   const exec = (cmd: string, args = []) => new Promise((resolve, reject) => {
 
-    console.log(`Started: ${cmd} ${args.join(" ")}`);
+    core.info(`Started: ${cmd} ${args.join(" ")}`);
     const app = spawn(cmd, args, { stdio: "inherit" });
 
     app.on("close", (code: number, signal: string) => {
@@ -46,11 +46,15 @@ export function commit(fileName: string) {
             "username": "web-flow"
           },
    */
+
+  core.info(`set user.name/user.email`);
   exec(`git config user.name {userName}`)
   exec(`git config user.email {userEmail}`)
+  core.info(`git push ${fileName}`);
   exec(`git add ${fileName}`)
   exec('git commit -m "coverage update"')
   exec('git push')
+  core.info(`git push ${fileName} done`);
 
 }
 

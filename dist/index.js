@@ -29081,7 +29081,7 @@ exports.printFile = printFile;
 function commit(fileName) {
     const spawn = (__nccwpck_require__(2081).spawn);
     const exec = (cmd, args = []) => new Promise((resolve, reject) => {
-        console.log(`Started: ${cmd} ${args.join(" ")}`);
+        core.info(`Started: ${cmd} ${args.join(" ")}`);
         const app = spawn(cmd, args, { stdio: "inherit" });
         app.on("close", (code, signal) => {
             if (code !== 0) {
@@ -29110,11 +29110,14 @@ function commit(fileName) {
               "username": "web-flow"
             },
      */
+    core.info(`set user.name/user.email`);
     exec(`git config user.name {userName}`);
     exec(`git config user.email {userEmail}`);
+    core.info(`git push ${fileName}`);
     exec(`git add ${fileName}`);
     exec('git commit -m "coverage update"');
     exec('git push');
+    core.info(`git push ${fileName} done`);
 }
 exports.commit = commit;
 function replace(fileName, findPattern, replacePattern) {
