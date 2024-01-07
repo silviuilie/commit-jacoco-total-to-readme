@@ -29065,7 +29065,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkExistence = exports.findInFile = exports.replaceInFile = exports.printFile = void 0;
+exports.checkExistence = exports.findInFile = exports.replace = exports.commit = exports.printFile = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const glob_1 = __importDefault(__nccwpck_require__(1957));
 const fs = __importStar(__nccwpck_require__(7147));
@@ -29074,7 +29074,50 @@ function printFile(fileName) {
     core.info(`#printFile : ${content}`);
 }
 exports.printFile = printFile;
-function replaceInFile(fileName, findPattern, replacePattern) {
+/**
+ * TODO : +@ readme. see https://github.com/actions-js/push/blob/master/start.js
+ * @param fileName
+ */
+function commit(fileName) {
+    const spawn = (__nccwpck_require__(2081).spawn);
+    const exec = (cmd, args = []) => new Promise((resolve, reject) => {
+        console.log(`Started: ${cmd} ${args.join(" ")}`);
+        const app = spawn(cmd, args, { stdio: "inherit" });
+        app.on("close", (code, signal) => {
+            if (code !== 0) {
+                var err = new Error(`Invalid status code: ${code}`);
+                err.cause = code;
+                return reject(err);
+            }
+            return resolve(code);
+        });
+        app.on("error", reject);
+    });
+    // event.commits[0].author.email/name
+    // event.commits[0].committer.email/name :
+    /*
+  
+        "commits": [
+          {
+            "author": {
+              "email": "silviu.ilie@gmail.com",
+              "name": "silviuilie",
+              "username": "silviuilie"
+            },
+            "committer": {
+              "email": "noreply@github.com",
+              "name": "GitHub",
+              "username": "web-flow"
+            },
+     */
+    exec(`git config user.name {userName}`);
+    exec(`git config user.email {userEmail}`);
+    exec(`git add ${fileName}`);
+    exec('git commit -m "coverage update"');
+    exec('git push');
+}
+exports.commit = commit;
+function replace(fileName, findPattern, replacePattern) {
     core.info(`#replaceInFile replace : ${findPattern} with ${replacePattern} in ${fileName}`);
     fs.readFile(fileName, "utf8", function (err, data) {
         if (err) {
@@ -29088,7 +29131,7 @@ function replaceInFile(fileName, findPattern, replacePattern) {
         });
     });
 }
-exports.replaceInFile = replaceInFile;
+exports.replace = replace;
 /**
  * finds last occurrence of any coverage badge (as defined by left/right pattern).
  */
@@ -29228,8 +29271,9 @@ async function run() {
                 const latestTotal = jacocoNewCoverage.missed + jacocoNewCoverage.covered;
                 const latestCoverage = ((jacocoNewCoverage.covered / latestTotal) * 100).toPrecision(2);
                 core.info(`new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`);
-                fileUtils.replaceInFile(oldCoverage, oldCoverageValue, latestCoverage + "%");
+                fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage + "%");
                 fileUtils.printFile(oldCoverage);
+                fileUtils.commit(oldCoverage);
             }
             else {
                 const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;
@@ -29281,6 +29325,14 @@ module.exports = require("async_hooks");
 
 "use strict";
 module.exports = require("buffer");
+
+/***/ }),
+
+/***/ 2081:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("child_process");
 
 /***/ }),
 

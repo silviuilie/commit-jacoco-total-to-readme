@@ -119,8 +119,9 @@ export async function run(): Promise<void> {
           `new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`
         );
 
-        fileUtils.replaceInFile(oldCoverage, oldCoverageValue, latestCoverage+"%");
+        fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage+"%");
         fileUtils.printFile(oldCoverage)
+        fileUtils.commit(oldCoverage)
 
       } else {
         const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;

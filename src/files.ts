@@ -7,7 +7,54 @@ export function printFile(fileName: string): void {
   core.info(`#printFile : ${content}`);
 }
 
-export function replaceInFile(
+/**
+ * TODO : +@ readme. see https://github.com/actions-js/push/blob/master/start.js
+ * @param fileName
+ */
+export function commit(fileName: string) {
+  const spawn = require("child_process").spawn;
+
+  const exec = (cmd: string, args = []) => new Promise((resolve, reject) => {
+
+    console.log(`Started: ${cmd} ${args.join(" ")}`);
+    const app = spawn(cmd, args, { stdio: "inherit" });
+
+    app.on("close", (code: number, signal: string) => {
+      if (code !== 0) {
+        var err = new Error(`Invalid status code: ${code}`);
+        err.cause = code;
+        return reject(err);
+      }
+      return resolve(code);
+    });
+    app.on("error", reject);
+  });
+  // event.commits[0].author.email/name
+  // event.commits[0].committer.email/name :
+  /*
+
+      "commits": [
+        {
+          "author": {
+            "email": "silviu.ilie@gmail.com",
+            "name": "silviuilie",
+            "username": "silviuilie"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+   */
+  exec(`git config user.name {userName}`)
+  exec(`git config user.email {userEmail}`)
+  exec(`git add ${fileName}`)
+  exec('git commit -m "coverage update"')
+  exec('git push')
+
+}
+
+export function replace(
   fileName: string,
   findPattern: string, replacePattern: string
 ) {
@@ -18,17 +65,17 @@ export function replaceInFile(
     if (err) {
       return console.log(err);
     }
-    var result = data.replace(new RegExp(`${findPattern}`,"g"), replacePattern);
+    var result = data.replace(new RegExp(`${findPattern}`, "g"), replacePattern);
 
     core.info(
       `replaced : ${result}`
-    )
+    );
 
     fs.writeFile(fileName, result, "utf8", function(err) {
       if (err) return console.log(err);
     });
 
-  })
+  });
 }
 
 /**
