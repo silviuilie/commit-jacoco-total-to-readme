@@ -29110,6 +29110,9 @@ function commit(fileName) {
               "username": "web-flow"
             },
      */
+    core.info(`------`);
+    core.info(`test read context ${process.env['context']}`);
+    core.info(`------`);
     core.info(`set user.name/user.email`);
     exec(`git config user.name {userName}`);
     exec(`git config user.email {userEmail}`);
