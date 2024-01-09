@@ -32,9 +32,7 @@ TODOs :
     - `svg` badge,
       - when `svg` extract previous coverage
     - `text` (total percent),
-      
      should default to `svg` or `badge` ?
-    
   - add parameter, `minim` - defaults to 0.6
 
 coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
