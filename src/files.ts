@@ -48,6 +48,7 @@ export function commit(fileName: string) {
    */
 
   core.info(`------`)
+  exec(`../script/push.sh`)
   core.info(`test read context ${process.env['context']}`)
   core.info(`------`)
 
