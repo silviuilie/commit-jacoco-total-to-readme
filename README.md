@@ -1,7 +1,7 @@
 # Commits the jacoco coverage to readme file as badge 
 
-  - add parameter, readme.md `readmeFileName` - defaults to `readme.md`
-  - add parameter, readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
+  - parameter readme.md `readmeFileName` - defaults to `readme.md`
+  - parameter readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
     
 TODOs :
   - commit
