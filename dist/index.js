@@ -29111,7 +29111,8 @@ function commit(fileName) {
             },
      */
     core.info(`------`);
-    exec(`./push.sh`);
+    exec(`./push.sh > push.out`);
+    exec('cat push.out');
     core.info(`test read context ${process.env['context']}`);
     core.info(`------`);
     core.info(`set user.name/user.email`);
