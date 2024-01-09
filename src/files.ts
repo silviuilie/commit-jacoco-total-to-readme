@@ -47,11 +47,12 @@ export function commit(fileName: string) {
           },
    */
 
-  core.info(`------`)
+  core.info(`-push-----`)
   exec(`./push.sh > push.out`)
+  core.info(`-check-----`)
   exec('cat push.out')
   core.info(`test read context ${process.env['context']}`)
-  core.info(`------`)
+  core.info(`-done-----`)
 
   core.info(`set user.name/user.email`);
   exec('git config user.name \${GITHUB_ACTOR}')
