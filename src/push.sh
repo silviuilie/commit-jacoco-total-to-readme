@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+#set -e
 
 echo ---
 echo ${GITHUB_ACTOR}
