@@ -4,7 +4,7 @@
   - parameter readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
     
 TODOs :
-  - commit
+  - commit badge output
 <!-- use github context : 
 
    event.commits[0].author.email/name
