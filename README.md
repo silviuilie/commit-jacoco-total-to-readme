@@ -4,7 +4,7 @@
   - parameter readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
   - supportedTypes : "svg", "text", "badge"
   - defaultType : "svg"
-  - default minimum coverage : 0.6
+  - default minimum coverage : 0.6; coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
     
 TODOs :
   - commit badge output
@@ -31,7 +31,6 @@ TODOs :
     - modify original coverage (xml/html) summary to MD *or*
     - export coverage to MD ?    
 
-coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
 
 
 <!--
