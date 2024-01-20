@@ -4,6 +4,7 @@
   - parameter readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
   - supportedTypes : "svg", "text", "badge"
   - defaultType : "svg"
+  - default minimum coverage : 0.6
     
 TODOs :
   - commit badge output
