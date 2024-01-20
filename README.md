@@ -3,6 +3,7 @@
   - parameter readme.md `readmeFileName` - defaults to `readme.md`
   - parameter readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
   - supportedTypes : "svg", "text", "badge"
+  - defaultType : "svg"
     
 TODOs :
   - commit badge output
