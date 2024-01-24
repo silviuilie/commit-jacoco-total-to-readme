@@ -2,7 +2,7 @@
 
   - parameter readme.md `readmeFileName` - defaults to `readme.md`
   - parameter readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
-  - supportedTypes : "svg", "text", "badge"
+  - supportedTypes : "svg", "text" (markdown?), "badge"
   - defaultType : "svg"
   - default minimum coverage : 0.6; coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
     
