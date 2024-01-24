@@ -7,7 +7,7 @@
   - default minimum coverage : 0.6; coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
     
 TODOs :
-  - commit badge output
+  - commit badge default (if not found)
 <!-- use github context : 
 
    event.commits[0].author.email/name
