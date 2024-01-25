@@ -3,10 +3,11 @@
   - parameter readme.md `readmeFileName` - defaults to `readme.md`
   - parameter readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
   - supportedTypes : `svg`, `text` (markdown?), `badge`  - defaults to `svg`
-  - default minimum coverage : 0.6; coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
+  - default minimum coverage : `0.6`; coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
     
 TODOs :
   - add badge default (if not found - default path : doc/badges/coverage.svg, last coverage %)
+
 <!-- use github context : 
 
    event.commits[0].author.email/name
