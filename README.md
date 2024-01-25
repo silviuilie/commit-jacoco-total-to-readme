@@ -2,9 +2,12 @@
 
   - parameter readme.md `readmeFileName` - defaults to `readme.md`
   - parameter readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
+  - supportedTypes : `svg`, `text` (markdown?), `badge`  - defaults to `svg`
+  - default minimum coverage : `0.6`; coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
     
 TODOs :
-  - commit
+  - add badge default (if not found - default path : doc/badges/coverage.svg, last coverage %)
+
 <!-- use github context : 
 
    event.commits[0].author.email/name
@@ -26,16 +29,8 @@ TODOs :
   -->
   - add coverage summary ?
     - modify original coverage (xml/html) summary to MD *or*
-    - export coverage to MD ?   
-  - add parameter, `type` of coverage to commit :
-    - `badge` with img.shields.io/badge
-    - `svg` badge,
-      - when `svg` extract previous coverage
-    - `text` (total percent),
-     should default to `svg` or `badge` ?
-  - add parameter, `minim` - defaults to 0.6
+    - export coverage to MD ?    
 
-coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
 
 
 <!--
