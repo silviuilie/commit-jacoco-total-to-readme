@@ -29065,7 +29065,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkExistence = exports.findInFile = exports.replace = exports.commit = exports.printFile = void 0;
+exports.checkExistence = exports.createFile = exports.findInFile = exports.replace = exports.commit = exports.printFile = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const glob_1 = __importDefault(__nccwpck_require__(1957));
 const fs = __importStar(__nccwpck_require__(7147));
@@ -29113,16 +29113,16 @@ function commit(fileName) {
     core.info(`-push-----`);
     exec(`./push.sh > push.out`);
     core.info(`-check-----`);
-    exec('cat push.out');
-    core.info(`test read context ${process.env['context']}`);
+    exec("cat push.out");
+    core.info(`test read context ${process.env["context"]}`);
     core.info(`-done-----`);
     core.info(`set user.name/user.email`);
-    exec('git config user.name \${GITHUB_ACTOR}');
-    exec('git config user.email \${GITHUB_ACTOR}@users.noreply.github.com');
+    exec("git config user.name \${GITHUB_ACTOR}");
+    exec("git config user.email \${GITHUB_ACTOR}@users.noreply.github.com");
     core.info(`git push ${fileName}`);
     exec(`git add ${fileName}`);
-    exec('git commit -m "coverage update"');
-    exec('git push');
+    exec("git commit -m \"coverage update\"");
+    exec("git push");
     core.info(`git push ${fileName} done`);
 }
 exports.commit = commit;
@@ -29154,6 +29154,19 @@ function findInFile(fileName, leftPattern, rightPattern) {
     return foundCoverage;
 }
 exports.findInFile = findInFile;
+async function createFile(path, content) {
+    return new Promise((resolve, reject) => {
+        fs.writeFile(path, content, callback => {
+            if (callback) {
+                reject(callback);
+            }
+            else {
+                resolve(true);
+            }
+        });
+    });
+}
+exports.createFile = createFile;
 async function checkExistence(pattern) {
     const globOptions = {
         follow: !((core.getInput("follow_symlinks") || "true").toUpperCase() === "FALSE"),
@@ -29280,6 +29293,7 @@ async function run() {
                 const latestTotal = jacocoNewCoverage.missed + jacocoNewCoverage.covered;
                 const latestCoverage = ((jacocoNewCoverage.covered / latestTotal) * 100).toPrecision(2);
                 core.info(`new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`);
+                core.info(`readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverage} latestCoverage = ${latestCoverage}%`);
                 fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage + "%");
                 fileUtils.printFile(oldCoverage);
                 fileUtils.commit(oldCoverage);

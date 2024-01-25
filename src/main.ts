@@ -119,6 +119,9 @@ export async function run(): Promise<void> {
           `new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`
         );
 
+        core.info(
+          `readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverage} latestCoverage = ${latestCoverage}%`
+        )
         fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage+"%");
         fileUtils.printFile(oldCoverage)
         fileUtils.commit(oldCoverage)
