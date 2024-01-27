@@ -47,21 +47,21 @@ export function commit(fileName: string) {
           },
    */
 
-  core.info(`-push-----`);
-  exec(`./push.sh > push.out`);
-  core.info(`-check-----`);
-  exec("cat push.out");
-  core.info(`test read context ${process.env["context"]}`);
-  core.info(`-done-----`);
+  core.info(`-js-push-----`);
+  exec(`./push.sh`);
+  core.info(`-js-check-----`);
+  // exec("cat push.out");
+  // core.info(`test read context ${process.env["context"]}`);
+  // core.info(`-done-----`);
 
-  core.info(`set user.name/user.email`);
-  exec("git config user.name \${GITHUB_ACTOR}");
-  exec("git config user.email \${GITHUB_ACTOR}@users.noreply.github.com");
-  core.info(`git push ${fileName}`);
-  exec(`git add ${fileName}`);
-  exec("git commit -m \"coverage update\"");
-  exec("git push");
-  core.info(`git push ${fileName} done`);
+  // core.info(`set user.name/user.email`);
+  // exec("git config user.name \${GITHUB_ACTOR}");
+  // exec("git config user.email \${GITHUB_ACTOR}@users.noreply.github.com");
+  // core.info(`git push ${fileName}`);
+  // exec(`git add ${fileName}`);
+  // exec("git commit -m \"coverage update\"");
+  // exec("git push");
+  // core.info(`git push ${fileName} done`);
 
 }
 
@@ -78,16 +78,15 @@ export function replace(
     }
     var result = data.replace(new RegExp(`${findPattern}`, "g"), replacePattern);
 
-    core.info(
-      `replaced : ${result}`
-    );
-    core.info(
-      `done`
-    );
-
     fs.writeFile(fileName, result, "utf8", function(err) {
-      if (err) return core.error(err);
+      if (err) {
+        return core.error(err);
+      } else {
+        core.info("#replaceInFile : new coverage replaced")
+      }
     });
+
+    //createFile(fileName+"2", result);
 
   });
 }
