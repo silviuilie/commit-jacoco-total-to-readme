@@ -13,9 +13,9 @@ export function printFile(fileName: string): void {
  */
 export function commit(fileName: string) {
   const spawn = require("child_process").spawn;
+  const path = require("path");
 
-  const exec = (cmd: string, args = []) => new Promise((resolve, reject) => {
-
+  const exec = (cmd: string, args:string[]=[]) => new Promise((resolve, reject) => {
     core.info(`Started: ${cmd} ${args.join(" ")}`);
     const app = spawn(cmd, args, { stdio: "inherit" });
 
@@ -48,7 +48,11 @@ export function commit(fileName: string) {
    */
 
   core.info(`-js-push-----`);
-  exec(`./push.sh`);
+
+  const main = async () => {
+    await exec('bash', [path.join(__dirname, './push.sh')]);
+  };
+  // exec(`./push.sh`);
   core.info(`-js-check-----`);
   // exec("cat push.out");
   // core.info(`test read context ${process.env["context"]}`);

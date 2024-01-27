@@ -29080,6 +29080,7 @@ exports.printFile = printFile;
  */
 function commit(fileName) {
     const spawn = (__nccwpck_require__(2081).spawn);
+    const path = __nccwpck_require__(1017);
     const exec = (cmd, args = []) => new Promise((resolve, reject) => {
         core.info(`Started: ${cmd} ${args.join(" ")}`);
         const app = spawn(cmd, args, { stdio: "inherit" });
@@ -29111,7 +29112,10 @@ function commit(fileName) {
             },
      */
     core.info(`-js-push-----`);
-    exec(`./push.sh`);
+    const main = async () => {
+        await exec('bash', [__nccwpck_require__.ab + "push.sh"]);
+    };
+    // exec(`./push.sh`);
     core.info(`-js-check-----`);
     // exec("cat push.out");
     // core.info(`test read context ${process.env["context"]}`);
