@@ -29130,13 +29130,14 @@ function replace(fileName, findPattern, replacePattern) {
     core.info(`#replaceInFile replace : ${findPattern} with ${replacePattern} in ${fileName}`);
     fs.readFile(fileName, "utf8", function (err, data) {
         if (err) {
-            return console.log(err);
+            return core.error(err);
         }
         var result = data.replace(new RegExp(`${findPattern}`, "g"), replacePattern);
         core.info(`replaced : ${result}`);
+        core.info(`done`);
         fs.writeFile(fileName, result, "utf8", function (err) {
             if (err)
-                return console.log(err);
+                return core.error(err);
         });
     });
 }
