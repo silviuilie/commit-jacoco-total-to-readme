@@ -7,8 +7,8 @@ import * as fileUtils from "./files";
 const _jacocoTotalCoverageStart = "</package><counter type=\"INSTRUCTION\"";
 const _jacocoTotalCoverageEnd = "/><counter type=\"BRANCH\"";
 
-const _readmeTotalCoverageStart = "[![Coverage Status](";
-const _readmeTotalCoverageEnd = ")]";
+const _readmeTotalCoverageStart = "![Coverage Status](";
+const _readmeTotalCoverageEnd = ")";
 
 const _badgeSvgTotalCoverageStart = "<title>Coverage: "; //51.00%
 const _badgeSvgTotalCoverageEnd = "</title>";

@@ -29225,8 +29225,8 @@ const fileUtils = __importStar(__nccwpck_require__(7255));
  */
 const _jacocoTotalCoverageStart = "</package><counter type=\"INSTRUCTION\"";
 const _jacocoTotalCoverageEnd = "/><counter type=\"BRANCH\"";
-const _readmeTotalCoverageStart = "[![Coverage Status](";
-const _readmeTotalCoverageEnd = ")]";
+const _readmeTotalCoverageStart = "![Coverage Status](";
+const _readmeTotalCoverageEnd = ")";
 const _badgeSvgTotalCoverageStart = "<title>Coverage: "; //51.00%
 const _badgeSvgTotalCoverageEnd = "</title>";
 const _defaultReadmeName = "readme.md";
