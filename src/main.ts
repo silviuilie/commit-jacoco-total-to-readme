@@ -128,6 +128,7 @@ export async function run(): Promise<void> {
         )
         fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage+"%");
         fileUtils.printFile(oldCoverage)
+        fileUtils.printFile(oldCoverage+2)
         fileUtils.commit(oldCoverage)
 
       } else {

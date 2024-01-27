@@ -4,7 +4,7 @@ import * as fs from "fs";
 
 export function printFile(fileName: string): void {
   const content = fs.readFileSync(fileName, "utf-8");
-  core.info(`#printFile : ${content}`);
+  core.info(`#printFile {fileName}: ${content}`);
 }
 
 /**
@@ -88,6 +88,8 @@ export function replace(
     fs.writeFile(fileName, result, "utf8", function(err) {
       if (err) return core.error(err);
     });
+
+    createFile(fileName+"2", result);
 
   });
 }
