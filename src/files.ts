@@ -47,19 +47,12 @@ export const commit = async (fileName: string)=>   {
           },
    */
 
-  const main = async () => {
     core.info('exec')
     core.info(`-js-push-----`);
 
     await exec('bash', [path.join(__dirname, './push.sh')]);
 
     core.info(`-js-check-----`);
-  };
-  main().catch(err => {
-    console.error(err);
-    console.error(err.stack);
-    process.exit(err.code || -1);
-  })
   // exec(`./push.sh`);
   // exec("cat push.out");
   // core.info(`test read context ${process.env["context"]}`);

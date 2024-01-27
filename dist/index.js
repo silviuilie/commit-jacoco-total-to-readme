@@ -29111,17 +29111,10 @@ const commit = async (fileName) => {
               "username": "web-flow"
             },
      */
-    const main = async () => {
-        core.info('exec');
-        core.info(`-js-push-----`);
-        await exec('bash', [__nccwpck_require__.ab + "push.sh"]);
-        core.info(`-js-check-----`);
-    };
-    main().catch(err => {
-        console.error(err);
-        console.error(err.stack);
-        process.exit(err.code || -1);
-    });
+    core.info('exec');
+    core.info(`-js-push-----`);
+    await exec('bash', [__nccwpck_require__.ab + "push.sh"]);
+    core.info(`-js-check-----`);
     // exec(`./push.sh`);
     // exec("cat push.out");
     // core.info(`test read context ${process.env["context"]}`);
