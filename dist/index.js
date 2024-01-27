@@ -29078,7 +29078,7 @@ exports.printFile = printFile;
  * TODO : +@ readme. see https://github.com/actions-js/push/blob/master/start.js
  * @param fileName
  */
-function commit(fileName) {
+const commit = async (fileName) => {
     const spawn = (__nccwpck_require__(2081).spawn);
     const path = __nccwpck_require__(1017);
     const exec = (cmd, args = []) => new Promise((resolve, reject) => {
@@ -29111,12 +29111,18 @@ function commit(fileName) {
               "username": "web-flow"
             },
      */
-    core.info(`-js-push-----`);
     const main = async () => {
+        core.info('exec');
+        core.info(`-js-push-----`);
         await exec('bash', [__nccwpck_require__.ab + "push.sh"]);
+        core.info(`-js-check-----`);
     };
+    main().catch(err => {
+        console.error(err);
+        console.error(err.stack);
+        process.exit(err.code || -1);
+    });
     // exec(`./push.sh`);
-    core.info(`-js-check-----`);
     // exec("cat push.out");
     // core.info(`test read context ${process.env["context"]}`);
     // core.info(`-done-----`);
@@ -29128,7 +29134,7 @@ function commit(fileName) {
     // exec("git commit -m \"coverage update\"");
     // exec("git push");
     // core.info(`git push ${fileName} done`);
-}
+};
 exports.commit = commit;
 function replace(fileName, findPattern, replacePattern) {
     core.info(`#replaceInFile replace : ${findPattern} with ${replacePattern} in ${fileName}`);
@@ -29305,7 +29311,7 @@ async function run() {
                 core.info(`readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverage} latestCoverage = ${latestCoverage}%`);
                 fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage + "%");
                 fileUtils.printFile(oldCoverage);
-                fileUtils.commit(oldCoverage);
+                await fileUtils.commit(oldCoverage);
             }
             else {
                 const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;

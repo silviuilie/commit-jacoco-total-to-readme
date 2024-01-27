@@ -11,7 +11,7 @@ export function printFile(fileName: string): void {
  * TODO : +@ readme. see https://github.com/actions-js/push/blob/master/start.js
  * @param fileName
  */
-export function commit(fileName: string) {
+export const commit = async (fileName: string)=>   {
   const spawn = require("child_process").spawn;
   const path = require("path");
 
@@ -47,13 +47,20 @@ export function commit(fileName: string) {
           },
    */
 
-  core.info(`-js-push-----`);
-
   const main = async () => {
+    core.info('exec')
+    core.info(`-js-push-----`);
+
     await exec('bash', [path.join(__dirname, './push.sh')]);
+
+    core.info(`-js-check-----`);
   };
+  main().catch(err => {
+    console.error(err);
+    console.error(err.stack);
+    process.exit(err.code || -1);
+  })
   // exec(`./push.sh`);
-  core.info(`-js-check-----`);
   // exec("cat push.out");
   // core.info(`test read context ${process.env["context"]}`);
   // core.info(`-done-----`);
