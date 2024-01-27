@@ -114,7 +114,11 @@ export async function run(): Promise<void> {
         );
         const latestTotal: number = jacocoNewCoverage.missed + jacocoNewCoverage.covered;
 
-        const latestCoverage: string = ((jacocoNewCoverage.covered / latestTotal)*100).toPrecision(4);
+        // const latestCoverage: string = ((jacocoNewCoverage.covered / latestTotal)*100).toPrecision(4);
+        const latestCoverage: string = parseFloat(
+                          "" + parseFloat( (jacocoNewCoverage.covered/latestTotal).toFixed(4)) * 100
+                      ).toPrecision(4)
+
         core.info(
           `new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`
         );

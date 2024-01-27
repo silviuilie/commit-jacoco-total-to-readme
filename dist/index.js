@@ -29291,7 +29291,8 @@ async function run() {
                 const jacocoNewCoverage = jacocoCoverage(currentBuildCoverage);
                 core.info(`new jacocoNewCoverage :  ${jacocoNewCoverage.missed}: ${jacocoNewCoverage.covered}`);
                 const latestTotal = jacocoNewCoverage.missed + jacocoNewCoverage.covered;
-                const latestCoverage = ((jacocoNewCoverage.covered / latestTotal) * 100).toPrecision(4);
+                // const latestCoverage: string = ((jacocoNewCoverage.covered / latestTotal)*100).toPrecision(4);
+                const latestCoverage = parseFloat("" + parseFloat((jacocoNewCoverage.covered / latestTotal).toFixed(4)) * 100).toPrecision(4);
                 core.info(`new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`);
                 core.info(`readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverage} latestCoverage = ${latestCoverage}%`);
                 fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage + "%");
