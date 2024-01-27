@@ -89,8 +89,6 @@ export function replace(
       if (err) return core.error(err);
     });
 
-    createFile(fileName+"2", result);
-
   });
 }
 

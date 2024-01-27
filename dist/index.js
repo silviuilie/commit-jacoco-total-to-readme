@@ -29139,7 +29139,6 @@ function replace(fileName, findPattern, replacePattern) {
             if (err)
                 return core.error(err);
         });
-        createFile(fileName + "2", result);
     });
 }
 exports.replace = replace;
@@ -29299,7 +29298,6 @@ async function run() {
                 core.info(`readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverage} latestCoverage = ${latestCoverage}%`);
                 fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage + "%");
                 fileUtils.printFile(oldCoverage);
-                fileUtils.printFile(oldCoverage + 2);
                 fileUtils.commit(oldCoverage);
             }
             else {
