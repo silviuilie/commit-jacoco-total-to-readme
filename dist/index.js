@@ -29065,7 +29065,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkExistence = exports.createFile = exports.findInFile = exports.replace = exports.commit = exports.printFile = void 0;
+exports.checkExistence = exports.createFile = exports.findInFile = exports.replace = exports.push = exports.printFile = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const glob_1 = __importDefault(__nccwpck_require__(1957));
 const fs = __importStar(__nccwpck_require__(7147));
@@ -29078,7 +29078,7 @@ exports.printFile = printFile;
  * TODO : +@ readme. see https://github.com/actions-js/push/blob/master/start.js
  * @param fileName
  */
-const commit = async (fileName) => {
+const push = async (fileName) => {
     const spawn = (__nccwpck_require__(2081).spawn);
     const path = __nccwpck_require__(1017);
     const exec = (cmd, args = []) => new Promise((resolve, reject) => {
@@ -29128,7 +29128,7 @@ const commit = async (fileName) => {
     // exec("git push");
     // core.info(`git push ${fileName} done`);
 };
-exports.commit = commit;
+exports.push = push;
 function replace(fileName, findPattern, replacePattern) {
     core.info(`#replaceInFile replace : ${findPattern} with ${replacePattern} in ${fileName}`);
     fs.readFile(fileName, "utf8", function (err, data) {
@@ -29141,7 +29141,9 @@ function replace(fileName, findPattern, replacePattern) {
                 return core.error(err);
             }
             else {
-                core.info("#replaceInFile : new coverage replaced");
+                core.info("#replaceInFile : new coverage replaced; now push");
+                (0, exports.push)(fileName);
+                core.info("#replaceInFile : new coverage replaced/pushed");
             }
         });
         //createFile(fileName+"2", result);
@@ -29303,8 +29305,8 @@ async function run() {
                 core.info(`new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`);
                 core.info(`readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverage} latestCoverage = ${latestCoverage}%`);
                 fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage + "%");
-                fileUtils.printFile(oldCoverage);
-                await fileUtils.commit(oldCoverage);
+                // fileUtils.printFile(oldCoverage)
+                // await fileUtils.push(oldCoverage)
             }
             else {
                 const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;

@@ -11,7 +11,7 @@ export function printFile(fileName: string): void {
  * TODO : +@ readme. see https://github.com/actions-js/push/blob/master/start.js
  * @param fileName
  */
-export const commit = async (fileName: string)=>   {
+export const push = async (fileName: string)=>   {
   const spawn = require("child_process").spawn;
   const path = require("path");
 
@@ -86,7 +86,9 @@ export function replace(
       if (err) {
         return core.error(err);
       } else {
-        core.info("#replaceInFile : new coverage replaced")
+        core.info("#replaceInFile : new coverage replaced; now push")
+        push(fileName);
+        core.info("#replaceInFile : new coverage replaced/pushed")
       }
     });
 

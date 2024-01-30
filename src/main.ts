@@ -127,8 +127,8 @@ export async function run(): Promise<void> {
           `readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverage} latestCoverage = ${latestCoverage}%`
         )
         fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage+"%");
-        fileUtils.printFile(oldCoverage)
-        await fileUtils.commit(oldCoverage)
+        // fileUtils.printFile(oldCoverage)
+        // await fileUtils.push(oldCoverage)
 
       } else {
         const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;
