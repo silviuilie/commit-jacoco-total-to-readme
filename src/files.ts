@@ -3,7 +3,6 @@ import glob from "glob";
 import * as fs from "fs";
 import path from "path";
 
-const pushFile = path.join(__dirname, "./push.sh");
 
 export function printFile(fileName: string): void {
   const content = fs.readFileSync(fileName, "utf-8");
@@ -92,7 +91,7 @@ export function replace(
       } else {
         core.info("#replace : write done, print and push");
         printFile(fileName);
-        replace(pushFile, "${git-add-file}", "${git-add-file}\n" + fileName, true);
+        replace(path.join(__dirname, "./push.sh"), "${git-add-file}", "${git-add-file}\n" + fileName, true);
         if (commit) {
           core.info("#replace : new coverage replaced; now push");
           push(fileName);

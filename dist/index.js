@@ -29070,7 +29070,6 @@ const core = __importStar(__nccwpck_require__(2186));
 const glob_1 = __importDefault(__nccwpck_require__(1957));
 const fs = __importStar(__nccwpck_require__(7147));
 const path_1 = __importDefault(__nccwpck_require__(1017));
-const pushFile = path_1.default.join(__dirname, "./push.sh");
 function printFile(fileName) {
     const content = fs.readFileSync(fileName, "utf-8");
     core.info(`#printFile ${fileName} : ${content}`);
@@ -29145,7 +29144,7 @@ function replace(fileName, findPattern, replacePattern, commit = false) {
             else {
                 core.info("#replace : write done, print and push");
                 printFile(fileName);
-                replace(pushFile, "${git-add-file}", "${git-add-file}\n" + fileName, true);
+                replace(path_1.default.join(__dirname, "./push.sh"), "${git-add-file}", "${git-add-file}\n" + fileName, true);
                 if (commit) {
                     core.info("#replace : new coverage replaced; now push");
                     (0, exports.push)(fileName);
