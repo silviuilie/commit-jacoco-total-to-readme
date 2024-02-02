@@ -4,7 +4,7 @@ import * as fs from "fs";
 
 export function printFile(fileName: string): void {
   const content = fs.readFileSync(fileName, "utf-8");
-  core.info(`#printFile {fileName}: ${content}`);
+  core.info(`#printFile ${fileName}: ${content}`);
 }
 
 /**

@@ -29071,7 +29071,7 @@ const glob_1 = __importDefault(__nccwpck_require__(1957));
 const fs = __importStar(__nccwpck_require__(7147));
 function printFile(fileName) {
     const content = fs.readFileSync(fileName, "utf-8");
-    core.info(`#printFile {fileName}: ${content}`);
+    core.info(`#printFile ${fileName}: ${content}`);
 }
 exports.printFile = printFile;
 /**
