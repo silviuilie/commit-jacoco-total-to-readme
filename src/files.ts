@@ -1,8 +1,9 @@
 import * as core from "@actions/core";
 import glob from "glob";
 import * as fs from "fs";
+import path from "path";
 
-const pushFile = "./push.sh"
+const pushFile = path.join(__dirname, "./push.sh");
 
 export function printFile(fileName: string): void {
   const content = fs.readFileSync(fileName, "utf-8");
@@ -13,11 +14,11 @@ export function printFile(fileName: string): void {
  * TODO : +@ readme. see https://github.com/actions-js/push/blob/master/start.js
  * @param fileName
  */
-export const push = async (fileName: string)=>   {
+export const push = async (fileName: string) => {
   const spawn = require("child_process").spawn;
   const path = require("path");
 
-  const exec = (cmd: string, args:string[]=[]) => new Promise((resolve, reject) => {
+  const exec = (cmd: string, args: string[] = []) => new Promise((resolve, reject) => {
     core.info(`Started: ${cmd} ${args.join(" ")}`);
     const app = spawn(cmd, args, { stdio: "inherit" });
 
@@ -49,12 +50,12 @@ export const push = async (fileName: string)=>   {
           },
    */
 
-    core.info('exec')
-    core.info(`-js-push-----`);
+  core.info("exec");
+  core.info(`-js-push-----`);
 
-    await exec('bash', [path.join(__dirname, './push.sh')]);
+  await exec("bash", [path.join(__dirname, "./push.sh")]);
 
-    core.info(`-js-check-----`);
+  core.info(`-js-check-----`);
   // exec(`./push.sh`);
   // exec("cat push.out");
   // core.info(`test read context ${process.env["context"]}`);
@@ -69,12 +70,12 @@ export const push = async (fileName: string)=>   {
   // exec("git push");
   // core.info(`git push ${fileName} done`);
 
-}
+};
 
-export function replace (
+export function replace(
   fileName: string,
   findPattern: string, replacePattern: string,
-  commit:boolean = false
+  commit: boolean = false
 ) {
 
   core.info(`#replaceInFile replace : ${findPattern} with ${replacePattern} in ${fileName}`);
@@ -89,13 +90,13 @@ export function replace (
       if (err) {
         return core.error(err);
       } else {
-        core.info("#replace : write done, print and push")
+        core.info("#replace : write done, print and push");
         printFile(fileName);
-        replace(pushFile,"${git-add-file}","${git-add-file}\n"+fileName, true);
+        replace(pushFile, "${git-add-file}", "${git-add-file}\n" + fileName, true);
         if (commit) {
-          core.info("#replace : new coverage replaced; now push")
+          core.info("#replace : new coverage replaced; now push");
           push(fileName);
-          core.info("#replace : new coverage replaced/pushed")
+          core.info("#replace : new coverage replaced/pushed");
         }
       }
     });

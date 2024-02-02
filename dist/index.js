@@ -29069,7 +29069,8 @@ exports.checkExistence = exports.createFile = exports.findInFile = exports.repla
 const core = __importStar(__nccwpck_require__(2186));
 const glob_1 = __importDefault(__nccwpck_require__(1957));
 const fs = __importStar(__nccwpck_require__(7147));
-const pushFile = "./push.sh";
+const path_1 = __importDefault(__nccwpck_require__(1017));
+const pushFile = path_1.default.join(__dirname, "./push.sh");
 function printFile(fileName) {
     const content = fs.readFileSync(fileName, "utf-8");
     core.info(`#printFile ${fileName} : ${content}`);
@@ -29112,9 +29113,9 @@ const push = async (fileName) => {
               "username": "web-flow"
             },
      */
-    core.info('exec');
+    core.info("exec");
     core.info(`-js-push-----`);
-    await exec('bash', [__nccwpck_require__.ab + "push.sh"]);
+    await exec("bash", [__nccwpck_require__.ab + "push.sh"]);
     core.info(`-js-check-----`);
     // exec(`./push.sh`);
     // exec("cat push.out");
