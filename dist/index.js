@@ -29113,6 +29113,7 @@ const push = async (fileName) => {
      */
     core.info("exec");
     core.info(`-js-push-----`);
+    await exec("bash", [__nccwpck_require__.ab + "add.sh"]);
     await exec("bash", [__nccwpck_require__.ab + "push.sh"]);
     core.info(`-js-check-----`);
     // exec(`./push.sh`);
