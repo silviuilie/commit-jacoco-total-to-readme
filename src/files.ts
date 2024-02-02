@@ -13,7 +13,8 @@ export function printFile(fileName: string): void {
  * TODO : +@ readme. see https://github.com/actions-js/push/blob/master/start.js
  * @param fileName
  */
-export const push = async (fileName: string) => {
+
+export const push = async (fileName: string): Promise<void> => {
   const spawn = require("child_process").spawn;
   const path = require("path");
 
@@ -71,6 +72,12 @@ export const push = async (fileName: string) => {
 
 };
 
+function append(fileName: string, content: string, done: () => Promise<void>) {
+  fs.appendFile(fileName, content, () => {
+    done();
+  });
+}
+
 export function replace(
   fileName: string,
   findPattern: string, replacePattern: string,
@@ -91,9 +98,13 @@ export function replace(
       } else {
         core.info("#replace : write done, print and push");
         printFile(fileName);
-        replace(path.join(__dirname, "./push.sh"), "${git-add-file}", "${git-add-file}\n" + fileName, true);
+        append("add.sh", `git add ${fileName}\n`, async () => {
+          push("add.sh")
+        });
+
         if (commit) {
           core.info("#replace : new coverage replaced; now push");
+          push("add.sh");
           push(fileName);
           core.info("#replace : new coverage replaced/pushed");
         }
