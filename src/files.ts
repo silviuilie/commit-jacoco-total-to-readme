@@ -2,7 +2,7 @@ import * as core from "@actions/core";
 import glob from "glob";
 import * as fs from "fs";
 
-const pushFile = "push.sh"
+const pushFile = "./push.sh"
 
 export function printFile(fileName: string): void {
   const content = fs.readFileSync(fileName, "utf-8");
