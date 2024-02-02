@@ -29113,8 +29113,11 @@ const push = async (fileName) => {
      */
     core.info("exec");
     core.info(`-js-push-----`);
-    await exec("bash", [__nccwpck_require__.ab + "add.sh"]);
-    await exec("bash", [__nccwpck_require__.ab + "push.sh"]);
+    exec("bash", [__nccwpck_require__.ab + "add.sh"]).then((result) => {
+        exec("bash", [__nccwpck_require__.ab + "push.sh"]);
+    }, (error) => {
+        core.error(error);
+    });
     core.info(`-js-check-----`);
     // exec(`./push.sh`);
     // exec("cat push.out");

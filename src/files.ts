@@ -2,6 +2,7 @@ import * as core from "@actions/core";
 import glob from "glob";
 import * as fs from "fs";
 import path from "path";
+import { error } from "@actions/core";
 
 
 export function printFile(fileName: string): void {
@@ -53,8 +54,14 @@ export const push = async (fileName: string): Promise<void> => {
   core.info("exec");
   core.info(`-js-push-----`);
 
-  await exec("bash", [path.join(__dirname, "./add.sh")]);
-  await exec("bash", [path.join(__dirname, "./push.sh")]);
+  exec("bash", [path.join(__dirname, "./add.sh")]).then(
+    (result) => {
+      exec("bash", [path.join(__dirname, "./push.sh")]);
+    },
+    (error) => {
+      core.error(error);
+    }
+  );
 
   core.info(`-js-check-----`);
   // exec(`./push.sh`);
@@ -100,7 +107,7 @@ export function replace(
         core.info("#replace : write done, print and push");
         printFile(fileName);
         append("add.sh", `git add ${fileName}\n`, async () => {
-          push("add.sh")
+          push("add.sh");
         });
 
         if (commit) {
