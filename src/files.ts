@@ -4,7 +4,7 @@ import * as fs from "fs";
 
 export function printFile(fileName: string): void {
   const content = fs.readFileSync(fileName, "utf-8");
-  core.info(`#printFile ${fileName}: ${content}`);
+  core.info(`#printFile ${fileName} : ${content}`);
 }
 
 /**
@@ -86,10 +86,11 @@ export function replace(
       if (err) {
         return core.error(err);
       } else {
+        core.info("#replace : write done, print and push")
         printFile(fileName);
-        core.info("#replaceInFile : new coverage replaced; now push")
+        core.info("#replace : new coverage replaced; now push")
         push(fileName);
-        core.info("#replaceInFile : new coverage replaced/pushed")
+        core.info("#replace : new coverage replaced/pushed")
       }
     });
 

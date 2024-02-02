@@ -29071,7 +29071,7 @@ const glob_1 = __importDefault(__nccwpck_require__(1957));
 const fs = __importStar(__nccwpck_require__(7147));
 function printFile(fileName) {
     const content = fs.readFileSync(fileName, "utf-8");
-    core.info(`#printFile ${fileName}: ${content}`);
+    core.info(`#printFile ${fileName} : ${content}`);
 }
 exports.printFile = printFile;
 /**
@@ -29141,10 +29141,11 @@ function replace(fileName, findPattern, replacePattern) {
                 return core.error(err);
             }
             else {
+                core.info("#replace : write done, print and push");
                 printFile(fileName);
-                core.info("#replaceInFile : new coverage replaced; now push");
+                core.info("#replace : new coverage replaced; now push");
                 (0, exports.push)(fileName);
-                core.info("#replaceInFile : new coverage replaced/pushed");
+                core.info("#replace : new coverage replaced/pushed");
             }
         });
         //createFile(fileName+"2", result);
