@@ -29069,6 +29069,7 @@ exports.checkExistence = exports.createFile = exports.findInFile = exports.repla
 const core = __importStar(__nccwpck_require__(2186));
 const glob_1 = __importDefault(__nccwpck_require__(1957));
 const fs = __importStar(__nccwpck_require__(7147));
+const pushFile = "push.sh";
 function printFile(fileName) {
     const content = fs.readFileSync(fileName, "utf-8");
     core.info(`#printFile ${fileName} : ${content}`);
@@ -29129,7 +29130,7 @@ const push = async (fileName) => {
     // core.info(`git push ${fileName} done`);
 };
 exports.push = push;
-function replace(fileName, findPattern, replacePattern) {
+function replace(fileName, findPattern, replacePattern, commit = false) {
     core.info(`#replaceInFile replace : ${findPattern} with ${replacePattern} in ${fileName}`);
     fs.readFile(fileName, "utf8", function (err, data) {
         if (err) {
@@ -29143,9 +29144,12 @@ function replace(fileName, findPattern, replacePattern) {
             else {
                 core.info("#replace : write done, print and push");
                 printFile(fileName);
-                core.info("#replace : new coverage replaced; now push");
-                (0, exports.push)(fileName);
-                core.info("#replace : new coverage replaced/pushed");
+                replace(pushFile, "${git-add-file}", "${git-add-file}\n" + fileName, true);
+                if (commit) {
+                    core.info("#replace : new coverage replaced; now push");
+                    (0, exports.push)(fileName);
+                    core.info("#replace : new coverage replaced/pushed");
+                }
             }
         });
         //createFile(fileName+"2", result);

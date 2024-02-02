@@ -2,6 +2,8 @@ import * as core from "@actions/core";
 import glob from "glob";
 import * as fs from "fs";
 
+const pushFile = "push.sh"
+
 export function printFile(fileName: string): void {
   const content = fs.readFileSync(fileName, "utf-8");
   core.info(`#printFile ${fileName} : ${content}`);
@@ -69,9 +71,10 @@ export const push = async (fileName: string)=>   {
 
 }
 
-export function replace(
+export function replace (
   fileName: string,
-  findPattern: string, replacePattern: string
+  findPattern: string, replacePattern: string,
+  commit:boolean = false
 ) {
 
   core.info(`#replaceInFile replace : ${findPattern} with ${replacePattern} in ${fileName}`);
@@ -88,9 +91,12 @@ export function replace(
       } else {
         core.info("#replace : write done, print and push")
         printFile(fileName);
-        core.info("#replace : new coverage replaced; now push")
-        push(fileName);
-        core.info("#replace : new coverage replaced/pushed")
+        replace(pushFile,"${git-add-file}","${git-add-file}\n"+fileName, true);
+        if (commit) {
+          core.info("#replace : new coverage replaced; now push")
+          push(fileName);
+          core.info("#replace : new coverage replaced/pushed")
+        }
       }
     });
 
