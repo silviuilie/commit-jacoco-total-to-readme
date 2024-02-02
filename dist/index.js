@@ -29141,6 +29141,7 @@ function replace(fileName, findPattern, replacePattern) {
                 return core.error(err);
             }
             else {
+                printFile(fileName);
                 core.info("#replaceInFile : new coverage replaced; now push");
                 (0, exports.push)(fileName);
                 core.info("#replaceInFile : new coverage replaced/pushed");

@@ -86,6 +86,7 @@ export function replace(
       if (err) {
         return core.error(err);
       } else {
+        printFile(fileName);
         core.info("#replaceInFile : new coverage replaced; now push")
         push(fileName);
         core.info("#replaceInFile : new coverage replaced/pushed")
