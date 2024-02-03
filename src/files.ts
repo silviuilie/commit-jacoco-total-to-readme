@@ -55,7 +55,7 @@ export const push = async (fileName: string): Promise<void> => {
   core.info("exec");
   core.info(`-js-push-----`);
   core.info(`-add file-----[`);
-  printFile("./add.sh")
+  // printFile("./add.sh")
   core.info(`]-add file-----`);
 
 
