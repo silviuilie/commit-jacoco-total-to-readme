@@ -29315,7 +29315,9 @@ async function run() {
                 core.info(`new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`);
                 core.info(`readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverage} latestCoverage = ${latestCoverage}%`);
                 fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage + "%");
-                fileUtils.push();
+                fileUtils.push().then(() => {
+                    core.info("push complete");
+                }, () => { });
                 // fileUtils.printFile(oldCoverage)
                 // await fileUtils.push(oldCoverage)
             }
