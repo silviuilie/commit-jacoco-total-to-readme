@@ -60,14 +60,7 @@ export const push = async (fileName: string): Promise<void> => {
 
 
 
-  exec("bash", [path.join(__dirname, "./add.sh")]).then(
-    (result) => {
-      exec("bash", [path.join(__dirname, "./push.sh")]);
-    },
-    (error) => {
-      core.error(error);
-    }
-  );
+  exec("bash", [path.join(__dirname, "./push.sh")]);
 
   core.info(`-js-check-----`);
   // exec(`./push.sh`);
