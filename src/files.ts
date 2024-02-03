@@ -112,16 +112,16 @@ export function replace(
       } else {
         core.info("#replace : write done, print and push");
         printFile(fileName);
-        append("add.sh", `git add ${fileName}\n`, async () => {
-          push("add.sh");
-        });
+        // append("add.sh", `git add ${fileName}\n`, async () => {
+        //   push("add.sh");
+        // });
 
-        if (commit) {
+        // if (commit) {
           core.info("#replace : new coverage replaced; now push");
-          push("add.sh");
+          // push("add.sh");
           push(fileName);
           core.info("#replace : new coverage replaced/pushed");
-        }
+        // }
       }
     });
 

@@ -29156,15 +29156,15 @@ function replace(fileName, findPattern, replacePattern, commit = false) {
             else {
                 core.info("#replace : write done, print and push");
                 printFile(fileName);
-                append("add.sh", `git add ${fileName}\n`, async () => {
-                    (0, exports.push)("add.sh");
-                });
-                if (commit) {
-                    core.info("#replace : new coverage replaced; now push");
-                    (0, exports.push)("add.sh");
-                    (0, exports.push)(fileName);
-                    core.info("#replace : new coverage replaced/pushed");
-                }
+                // append("add.sh", `git add ${fileName}\n`, async () => {
+                //   push("add.sh");
+                // });
+                // if (commit) {
+                core.info("#replace : new coverage replaced; now push");
+                // push("add.sh");
+                (0, exports.push)(fileName);
+                core.info("#replace : new coverage replaced/pushed");
+                // }
             }
         });
         //createFile(fileName+"2", result);
