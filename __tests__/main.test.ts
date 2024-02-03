@@ -30,7 +30,7 @@ describe('action', () => {
     getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
     // setFailedMock = jest.spyOn(core, 'setFailed').mockImplementation()
     checkFileExistenceMock = jest
-      .spyOn(fileUtils, 'checkExistence')
+      .spyOn(fileUtils, 'exists')
       .mockImplementation()
     fileUtilsFindPreviousCoverageMock = jest
       .spyOn(fileUtils, 'findInFile')

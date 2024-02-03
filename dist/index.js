@@ -29065,7 +29065,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkExistence = exports.createFile = exports.findInFile = exports.replace = exports.push = exports.printFile = void 0;
+exports.exists = exports.createFile = exports.findInFile = exports.replace = exports.push = exports.printFile = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const glob_1 = __importDefault(__nccwpck_require__(1957));
 const fs = __importStar(__nccwpck_require__(7147));
@@ -29078,7 +29078,7 @@ exports.printFile = printFile;
  * TODO : +@ readme. see https://github.com/actions-js/push/blob/master/start.js
  * @param fileName
  */
-const push = async (fileName) => {
+const push = async () => {
     const spawn = (__nccwpck_require__(2081).spawn);
     const path = __nccwpck_require__(1017);
     const exec = (cmd, args = []) => new Promise((resolve, reject) => {
@@ -29090,7 +29090,6 @@ const push = async (fileName) => {
                 err.cause = code;
                 return reject(err);
             }
-            core.info(`(!)exec ${cmd} done`);
             return resolve(code);
         });
         app.on("error", reject);
@@ -29113,12 +29112,12 @@ const push = async (fileName) => {
             },
      */
     core.info("exec");
-    core.info(`-js-push-----`);
-    core.info(`-add file-----[`);
-    // printFile("./add.sh")
-    core.info(`]-add file-----`);
-    exec("bash", [__nccwpck_require__.ab + "push.sh"]);
-    core.info(`-js-check-----`);
+    core.info(`-js-push-----[`);
+    // core.info(`-add file-----[`);
+    // printFile("./add.sh");
+    // core.info(`]-add file-----`);
+    await exec("bash", [__nccwpck_require__.ab + "push.sh"]);
+    core.info(`]-js-push-----`);
     // exec(`./push.sh`);
     // exec("cat push.out");
     // core.info(`test read context ${process.env["context"]}`);
@@ -29152,15 +29151,9 @@ function replace(fileName, findPattern, replacePattern, commit = false) {
             else {
                 core.info("#replace : write done, print and push");
                 printFile(fileName);
-                // append("add.sh", `git add ${fileName}\n`, async () => {
-                //   push("add.sh");
-                // });
-                // if (commit) {
                 core.info("#replace : new coverage replaced; now push");
-                // push("add.sh");
-                (0, exports.push)(fileName);
+                // push(fileName);
                 core.info("#replace : new coverage replaced/pushed");
-                // }
             }
         });
         //createFile(fileName+"2", result);
@@ -29193,7 +29186,7 @@ async function createFile(path, content) {
     });
 }
 exports.createFile = createFile;
-async function checkExistence(pattern) {
+async function exists(pattern) {
     const globOptions = {
         follow: !((core.getInput("follow_symlinks") || "true").toUpperCase() === "FALSE"),
         nocase: (core.getInput("ignore_case") || "false").toUpperCase() === "TRUE"
@@ -29209,7 +29202,7 @@ async function checkExistence(pattern) {
         });
     });
 }
-exports.checkExistence = checkExistence;
+exports.exists = exists;
 
 
 /***/ }),
@@ -29284,7 +29277,7 @@ async function run() {
         core.info(`#run type is ${jacocoFileName}`);
         core.info(`#run type is ${type}`);
         core.info(`#run minimum is ${minim}`);
-        const fileFound = await fileUtils.checkExistence(readmeFileName);
+        const fileFound = await fileUtils.exists(readmeFileName);
         core.info(`#run file ${readmeFileName} found : ${fileFound}`);
         if (!fileFound) {
             core.setFailed(`required coverage report target file not found : ${fileFound}`);
@@ -29322,6 +29315,7 @@ async function run() {
                 core.info(`new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`);
                 core.info(`readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverage} latestCoverage = ${latestCoverage}%`);
                 fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage + "%");
+                fileUtils.push();
                 // fileUtils.printFile(oldCoverage)
                 // await fileUtils.push(oldCoverage)
             }
@@ -29341,7 +29335,7 @@ async function run() {
     }
     function resolveFile(fileName) {
         const resolvedName = fileName;
-        const fileFound = fileUtils.checkExistence(resolvedName);
+        const fileFound = fileUtils.exists(resolvedName);
         if (!fileFound) {
             core.warning(`#run file not found : [${resolvedName}]`);
             core.setFailed(`required file not found : ${resolvedName}`);

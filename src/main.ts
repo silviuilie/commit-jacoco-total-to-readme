@@ -52,7 +52,7 @@ export async function run(): Promise<void> {
     core.info(`#run type is ${type}`);
     core.info(`#run minimum is ${minim}`);
 
-    const fileFound = await fileUtils.checkExistence(readmeFileName);
+    const fileFound = await fileUtils.exists(readmeFileName);
     core.info(`#run file ${readmeFileName} found : ${fileFound}`);
 
     if (!fileFound) {
@@ -127,6 +127,7 @@ export async function run(): Promise<void> {
           `readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverage} latestCoverage = ${latestCoverage}%`
         )
         fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage+"%");
+        fileUtils.push();
         // fileUtils.printFile(oldCoverage)
         // await fileUtils.push(oldCoverage)
 
@@ -145,7 +146,7 @@ export async function run(): Promise<void> {
 
   function resolveFile(fileName: string): string {
     const resolvedName = fileName;
-    const fileFound = fileUtils.checkExistence(resolvedName);
+    const fileFound = fileUtils.exists(resolvedName);
     if (!fileFound) {
       core.warning(`#run file not found : [${resolvedName}]`);
       core.setFailed(`required file not found : ${resolvedName}`);

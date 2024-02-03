@@ -15,7 +15,7 @@ export function printFile(fileName: string): void {
  * @param fileName
  */
 
-export const push = async (fileName: string): Promise<void> => {
+export const push = async (): Promise<void> => {
   const spawn = require("child_process").spawn;
   const path = require("path");
 
@@ -29,7 +29,7 @@ export const push = async (fileName: string): Promise<void> => {
         err.cause = code;
         return reject(err);
       }
-      core.info(`(!)exec ${cmd} done`)
+
       return resolve(code);
     });
     app.on("error", reject);
@@ -53,16 +53,15 @@ export const push = async (fileName: string): Promise<void> => {
    */
 
   core.info("exec");
-  core.info(`-js-push-----`);
-  core.info(`-add file-----[`);
-  // printFile("./add.sh")
-  core.info(`]-add file-----`);
+  core.info(`-js-push-----[`);
+  // core.info(`-add file-----[`);
+  // printFile("./add.sh");
+  // core.info(`]-add file-----`);
 
 
+  await exec("bash", [path.join(__dirname, "./push.sh")]);
 
-  exec("bash", [path.join(__dirname, "./push.sh")]);
-
-  core.info(`-js-check-----`);
+  core.info(`]-js-push-----`);
   // exec(`./push.sh`);
   // exec("cat push.out");
   // core.info(`test read context ${process.env["context"]}`);
@@ -105,16 +104,9 @@ export function replace(
       } else {
         core.info("#replace : write done, print and push");
         printFile(fileName);
-        // append("add.sh", `git add ${fileName}\n`, async () => {
-        //   push("add.sh");
-        // });
-
-        // if (commit) {
-          core.info("#replace : new coverage replaced; now push");
-          // push("add.sh");
-          push(fileName);
-          core.info("#replace : new coverage replaced/pushed");
-        // }
+        core.info("#replace : new coverage replaced; now push");
+        // push(fileName);
+        core.info("#replace : new coverage replaced/pushed");
       }
     });
 
@@ -160,7 +152,7 @@ export async function createFile(path: string, content: string): Promise<boolean
   });
 }
 
-export async function checkExistence(pattern: string): Promise<boolean> {
+export async function exists(pattern: string): Promise<boolean> {
   const globOptions = {
     follow: !(
       (core.getInput("follow_symlinks") || "true").toUpperCase() === "FALSE"
