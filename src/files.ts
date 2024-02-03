@@ -29,6 +29,7 @@ export const push = async (fileName: string): Promise<void> => {
         err.cause = code;
         return reject(err);
       }
+      core.info(`(!)exec ${cmd} done`)
       return resolve(code);
     });
     app.on("error", reject);

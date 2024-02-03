@@ -29090,6 +29090,7 @@ const push = async (fileName) => {
                 err.cause = code;
                 return reject(err);
             }
+            core.info(`(!)exec ${cmd} done`);
             return resolve(code);
         });
         app.on("error", reject);
