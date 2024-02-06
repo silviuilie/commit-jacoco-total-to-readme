@@ -7,7 +7,7 @@
   - svg/badge should have same threshold for coverage style (green/yellow/red)
     
 TODOs :
-  - add badge default (if not found - default path : doc/badges/coverage.svg, last coverage %)
+  - add badge default (if not found - default path : doc/badges/coverage.svg, last coverage %) ?
 
 <!-- use github context : 
 
