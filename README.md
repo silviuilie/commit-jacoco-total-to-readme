@@ -17,7 +17,14 @@
 
 or 
 
-$${\color{green}00.00 \%}$$
+$${\color{green}00.00 }$$
+
+or 
+
+
+```html
+   <span color="red">00.00%</span>
+```
 
     
 TODOs :
