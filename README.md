@@ -16,11 +16,8 @@
 ```
 
 or 
-$${\color{red}Welcome \space \color{lightblue}To \space \color{orange}Stackoverflow}$$
-
-$${\color{red}Red}$$	 
-$${\color{green}Green}$$	 
-$${\color{yellow}Light}$$
+$${\color{red} \space 00.00% \space}$$
+ 
     
 TODOs :
   - add badge default (if not found - default path : doc/badges/coverage.svg, last coverage %) ?
