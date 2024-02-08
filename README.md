@@ -10,11 +10,9 @@
       - badge green:url/yellow:url/red:url (defaults)
       - text : coverage :00.00%
 ```diff
-- text in red
-+ text in green
+- 00.00% 
++ 99.00%
 ! text in orange
-# text in gray
-@@ text in purple (and bold)@@
 ```
     
 TODOs :
