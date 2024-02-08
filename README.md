@@ -16,10 +16,11 @@
 ```
 
 or 
+$${\color{red}Welcome \space \color{lightblue}To \space \color{orange}Stackoverflow}$$
 
-$${\color{red}Red}$$	$${\color{red}Red}$$
-$${\color{green}Green}$$	$${\color{green}Green}$$
-$${\color{yellow}Light \space Green}$$
+$${\color{red}Red}$$	 
+$${\color{green}Green}$$	 
+$${\color{yellow}Light}$$
     
 TODOs :
   - add badge default (if not found - default path : doc/badges/coverage.svg, last coverage %) ?
