@@ -16,8 +16,9 @@
 ```
 
 or 
-$${\color{red} \space 00.00% \space}$$
- 
+
+$${\color{green}00.00}$$
+
     
 TODOs :
   - add badge default (if not found - default path : doc/badges/coverage.svg, last coverage %) ?
