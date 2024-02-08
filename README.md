@@ -14,6 +14,12 @@
 + 99.00%
 ! text in orange
 ```
+
+or 
+
+$${\color{red}Red}$$	$${\color{red}Red}$$
+$${\color{green}Green}$$	$${\color{green}Green}$$
+$${\color{yellow}Light \space Green}$$
     
 TODOs :
   - add badge default (if not found - default path : doc/badges/coverage.svg, last coverage %) ?
