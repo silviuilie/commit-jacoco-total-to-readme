@@ -22,8 +22,8 @@ $${\color{green}00.00 }$$
 or 
 
 
-```html
-   <span color="red">00.00%</span>
+```js
+<span color="red">00.00%</span>
 ```
 
     
