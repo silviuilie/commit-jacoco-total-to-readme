@@ -8,7 +8,7 @@
       - default minimum coverage : `0.6`; coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
       svg : green/yellow/red
       - badge green:url/yellow:url/red:url (defaults)
-      - text : coverage :00.00%
+      - text : coverage : 
 ```diff
 - 00.00% 
 + 99.00%
