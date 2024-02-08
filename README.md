@@ -17,11 +17,11 @@
 
 or 
 
-$${\color{green}00.00 }$$
+$${\color{red}00.00 }$$
  
 or
 
-${\textsf{\color{red}00.00}}$
+${\textsf{\color{red}00.00} \%}$
     
 TODOs :
   - add badge default (if not found - default path : doc/badges/coverage.svg, last coverage %) ?
