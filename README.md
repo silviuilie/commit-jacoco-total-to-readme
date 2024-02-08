@@ -5,10 +5,11 @@
   - parameter readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
   - supportedTypes : `svg`, `text` (markdown?), `badge`  - defaults to `svg`, text, or shields.io badge 
   - svg/badge should have same threshold for coverage style (green/yellow/red)
-  -   default minimum coverage : `0.6`; coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
-    -- svg : green/yellow/red
-    -- badge green:url/yellow:url/red:url (defaults)
-    -- text : coverage :00.00%     
+      - default minimum coverage : `0.6`; coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
+      svg : green/yellow/red
+      - badge green:url/yellow:url/red:url (defaults)
+      - text : coverage :00.00%     <span style="color:blue">some *blue* text</span>.
+
     
 TODOs :
   - add badge default (if not found - default path : doc/badges/coverage.svg, last coverage %) ?
