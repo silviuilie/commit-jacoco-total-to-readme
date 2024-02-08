@@ -23,7 +23,7 @@ or
 
 
 ```js
-<span color="red">00.00%</span>
+00.00%
 ```
 
     
