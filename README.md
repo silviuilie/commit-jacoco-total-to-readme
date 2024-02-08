@@ -16,10 +16,7 @@
 ```
 
 or 
-
-$${\color{red}00.00 }$$
  
-or
 
 coverage : ${\textsf{\color{red}00.00}}$ %
     
