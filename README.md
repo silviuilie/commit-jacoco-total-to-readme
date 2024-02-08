@@ -17,7 +17,7 @@
 
 or 
 
-$${\color{green}00.00%}$$
+$${\color{green}00.00\%}$$
 
     
 TODOs :
