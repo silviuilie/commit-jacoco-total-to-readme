@@ -29246,6 +29246,18 @@ const _jacocoTotalCoverageStart = "</package><counter type=\"INSTRUCTION\"";
 const _jacocoTotalCoverageEnd = "/><counter type=\"BRANCH\"";
 const _readmeTotalCoverageStart = "![Coverage Status](";
 const _readmeTotalCoverageEnd = ")";
+const badgeCfg = {
+    type: "badge",
+    placeHolderSearch: [_readmeTotalCoverageStart, _readmeTotalCoverageEnd]
+};
+const svgCfg = {
+    type: "svg",
+    placeHolderSearch: [_readmeTotalCoverageStart, _readmeTotalCoverageEnd]
+};
+const textCfg = {
+    type: "text",
+    placeHolderSearch: ["coverage : \\[", "\\]"] //coverage : \[ ${\textsf{\color{red}00.00}}$ % \]
+};
 const _badgeSvgTotalCoverageStart = "<title>Coverage: "; //51.00%
 const _badgeSvgTotalCoverageEnd = "</title>";
 const _defaultReadmeName = "readme.md";
@@ -29253,6 +29265,10 @@ const _defaultJacocoFileName = "target/site/jacoco/jacoco.xml";
 const _supportedTypes = ["svg", "text", "badge"];
 const _defaultType = "svg";
 const _defaultMinim = "0.6";
+const defaultCoverage = {
+    red: "ff0000",
+    green: "00ff00",
+};
 /**
  * @returns {Promise<void>} Resolves when the action is complete
  */
@@ -29314,6 +29330,7 @@ async function run() {
                 const latestCoverage = parseFloat("" + parseFloat((jacocoNewCoverage.covered / latestTotal).toFixed(4)) * 100).toPrecision(4);
                 core.info(`new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`);
                 core.info(`readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverage} latestCoverage = ${latestCoverage}%`);
+                fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage + "%");
                 fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage + "%");
                 fileUtils.push().then(() => {
                     core.info("push complete");

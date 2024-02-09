@@ -10,6 +10,26 @@ const _jacocoTotalCoverageEnd = "/><counter type=\"BRANCH\"";
 const _readmeTotalCoverageStart = "![Coverage Status](";
 const _readmeTotalCoverageEnd = ")";
 
+interface BadgeConfiguration {
+  type: string;
+  placeHolderSearch: string[];
+}
+
+const badgeCfg: BadgeConfiguration = {
+  type: "badge",
+  placeHolderSearch:[_readmeTotalCoverageStart, _readmeTotalCoverageEnd]
+}
+
+const svgCfg: BadgeConfiguration = {
+  type: "svg",
+  placeHolderSearch:[_readmeTotalCoverageStart, _readmeTotalCoverageEnd]
+}
+
+const textCfg: BadgeConfiguration = {
+  type: "text",
+  placeHolderSearch:["coverage : \\[", "\\]"] //coverage : \[ ${\textsf{\color{red}00.00}}$ % \]
+}
+
 const _badgeSvgTotalCoverageStart = "<title>Coverage: "; //51.00%
 const _badgeSvgTotalCoverageEnd = "</title>";
 
@@ -18,6 +38,10 @@ const _defaultJacocoFileName = "target/site/jacoco/jacoco.xml";
 const _supportedTypes = ["svg", "text", "badge"];
 const _defaultType = "svg";
 const _defaultMinim = "0.6";
+const defaultCoverage = {
+  red: "ff0000",
+  green: "00ff00",
+}
 
 /**
  * @returns {Promise<void>} Resolves when the action is complete
@@ -126,6 +150,7 @@ export async function run(): Promise<void> {
         core.info(
           `readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverage} latestCoverage = ${latestCoverage}%`
         )
+        fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage+"%");
         fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage+"%");
         fileUtils.push().then(()=>{
           core.info("push complete")
