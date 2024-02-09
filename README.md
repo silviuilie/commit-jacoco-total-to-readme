@@ -15,11 +15,7 @@
 ! text in orange
 ```
 
-or 
-
-```diff
-- 00.00% 
-```
+or  
 
 
 coverage : ${\textsf{\color{red}00.00}}$ %
