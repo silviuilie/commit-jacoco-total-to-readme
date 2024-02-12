@@ -1,4 +1,11 @@
 
+ 
+why  
+=
+
+display last build coverage in the readme file (as svg badge, badge.io or just text).
+
+
 # Commits the jacoco coverage to readme file as badge 
 
   - parameter readme.md `readmeFileName` - defaults to `readme.md`
