@@ -10,38 +10,42 @@ const _jacocoTotalCoverageEnd = "/><counter type=\"BRANCH\"";
 const _readmeTotalCoverageStart = "![Coverage Status](";
 const _readmeTotalCoverageEnd = ")";
 
+
+const _supportedTypes = ["svg", "text", "badge"];
+
 interface BadgeConfiguration {
   type: string;
   placeHolderSearch: string[];
 }
 
-const badgeCfg: BadgeConfiguration = {
-  type: "badge",
-  placeHolderSearch:[_readmeTotalCoverageStart, _readmeTotalCoverageEnd]
-}
+const badgeCfg: BadgeConfiguration[] = [
+  {
+    type: "badge",
+    placeHolderSearch: [_readmeTotalCoverageStart, _readmeTotalCoverageEnd]
+  },
+  {
+    type: "svg",
+    placeHolderSearch: [_readmeTotalCoverageStart, _readmeTotalCoverageEnd]
+  },
+  {
+    type: "text",
+    placeHolderSearch: ["coverage : \\[", "\\]"] //coverage : \[ ${\textsf{\color{red}00.00}}$ % \]
+  }
+];
 
-const svgCfg: BadgeConfiguration = {
-  type: "svg",
-  placeHolderSearch:[_readmeTotalCoverageStart, _readmeTotalCoverageEnd]
-}
 
-const textCfg: BadgeConfiguration = {
-  type: "text",
-  placeHolderSearch:["coverage : \\[", "\\]"] //coverage : \[ ${\textsf{\color{red}00.00}}$ % \]
-}
 
 const _badgeSvgTotalCoverageStart = "<title>Coverage: "; //51.00%
 const _badgeSvgTotalCoverageEnd = "</title>";
 
 const _defaultReadmeName = "readme.md";
 const _defaultJacocoFileName = "target/site/jacoco/jacoco.xml";
-const _supportedTypes = ["svg", "text", "badge"];
 const _defaultType = "svg";
 const _defaultMinim = "0.6";
 const defaultCoverage = {
   red: "ff0000",
-  green: "00ff00",
-}
+  green: "00ff00"
+};
 
 /**
  * @returns {Promise<void>} Resolves when the action is complete
@@ -55,7 +59,6 @@ export async function run(): Promise<void> {
         break;
       }
     }
-    console.log(`#isSupported returns ${supported}`);
     return supported;
   }
 
@@ -63,18 +66,18 @@ export async function run(): Promise<void> {
     const readmeFileName: string = resolveFile(
       core.getInput("readmeFileName") || _defaultReadmeName
     );
+    core.info(`#run readmeFileName is ${readmeFileName}`);
 
     const jacocoFileName: string = resolveFile(
       core.getInput("jacocoFileName") || _defaultJacocoFileName
     );
+    core.info(`#run jacocoFileName is ${jacocoFileName}`);
 
     const type: string = core.getInput("type") || _defaultType;
-    const minim: string = core.getInput("minim") || _defaultMinim;
-
-    core.info(`#run filename is ${readmeFileName}`);
-    core.info(`#run type is ${jacocoFileName}`);
     core.info(`#run type is ${type}`);
-    core.info(`#run minimum is ${minim}`);
+
+    const minimCoverage: string = core.getInput("minim") || _defaultMinim;
+    core.info(`#run minimum Coverage is ${minimCoverage}`);
 
     const fileFound = await fileUtils.exists(readmeFileName);
     core.info(`#run file ${readmeFileName} found : ${fileFound}`);
@@ -140,8 +143,8 @@ export async function run(): Promise<void> {
 
         // const latestCoverage: string = ((jacocoNewCoverage.covered / latestTotal)*100).toPrecision(4);
         const latestCoverage: string = parseFloat(
-                          "" + parseFloat( (jacocoNewCoverage.covered/latestTotal).toFixed(4)) * 100
-                      ).toPrecision(4)
+          "" + parseFloat((jacocoNewCoverage.covered / latestTotal).toFixed(4)) * 100
+        ).toPrecision(4);
 
         core.info(
           `new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`
@@ -149,12 +152,13 @@ export async function run(): Promise<void> {
 
         core.info(
           `readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverage} latestCoverage = ${latestCoverage}%`
-        )
-        fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage+"%");
-        fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage+"%");
-        fileUtils.push().then(()=>{
-          core.info("push complete")
-        },()=>{});
+        );
+        fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage + "%");
+        fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage + "%");
+        fileUtils.push().then(() => {
+          core.info("push complete");
+        }, () => {
+        });
         // fileUtils.printFile(oldCoverage)
         // await fileUtils.push(oldCoverage)
 
