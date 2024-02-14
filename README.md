@@ -15,6 +15,7 @@ display last build jacoco coverage in the readme file (as svg badge, badge.io or
 
 TODOs
 ===
+  - txt support
   - add defaults for first run (append the readme ?, default svg)
   - svg/badge should have same threshold for coverage style (green/yellow/red)
       - default minimum coverage : `0.6`; coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
