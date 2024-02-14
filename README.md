@@ -8,9 +8,14 @@ display last build jacoco coverage in the readme file (as svg badge, badge.io or
 
 # Commits the jacoco coverage to readme file as badge 
 
+
   - parameter readme.md `readmeFileName` - defaults to `readme.md`
   - parameter readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
   - supportedTypes : `svg`, `text` (markdown?), `badge`  - defaults to `svg`, text, or shields.io badge 
+
+TODOs
+===
+  - add defaults for first run
   - svg/badge should have same threshold for coverage style (green/yellow/red)
       - default minimum coverage : `0.6`; coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
       svg : green/yellow/red
