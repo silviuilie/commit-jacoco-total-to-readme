@@ -11,7 +11,7 @@ purpose
 display last build jacoco coverage in the readme file (as svg file, badgen.net, shields.io etc or just text).
 
 
-# Commits the jacoco coverage to readme file as badge(text or ) or text   
+# Commits the jacoco coverage to readme file 
 
 
   - parameter readme.md `readmeFileName` - defaults to `readme.md`
