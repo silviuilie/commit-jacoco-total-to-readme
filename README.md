@@ -8,10 +8,10 @@
 purpose  
 =
 
-display last build jacoco coverage in the readme file (as svg badge, badge.io or just text).
+display last build jacoco coverage in the readme file (as svg file, badgen.net, shields.io etc or just text).
 
 
-# Commits the jacoco coverage to readme file as badge 
+# Commits the jacoco coverage to readme file as badge(text or ) or text   
 
 
   - parameter readme.md `readmeFileName` - defaults to `readme.md`
