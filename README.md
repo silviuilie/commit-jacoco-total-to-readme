@@ -10,8 +10,12 @@ purpose
 
 display last build jacoco coverage in the readme file (as svg file, badgen.net, shields.io etc or just text).
 
+ 
+if used
+=
 
-# Commits the jacoco coverage to readme file 
+
+commits the latest svg doc/badges/coverage.svg file or covergate text value (or badge) in the readme file 
 
 
   - parameter readme.md `readmeFileName` - defaults to `readme.md`
