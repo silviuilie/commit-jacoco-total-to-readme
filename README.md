@@ -8,7 +8,7 @@
 purpose  
 =
 
-display build jacoco coverage in the readme file (as svg file, badgen.net, shields.io etc or just text). jacoco xml report is required.
+display build jacoco coverage (xml report needed) in the readme file (as svg file, badgen.net, shields.io etc or just text). 
 
  
 if used
