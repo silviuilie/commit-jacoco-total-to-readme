@@ -152,17 +152,20 @@ export async function run(): Promise<void> {
         ).toPrecision(4);
 
         core.info(
-          `new jacocoNewCoverage total lines vs covered latestCoverageRatio :  ${latestCoverageRatio}`
-        );
-        core.info(
           `new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`
         );
 
         var badgeColor = defaultCoverageColor.red;
         if (latestCoverageRatio > parseFloat(_defaultMinim)) {
+          core.info(
+            `yellow ${latestCoverageRatio} > ${parseFloat(_defaultMinim)}`
+          );
           badgeColor = defaultCoverageColor.yellow;
         } else if (latestCoverageRatio > parseFloat(_defaultGreenMinim)) {
           badgeColor = defaultCoverageColor.green;
+          core.info(
+            `green ${latestCoverageRatio} > ${parseFloat(_defaultGreenMinim)}`
+          );
         }
         core.info(
           `badgeColor = ${badgeColor}`
