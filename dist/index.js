@@ -29336,12 +29336,12 @@ async function run() {
                 const latestCoverage = parseFloat("" + latestCoverageRatio * 100).toPrecision(4);
                 core.info(`new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`);
                 var badgeColor = defaultCoverageColor.red;
-                if (latestCoverageRatio > parseFloat(_defaultMinim)) {
+                if (latestCoverageRatio > parseFloat(_defaultGreenMinim)) {
                     core.info(`yellow ${latestCoverageRatio} > ${parseFloat(_defaultMinim)}`);
-                    badgeColor = defaultCoverageColor.yellow;
-                }
-                else if (latestCoverageRatio > parseFloat(_defaultGreenMinim)) {
                     badgeColor = defaultCoverageColor.green;
+                }
+                else if (latestCoverageRatio > parseFloat(_defaultMinim)) {
+                    badgeColor = defaultCoverageColor.yellow;
                     core.info(`green ${latestCoverageRatio} > ${parseFloat(_defaultGreenMinim)}`);
                 }
                 core.info(`badgeColor = ${badgeColor}`);
