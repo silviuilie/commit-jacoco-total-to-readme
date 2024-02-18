@@ -9,6 +9,8 @@ const _jacocoTotalCoverageEnd = "/><counter type=\"BRANCH\"";
 
 const _readmeTotalCoverageStart = "![Coverage Status](";
 const _readmeTotalCoverageEnd = ")";
+const _greenCov='\n' +
+  '<svg xmlns="http://www.w3.org/2000/svg" width="103" height="20" role="img" aria-label="coverage: 100%"><linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="r"><rect width="103" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#r)"><rect width="61" height="20" fill="#555"/><rect x="61" width="42" height="20" fill="#4c1"/><rect width="103" height="20" fill="url(#s)"/></g><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110"><text aria-hidden="true" x="315" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="510">coverage</text><text x="315" y="140" transform="scale(.1)" fill="#fff" textLength="510">coverage</text><text aria-hidden="true" x="810" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="315">100%</text><text x="810" y="140" transform="scale(.1)" fill="#fff" textLength="315">100%</text></g></svg>';
 
 
 const _supportedTypes = ["svg", "text", "badge"];
@@ -42,9 +44,11 @@ const _defaultReadmeName = "readme.md";
 const _defaultJacocoFileName = "target/site/jacoco/jacoco.xml";
 const _defaultType = "svg";
 const _defaultMinim = "0.6";
-const defaultCoverage = {
-  red: "ff0000",
-  green: "00ff00"
+const _defaultGreenMinim = "0.8";
+const defaultCoverageColor = {
+  yellow: "dfb317",
+  red: "e05d44",
+  green: "4c1"
 };
 
 /**
@@ -142,18 +146,28 @@ export async function run(): Promise<void> {
         const latestTotal: number = jacocoNewCoverage.missed + jacocoNewCoverage.covered;
 
         // const latestCoverage: string = ((jacocoNewCoverage.covered / latestTotal)*100).toPrecision(4);
+        const latestCoverageRatio = parseFloat((jacocoNewCoverage.covered / latestTotal).toFixed(4));
         const latestCoverage: string = parseFloat(
-          "" + parseFloat((jacocoNewCoverage.covered / latestTotal).toFixed(4)) * 100
+          "" + latestCoverageRatio * 100
         ).toPrecision(4);
 
         core.info(
           `new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`
         );
 
+        var badgeColor = defaultCoverageColor.red;
+        if (latestCoverageRatio > parseFloat(_defaultMinim)) {
+          badgeColor = defaultCoverageColor.yellow;
+        } else if (latestCoverageRatio > parseFloat(_defaultGreenMinim)) {
+          badgeColor = defaultCoverageColor.green;
+        }
+        core.info(
+          `badgeColor = ${badgeColor}`
+        );
+
         core.info(
           `readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverage} latestCoverage = ${latestCoverage}%`
         );
-        fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage + "%");
         fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage + "%");
         fileUtils.push().then(() => {
           core.info("push complete");
