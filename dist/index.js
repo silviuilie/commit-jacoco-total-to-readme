@@ -29334,6 +29334,7 @@ async function run() {
                 // const latestCoverage: string = ((jacocoNewCoverage.covered / latestTotal)*100).toPrecision(4);
                 const latestCoverageRatio = parseFloat((jacocoNewCoverage.covered / latestTotal).toFixed(4));
                 const latestCoverage = parseFloat("" + latestCoverageRatio * 100).toPrecision(4);
+                core.info(`new jacocoNewCoverage total lines vs covered latestCoverageRatio :  ${latestCoverageRatio}`);
                 core.info(`new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`);
                 var badgeColor = defaultCoverageColor.red;
                 if (latestCoverageRatio > parseFloat(_defaultMinim)) {

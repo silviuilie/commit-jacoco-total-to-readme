@@ -152,6 +152,9 @@ export async function run(): Promise<void> {
         ).toPrecision(4);
 
         core.info(
+          `new jacocoNewCoverage total lines vs covered latestCoverageRatio :  ${latestCoverageRatio}`
+        );
+        core.info(
           `new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`
         );
 
