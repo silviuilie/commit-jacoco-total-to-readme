@@ -1,14 +1,14 @@
-<!--
-
- related :
-    python : https://github.com/cicirello/jacoco-badge-generator?tab=readme-ov-file (badge samples)
-
--->
+ 
  
 purpose  
 =
 
 display build jacoco coverage (xml report needed) in the readme file (as svg file, badgen.net, shields.io etc or just text). 
+
+related
+==
+ python : 
+     python : https://github.com/cicirello/jacoco-badge-generator?tab=readme-ov-file (badge samples)
 
  
 if used
