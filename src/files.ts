@@ -135,7 +135,7 @@ export function findInFile(
   );
 
   core.info(`foundCoverage.length : [${foundCoverage.length}]`);
-  core.info(`foundCoverage : [${foundCoverage}]`);
+  core.info(`e : [${foundCoverage}]`);
 
   return foundCoverage;
 }
