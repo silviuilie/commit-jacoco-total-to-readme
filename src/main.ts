@@ -158,13 +158,13 @@ export async function run(): Promise<void> {
         var badgeColor = defaultCoverageColor.red;
         if (latestCoverageRatio > parseFloat(_defaultGreenMinim)) {
           core.info(
-            `green ${latestCoverageRatio} > ${parseFloat(_defaultMinim)}`
+            `green ${latestCoverageRatio} > ${parseFloat(_defaultGreenMinim)}`
           );
           badgeColor = defaultCoverageColor.green;
         } else if (latestCoverageRatio > parseFloat(_defaultMinim)) {
           badgeColor = defaultCoverageColor.yellow;
           core.info(
-            `yellow ${latestCoverageRatio} > ${parseFloat(_defaultGreenMinim)}`
+            `yellow ${latestCoverageRatio} > ${parseFloat(_defaultMinim)}`
           );
         }
         core.info(
