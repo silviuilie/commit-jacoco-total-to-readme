@@ -10,7 +10,7 @@ const _jacocoTotalCoverageEnd = "/><counter type=\"BRANCH\"";
 const _readmeTotalCoverageStart = "![Coverage Status](";
 const _readmeTotalCoverageEnd = ")";
 const _svgTemplate=
-  '<svg xmlns="http://www.w3.org/2000/svg" width="103" height="20" role="img" aria-label="coverage: 100%"><linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="r"><rect width="103" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#r)"><rect width="61" height="20" fill="#555"/><rect x="61" width="42" height="20" fill="${badgeColor}"/><rect width="103" height="20" fill="url(#s)"/></g><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110"><text aria-hidden="true" x="315" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="510">coverage</text><text x="315" y="140" transform="scale(.1)" fill="#fff" textLength="510">coverage</text><text aria-hidden="true" x="810" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="315">100%</text><text x="810" y="140" transform="scale(.1)" fill="#fff" textLength="315">100%</text></g></svg>';
+  '<svg xmlns="http://www.w3.org/2000/svg" width="103" height="20" role="img" aria-label="coverage: 100%"><linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="r"><rect width="103" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#r)"><rect width="61" height="20" fill="#555"/><rect x="61" width="42" height="20" fill="${badgeColor}"/><rect width="103" height="20" fill="url(#s)"/></g><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110"><text aria-hidden="true" x="315" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="510">coverage</text><text x="315" y="140" transform="scale(.1)" fill="#fff" textLength="510">coverage</text><text aria-hidden="true" x="810" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="315">${badgeCoverage}</text><text x="810" y="140" transform="scale(.1)" fill="#fff" textLength="315">${badgeCoverage}</text></g></svg>';
 
 
 const _supportedTypes = ["svg", "text", "badge"];
@@ -44,7 +44,7 @@ const _defaultReadmeName = "readme.md";
 const _defaultJacocoFileName = "target/site/jacoco/jacoco.xml";
 const _defaultType = "svg";
 const _defaultMinim = "0.6";
-const _defaultGreenMinim = "0.8";
+const _defaultGreenMinim = "0.7";
 const defaultCoverageColor = {
   yellow: "#dfb317",
   red: "#e05d44",
@@ -168,10 +168,9 @@ export async function run(): Promise<void> {
           );
         }
         core.info(
-          `badgeColor a= ${_svgTemplate}`
-        );
-        core.info(
-          `badgeColor b= ` + _svgTemplate.replace('${badgeColor}',badgeColor)
+          `svg replaced : ` + _svgTemplate
+                                .replace('${badgeColor}',badgeColor)
+                                .replace('${badgeCoverage}',`${latestCoverage}%`)
         );
 
         core.info(
