@@ -46,9 +46,9 @@ const _defaultType = "svg";
 const _defaultMinim = "0.6";
 const _defaultGreenMinim = "0.8";
 const defaultCoverageColor = {
-  yellow: "dfb317",
-  red: "e05d44",
-  green: "4c1"
+  yellow: "#dfb317",
+  red: "#e05d44",
+  green: "#4c1"
 };
 
 /**
