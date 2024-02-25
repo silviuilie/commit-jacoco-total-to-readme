@@ -169,8 +169,8 @@ export async function run(): Promise<void> {
         }
         core.info(
           `svg replaced : ` + _svgTemplate
-                                .replace('${badgeColor}',badgeColor)
-                                .replace('${badgeCoverage}',`${latestCoverage}%`)
+                                .replace(new RegExp('${badgeColor}', "g"),badgeColor)
+                                .replace(new RegExp('${badgeCoverage}', "g"),latestCoverage+'%')
         );
 
         core.info(

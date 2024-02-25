@@ -29344,8 +29344,8 @@ async function run() {
                     core.info(`yellow ${latestCoverageRatio} > ${parseFloat(_defaultMinim)}`);
                 }
                 core.info(`svg replaced : ` + _svgTemplate
-                    .replace('${badgeColor}', badgeColor)
-                    .replace('${badgeCoverage}', `${latestCoverage}%`));
+                    .replace(new RegExp('${badgeColor}', "g"), badgeColor)
+                    .replace(new RegExp('${badgeCoverage}', "g"), latestCoverage + '%'));
                 core.info(`readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverage} latestCoverage = ${latestCoverage}%`);
                 fileUtils.replace(oldCoverage, oldCoverageValue, latestCoverage + "%");
                 fileUtils.push().then(() => {
