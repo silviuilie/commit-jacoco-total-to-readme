@@ -15,7 +15,7 @@ if used
 =
 
 
-commits (using `${GITHUB_ACTOR}`) the latest svg doc/badges/coverage.svg file or covergate text value (or badge) in the readme file 
+commits (as `${GITHUB_ACTOR}`) the latest svg doc/badges/coverage.svg file or covergate text value (or badge) in the readme file 
 
 
   - parameter readme.md `readmeFileName` - defaults to `readme.md`
