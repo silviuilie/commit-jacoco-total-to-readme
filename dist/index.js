@@ -29262,6 +29262,10 @@ const badgeCfg = [
         placeHolderSearch: ["coverage : \\[", "\\]"] //coverage : \[ ${\textsf{\color{red}00.00}}$ % \]
     }
 ];
+const badgeConfigurations = new Map();
+badgeCfg.forEach(config => {
+    badgeConfigurations.set(config.type, config);
+});
 const _badgeSvgTotalCoverageStart = "<title>Coverage: "; //51.00%
 const _badgeSvgTotalCoverageEnd = "</title>";
 const _defaultReadmeName = "readme.md";
@@ -29274,9 +29278,6 @@ const defaultCoverageColor = {
     red: "#e05d44",
     green: "#4c1"
 };
-/**
- * @returns {Promise<void>} Resolves when the action is complete
- */
 async function run() {
     function isSupported(oldCoverage) {
         let supported = false;
@@ -29290,29 +29291,28 @@ async function run() {
     }
     try {
         const readmeFileName = resolveFile(core.getInput("readmeFileName") || _defaultReadmeName);
-        core.info(`#run readmeFileName is ${readmeFileName}`);
+        core.debug(`#run readmeFileName is ${readmeFileName}`);
         const jacocoFileName = resolveFile(core.getInput("jacocoFileName") || _defaultJacocoFileName);
-        core.info(`#run jacocoFileName is ${jacocoFileName}`);
+        core.debug(`#run jacocoFileName is ${jacocoFileName}`);
         const type = core.getInput("type") || _defaultType;
-        core.info(`#run type is ${type}`);
+        core.debug(`#run type is ${type}`);
         const minimCoverage = core.getInput("minim") || _defaultMinim;
-        core.info(`#run minimum Coverage is ${minimCoverage}`);
+        core.debug(`#run minimum coverage is ${minimCoverage}`);
         const fileFound = await fileUtils.exists(readmeFileName);
-        core.info(`#run file ${readmeFileName} found : ${fileFound}`);
+        core.debug(`#run file ${readmeFileName} found : ${fileFound}`);
         if (!fileFound) {
             core.setFailed(`required coverage report target file not found : ${fileFound}`);
             core.warning(`#run file not found : ${readmeFileName} using ${_defaultReadmeName}`);
         }
         else {
-            core.info(`#run read file ${readmeFileName}`);
-            // TODO : if type is 'svg', extract the previous value svg file name ([![Coverage](<coverage-svg-file>)] and value (file from aria-label="Coverage: <VALUE>%")
+            core.debug(`#run read file ${readmeFileName}`);
             // TODO : if type is 'text' or 'badge' extract the previous value
-            const oldCoverage = fileUtils.findInFile(readmeFileName || _defaultReadmeName, _readmeTotalCoverageStart, _readmeTotalCoverageEnd);
-            core.info(`#run oldCoverage is ${oldCoverage}`);
-            if (isSupported(oldCoverage)) {
+            const oldCoverageSource = fileUtils.findInFile(readmeFileName || _defaultReadmeName, _readmeTotalCoverageStart, _readmeTotalCoverageEnd);
+            core.debug(`#run oldCoverageSource is ${oldCoverageSource}`);
+            if (isSupported(oldCoverageSource)) {
                 //fileUtils.printFile(`old total : ${oldCoverage}`)
-                core.info(`handle supported coverage type ${oldCoverage}`);
-                const oldCoverageValue = fileUtils.findInFile(oldCoverage, _badgeSvgTotalCoverageStart, _badgeSvgTotalCoverageEnd);
+                core.info(`#run handle supported coverage type ${oldCoverageSource}`);
+                const oldCoverageValue = fileUtils.findInFile(oldCoverageSource, _badgeSvgTotalCoverageStart, _badgeSvgTotalCoverageEnd);
                 core.info(`handle supported oldCoverageValue type ${oldCoverageValue}`);
                 const currentBuildCoverage = fileUtils.findInFile(_defaultJacocoFileName, _jacocoTotalCoverageStart, _jacocoTotalCoverageEnd);
                 core.info(`handle supported currentBuildCoverage type ${currentBuildCoverage}`);
@@ -29347,7 +29347,7 @@ async function run() {
                     .replace(new RegExp('{badgeColor}', "g"), badgeColor)
                     .replace(new RegExp('{badgeCoverage}', "g"), latestCoverage + '%');
                 core.info(`svg replaced : ` + newCovFile);
-                fileUtils.createFile(oldCoverage, newCovFile);
+                fileUtils.createFile(oldCoverageSource, newCovFile);
                 if (false) {}
                 fileUtils.push().then(() => {
                     core.info("push complete");
@@ -29358,7 +29358,7 @@ async function run() {
             }
             else {
                 const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;
-                const notSupportedOldCoverage = `failed to match old coverage [${oldCoverage}] to supported coverage badge types : ${_supportedTypes}. You have to add a supported coverage badge to your ${readmeFileName} so it can be replaced by this action.${recommendedFix}`;
+                const notSupportedOldCoverage = `failed to match old coverage [${oldCoverageSource}] to supported coverage badge types : ${_supportedTypes}. You have to add a supported coverage badge to your ${readmeFileName} so it can be replaced by this action.${recommendedFix}`;
                 core.warning(notSupportedOldCoverage);
                 core.error(notSupportedOldCoverage);
             }
