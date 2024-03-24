@@ -24,7 +24,8 @@ commits (as `${GITHUB_ACTOR}`) the latest svg doc/badges/coverage.svg file or co
   - _defaultGreenMinim 0.7 - green/_defaultMinim - yellow/less - red 
 
 TODOs
-===
+=== 
+  - clean config
   - txt,badge support (update readme/commit), svg (update svg readme/commit)
   - commit coverage to wiki ?
       - extract md (separate action?) ?
