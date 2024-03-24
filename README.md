@@ -25,12 +25,12 @@ commits (as `${GITHUB_ACTOR}`) the latest svg doc/badges/coverage.svg file or co
 
 TODOs
 === 
+  - add defaults for first run (append the readme ?, default svg)
   - clean config
   - txt,badge support (update readme/commit), svg (update svg readme/commit)
   - commit coverage to wiki ?
       - extract md (separate action?) ?
       - jacoco-md report ? (https://github.com/silviuilie/jacoco-md-ReportTask)
-  - add defaults for first run (append the readme ?, default svg)
   - svg/badge should have same threshold for coverage style (green/yellow/red)
       - default minimum coverage : `0.6`; coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
       svg : green/yellow/red
