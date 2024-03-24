@@ -56,19 +56,18 @@ const defaultCoverageColor = {
   green: "#4c1"
 };
 
-export async function run(): Promise<void> {
-
-  function isSupported(oldCoverage: string): boolean {
-    let supported = false;
-    for (const supportedType of _supportedTypes) {
-      if (oldCoverage.includes(supportedType)) {
-        supported = true;
-        break;
-      }
+function isSupported(oldCoverage: string): boolean {
+  let supported = false;
+  for (const supportedType of _supportedTypes) {
+    if (oldCoverage.includes(supportedType)) {
+      supported = true;
+      break;
     }
-    return supported;
   }
+  return supported;
+}
 
+export async function run(): Promise<void> {
   try {
     const readmeFileName: string = resolveFile(
       core.getInput("readmeFileName") || _defaultReadmeName
@@ -118,7 +117,7 @@ export async function run(): Promise<void> {
           _badgeSvgTotalCoverageStart,
           _badgeSvgTotalCoverageEnd
         );
-        core.info(`handle supported oldCoverageValue type ${oldCoverageValue}`);
+        core.info(`#run handle supported oldCoverageValue type ${oldCoverageValue}`);
 
         const currentBuildCoverage = fileUtils.findInFile(
           _defaultJacocoFileName,
@@ -126,7 +125,7 @@ export async function run(): Promise<void> {
           _jacocoTotalCoverageEnd
         );
         core.info(
-          `handle supported currentBuildCoverage type ${currentBuildCoverage}`
+          `#run  handle supported currentBuildCoverage type ${currentBuildCoverage}`
         );
 
         function jacocoCoverage(input: string): Record<string, number> {
@@ -144,7 +143,7 @@ export async function run(): Promise<void> {
 
         const jacocoNewCoverage: Record<string, number> = jacocoCoverage(currentBuildCoverage);
         core.info(
-          `new jacocoNewCoverage :  ${jacocoNewCoverage.missed}: ${jacocoNewCoverage.covered}`
+          `#run new jacocoNewCoverage :  ${jacocoNewCoverage.missed}: ${jacocoNewCoverage.covered}`
         );
         const latestTotal: number = jacocoNewCoverage.missed + jacocoNewCoverage.covered;
 
@@ -155,19 +154,19 @@ export async function run(): Promise<void> {
         ).toPrecision(4);
 
         core.info(
-          `new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`
+          `#run new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`
         );
 
         var badgeColor = defaultCoverageColor.red;
         if (latestCoverageRatio > parseFloat(_defaultGreenMinim)) {
           core.info(
-            `green ${latestCoverageRatio} > ${parseFloat(_defaultGreenMinim)}`
+            `#run green ${latestCoverageRatio} > ${parseFloat(_defaultGreenMinim)}`
           );
           badgeColor = defaultCoverageColor.green;
         } else if (latestCoverageRatio > parseFloat(_defaultMinim)) {
           badgeColor = defaultCoverageColor.yellow;
           core.info(
-            `yellow ${latestCoverageRatio} > ${parseFloat(_defaultMinim)}`
+            `#run yellow ${latestCoverageRatio} > ${parseFloat(_defaultMinim)}`
           );
         }
 
@@ -176,20 +175,20 @@ export async function run(): Promise<void> {
           .replace(new RegExp('{badgeCoverage}', "g"),latestCoverage+'%');
 
         core.info(
-          `svg replaced : ` + newCovFile
+          `#run svg replaced : ` + newCovFile
         );
         fileUtils.createFile(oldCoverageSource, newCovFile)
 
         if (false) {
 
           core.info(
-            `readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverageSource} latestCoverage = ${latestCoverage}%`
+            `#run readmeFileName = ${readmeFileName}  oldCoverage = ${oldCoverageSource} latestCoverage = ${latestCoverage}%`
           );
           fileUtils.replace(oldCoverageSource, oldCoverageValue, latestCoverage + "%");
         }
 
         fileUtils.push().then(() => {
-          core.info("push complete");
+          core.info("#run push complete");
         }, () => {
         });
         // fileUtils.printFile(oldCoverage)
@@ -212,7 +211,7 @@ export async function run(): Promise<void> {
     const resolvedName = fileName;
     const fileFound = fileUtils.exists(resolvedName);
     if (!fileFound) {
-      core.warning(`#run file not found : [${resolvedName}]`);
+      core.warning(`#resolveFile file not found : [${resolvedName}]`);
       core.setFailed(`required file not found : ${resolvedName}`);
     }
 
