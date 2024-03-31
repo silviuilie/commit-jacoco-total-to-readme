@@ -67,8 +67,8 @@ TODOs :
           
   -->
   - add coverage summary ?
-    - modify original coverage (xml/html) summary to MD *or*
     - export coverage to MD ?    
+    - modify original coverage (xml/html) summary to MD *or*
 
 
 
