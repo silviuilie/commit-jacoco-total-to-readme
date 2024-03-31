@@ -13,8 +13,8 @@ if used
 commits (as `${GITHUB_ACTOR}`) the latest svg doc/badges/coverage.svg file or covergate text value (or badge) in the readme file 
 
 
-  - parameter readme.md `readmeFileName` - defaults to `readme.md`
-  - parameter readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
+  - parameter  `readmeFileName` - defaults to `readme.md`
+  - parameter  `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
   - supportedTypes : `svg`, `text` (markdown?), `badge`  - defaults to `svg`, text, or shields.io badge 
   - _defaultGreenMinim 0.7 - green/_defaultMinim - yellow/less - red 
 
