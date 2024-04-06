@@ -16,7 +16,7 @@ commits (as `${GITHUB_ACTOR}`) the latest svg doc/badges/coverage.svg file or co
   - optional parameter  `readmeFileName` - defaults to `readme.md`
   - optional parameter  `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
   - optional supportedTypes : `svg`, `text` (markdown?), `badge`  - defaults to `svg`, text, or shields.io badge 
-  - _defaultGreenMinim 0.7 - green/_defaultMinim - yellow/less - red
+  - define badge layout : _defaultGreenMinim 0.7 - green/_defaultMinim - yellow/less - red
   - 
 
 TODOs
