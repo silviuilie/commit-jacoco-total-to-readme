@@ -29246,7 +29246,7 @@ const _jacocoTotalCoverageStart = "</package><counter type=\"INSTRUCTION\"";
 const _jacocoTotalCoverageEnd = "/><counter type=\"BRANCH\"";
 const _readmeTotalCoverageStart = "![Coverage Status](";
 const _readmeTotalCoverageEnd = ")";
-const _svgTemplate = '<svg xmlns="http://www.w3.org/2000/svg" width="103" height="20" role="img" aria-label="coverage: 100%"><linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="r"><rect width="103" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#r)"><rect width="61" height="20" fill="#555"/><rect x="61" width="42" height="20" fill="{badgeColor}"/><rect width="103" height="20" fill="url(#s)"/></g><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110"><text aria-hidden="true" x="315" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="510">coverage</text><text x="315" y="140" transform="scale(.1)" fill="#fff" textLength="510">coverage</text><text aria-hidden="true" x="830" y="150" fill="#010101" fill-opacity=".6" transform="scale(.1)" textLength="390">{badgeCoverage}</text><text x="830" y="140" transform="scale(.1)" fill="#fff" textLength="390">{badgeCoverage}</text></g></svg>';
+const _svgTemplate = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"103\" height=\"20\" role=\"img\" aria-label=\"coverage: 100%\"><linearGradient id=\"s\" x2=\"0\" y2=\"100%\"><stop offset=\"0\" stop-color=\"#bbb\" stop-opacity=\".1\"/><stop offset=\"1\" stop-opacity=\".1\"/></linearGradient><clipPath id=\"r\"><rect width=\"103\" height=\"20\" rx=\"3\" fill=\"#fff\"/></clipPath><g clip-path=\"url(#r)\"><rect width=\"61\" height=\"20\" fill=\"#555\"/><rect x=\"61\" width=\"42\" height=\"20\" fill=\"{badgeColor}\"/><rect width=\"103\" height=\"20\" fill=\"url(#s)\"/></g><g fill=\"#fff\" text-anchor=\"middle\" font-family=\"Verdana,Geneva,DejaVu Sans,sans-serif\" text-rendering=\"geometricPrecision\" font-size=\"110\"><text aria-hidden=\"true\" x=\"315\" y=\"150\" fill=\"#010101\" fill-opacity=\".3\" transform=\"scale(.1)\" textLength=\"510\">coverage</text><text x=\"315\" y=\"140\" transform=\"scale(.1)\" fill=\"#fff\" textLength=\"510\">coverage</text><text aria-hidden=\"true\" x=\"830\" y=\"150\" fill=\"#010101\" fill-opacity=\".6\" transform=\"scale(.1)\" textLength=\"390\">{badgeCoverage}</text><text x=\"830\" y=\"140\" transform=\"scale(.1)\" fill=\"#fff\" textLength=\"390\">{badgeCoverage}</text></g></svg>";
 const _supportedTypes = ["svg", "text", "badge"];
 const badgeCfg = [
     {
@@ -29288,88 +29288,11 @@ function isSupported(oldCoverage) {
     }
     return supported;
 }
-async function run() {
-    try {
-        const readmeFileName = resolveFile(core.getInput("readmeFileName") || _defaultReadmeName);
-        core.debug(`#run readmeFileName is ${readmeFileName}`);
-        const jacocoFileName = resolveFile(core.getInput("jacocoFileName") || _defaultJacocoFileName);
-        core.debug(`#run jacocoFileName is ${jacocoFileName}`);
-        const type = core.getInput("type") || _defaultType;
-        core.debug(`#run type is ${type}`);
-        const minimCoverage = core.getInput("minim") || _defaultMinim;
-        core.debug(`#run minimum coverage is ${minimCoverage}`);
-        const fileFound = await fileUtils.exists(readmeFileName);
-        core.debug(`#run file ${readmeFileName} found : ${fileFound}`);
-        if (!fileFound) {
-            core.setFailed(`required coverage report target file not found : ${fileFound}`);
-            core.warning(`#run file not found : ${readmeFileName} using ${_defaultReadmeName}`);
-        }
-        else {
-            core.debug(`#run read file ${readmeFileName}`);
-            // TODO : if type is 'text' or 'badge' extract the previous value
-            const oldCoverageSource = fileUtils.findInFile(readmeFileName || _defaultReadmeName, _readmeTotalCoverageStart, _readmeTotalCoverageEnd);
-            core.debug(`#run oldCoverageSource is ${oldCoverageSource}`);
-            if (isSupported(oldCoverageSource)) {
-                //fileUtils.printFile(`old total : ${oldCoverage}`)
-                core.info(`#run handle supported coverage type ${oldCoverageSource}`);
-                const oldCoverageValue = fileUtils.findInFile(oldCoverageSource, _badgeSvgTotalCoverageStart, _badgeSvgTotalCoverageEnd);
-                core.info(`#run handle supported oldCoverageValue type ${oldCoverageValue}`);
-                const currentBuildCoverage = fileUtils.findInFile(_defaultJacocoFileName, _jacocoTotalCoverageStart, _jacocoTotalCoverageEnd);
-                core.info(`#run  handle supported currentBuildCoverage type ${currentBuildCoverage}`);
-                function jacocoCoverage(input) {
-                    const result = {};
-                    const keyValuePairs = input.split(" ");
-                    keyValuePairs.forEach((pair) => {
-                        const [key, value] = pair.split("=");
-                        if (key && value) {
-                            result[key] = +value.replaceAll("\"", "");
-                        }
-                    });
-                    return result;
-                }
-                const jacocoNewCoverage = jacocoCoverage(currentBuildCoverage);
-                core.info(`#run new jacocoNewCoverage :  ${jacocoNewCoverage.missed}: ${jacocoNewCoverage.covered}`);
-                const latestTotal = jacocoNewCoverage.missed + jacocoNewCoverage.covered;
-                // const latestCoverage: string = ((jacocoNewCoverage.covered / latestTotal)*100).toPrecision(4);
-                const latestCoverageRatio = parseFloat((jacocoNewCoverage.covered / latestTotal).toFixed(4));
-                const latestCoverage = parseFloat("" + latestCoverageRatio * 100).toPrecision(4);
-                core.info(`#run new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`);
-                var badgeColor = defaultCoverageColor.red;
-                if (latestCoverageRatio > parseFloat(_defaultGreenMinim)) {
-                    core.info(`#run green ${latestCoverageRatio} > ${parseFloat(_defaultGreenMinim)}`);
-                    badgeColor = defaultCoverageColor.green;
-                }
-                else if (latestCoverageRatio > parseFloat(_defaultMinim)) {
-                    badgeColor = defaultCoverageColor.yellow;
-                    core.info(`#run yellow ${latestCoverageRatio} > ${parseFloat(_defaultMinim)}`);
-                }
-                var newCovFile = _svgTemplate
-                    .replace(new RegExp('{badgeColor}', "g"), badgeColor)
-                    .replace(new RegExp('{badgeCoverage}', "g"), latestCoverage + '%');
-                core.info(`#run svg replaced : ` + newCovFile);
-                fileUtils.createFile(oldCoverageSource, newCovFile);
-                if (false) {}
-                fileUtils.push().then(() => {
-                    core.info("#run push complete");
-                }, () => {
-                });
-                // fileUtils.printFile(oldCoverage)
-                // await fileUtils.push(oldCoverage)
-            }
-            else {
-                const recommendedFix = `You can add "${_readmeTotalCoverageStart}${type}${_readmeTotalCoverageEnd}" to your ${readmeFileName} to fix this error.`;
-                const notSupportedOldCoverage = `failed to match old coverage [${oldCoverageSource}] to supported coverage badge types : ${_supportedTypes}. You have to add a supported coverage badge to your ${readmeFileName} so it can be replaced by this action.${recommendedFix}`;
-                core.warning(notSupportedOldCoverage);
-                core.error(notSupportedOldCoverage);
-            }
-        }
-    }
-    catch (error) {
-        // Fail the workflow run if an error occurs
-        core.debug(error);
-        if (error instanceof Error)
-            core.setFailed(error.message);
-    }
+function readInput() {
+    const readmeFileName = resolveFile(core.getInput("readmeFileName") || _defaultReadmeName);
+    core.debug(`#run readmeFileName is ${readmeFileName}`);
+    const type = core.getInput("type") || _defaultType;
+    core.debug(`#run type is ${type}`);
     function resolveFile(fileName) {
         const resolvedName = fileName;
         const fileFound = fileUtils.exists(resolvedName);
@@ -29378,6 +29301,90 @@ async function run() {
             core.setFailed(`required file not found : ${resolvedName}`);
         }
         return resolvedName;
+    }
+    const jacocoFileName = resolveFile(core.getInput("jacocoFileName") || _defaultJacocoFileName);
+    core.debug(`#run jacocoFileName is ${jacocoFileName}`);
+    const minimCoverage = core.getInput("minim") || _defaultMinim;
+    core.debug(`#run minimum coverage is ${minimCoverage}`);
+    return {
+        readmeFileName: readmeFileName,
+        type: type,
+        jacocoFileName: jacocoFileName,
+        minimCoverage: minimCoverage
+    };
+}
+async function run() {
+    try {
+        const input = readInput();
+        const fileFound = await fileUtils.exists(input.readmeFileName);
+        core.debug(`#run file ${input.readmeFileName} found : ${fileFound}`);
+        if (!fileFound) {
+            core.setFailed(`required coverage report target file not found : ${fileFound}`);
+            core.warning(`#run file not found : ${input.readmeFileName} using ${_defaultReadmeName}`);
+        }
+        core.debug(`#run read file ${input.readmeFileName}`);
+        // TODO : if type is 'text' or 'badge' extract the previous value
+        const oldCoverageSource = fileUtils.findInFile(input.readmeFileName || _defaultReadmeName, _readmeTotalCoverageStart, _readmeTotalCoverageEnd);
+        core.debug(`#run oldCoverageSource is ${oldCoverageSource}`);
+        if (isSupported(oldCoverageSource)) {
+            //fileUtils.printFile(`old total : ${oldCoverage}`)
+            core.info(`#run handle supported coverage type ${oldCoverageSource}`);
+            const oldCoverageValue = fileUtils.findInFile(oldCoverageSource, _badgeSvgTotalCoverageStart, _badgeSvgTotalCoverageEnd);
+            core.info(`#run handle supported oldCoverageValue type ${oldCoverageValue}`);
+            const currentBuildCoverage = fileUtils.findInFile(_defaultJacocoFileName, _jacocoTotalCoverageStart, _jacocoTotalCoverageEnd);
+            core.info(`#run  handle supported currentBuildCoverage type ${currentBuildCoverage}`);
+            function jacocoCoverage(input) {
+                const result = {};
+                const keyValuePairs = input.split(" ");
+                keyValuePairs.forEach((pair) => {
+                    const [key, value] = pair.split("=");
+                    if (key && value) {
+                        result[key] = +value.replaceAll("\"", "");
+                    }
+                });
+                return result;
+            }
+            const jacocoNewCoverage = jacocoCoverage(currentBuildCoverage);
+            core.info(`#run new jacocoNewCoverage :  ${jacocoNewCoverage.missed}: ${jacocoNewCoverage.covered}`);
+            const latestTotal = jacocoNewCoverage.missed + jacocoNewCoverage.covered;
+            // const latestCoverage: string = ((jacocoNewCoverage.covered / latestTotal)*100).toPrecision(4);
+            const latestCoverageRatio = parseFloat((jacocoNewCoverage.covered / latestTotal).toFixed(4));
+            const latestCoverage = parseFloat("" + latestCoverageRatio * 100).toPrecision(4);
+            core.info(`#run new jacocoNewCoverage total lines vs covered :  ${latestTotal}: ${latestCoverage}`);
+            var badgeColor = defaultCoverageColor.red;
+            if (latestCoverageRatio > parseFloat(_defaultGreenMinim)) {
+                core.info(`#run green ${latestCoverageRatio} > ${parseFloat(_defaultGreenMinim)}`);
+                badgeColor = defaultCoverageColor.green;
+            }
+            else if (latestCoverageRatio > parseFloat(_defaultMinim)) {
+                badgeColor = defaultCoverageColor.yellow;
+                core.info(`#run yellow ${latestCoverageRatio} > ${parseFloat(_defaultMinim)}`);
+            }
+            var newCovFile = _svgTemplate
+                .replace(new RegExp("{badgeColor}", "g"), badgeColor)
+                .replace(new RegExp("{badgeCoverage}", "g"), latestCoverage + "%");
+            core.info(`#run svg replaced : ` + newCovFile);
+            fileUtils.createFile(oldCoverageSource, newCovFile);
+            if (false) {}
+            fileUtils.push().then(() => {
+                core.info("#run push complete");
+            }, () => {
+            });
+            // fileUtils.printFile(oldCoverage)
+            // await fileUtils.push(oldCoverage)
+        }
+        else {
+            const recommendedFix = `You can add "${_readmeTotalCoverageStart}${input.type}${_readmeTotalCoverageEnd}" to your ${input.readmeFileName} to fix this error.`;
+            const notSupportedOldCoverage = `failed to match old coverage [${oldCoverageSource}] to supported coverage badge types : ${_supportedTypes}. You have to add a supported coverage badge to your ${input.readmeFileName} so it can be replaced by this action.${recommendedFix}`;
+            core.warning(notSupportedOldCoverage);
+            core.error(notSupportedOldCoverage);
+        }
+    }
+    catch (error) {
+        // Fail the workflow run if an error occurs
+        core.debug(error);
+        if (error instanceof Error)
+            core.setFailed(error.message);
     }
 }
 exports.run = run;
