@@ -3,12 +3,7 @@
 purpose  
 =
 
-display build jacoco coverage (xml report needed) in the readme file (as svg file, badgen.net, shields.io etc or just text). 
-
-related
-==
- python : 
-     python : https://github.com/cicirello/jacoco-badge-generator?tab=readme-ov-file (badge samples)
+update badge jacoco coverage (svg file, badgen.net, shields.io etc or just text). 
 
  
 if used
@@ -18,18 +13,21 @@ if used
 commits (as `${GITHUB_ACTOR}`) the latest svg doc/badges/coverage.svg file or covergate text value (or badge) in the readme file 
 
 
-  - parameter readme.md `readmeFileName` - defaults to `readme.md`
-  - parameter readme.md `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
-  - supportedTypes : `svg`, `text` (markdown?), `badge`  - defaults to `svg`, text, or shields.io badge 
-  - _defaultGreenMinim 0.7 - green/_defaultMinim - yellow/less - red 
+  - extract input data
+  - optional parameter  `readmeFileName` - defaults to `readme.md`
+  - optional parameter  `jacocoFileName` - defaults to `target/site/jacoco/jacoco.xml`
+  - optional supportedTypes : `svg`, `text` (markdown?), `badge`  - defaults to `svg`, text, or shields.io badge 
+  - define badge layout : _defaultGreenMinim 0.7 - green/_defaultMinim - yellow/less - red
+    
 
 TODOs
-===
+=== 
+  - add defaults for first run (append the readme ?, default svg)
+  - clean config
   - txt,badge support (update readme/commit), svg (update svg readme/commit)
   - commit coverage to wiki ?
       - extract md (separate action?) ?
       - jacoco-md report ? (https://github.com/silviuilie/jacoco-md-ReportTask)
-  - add defaults for first run (append the readme ?, default svg)
   - svg/badge should have same threshold for coverage style (green/yellow/red)
       - default minimum coverage : `0.6`; coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
       svg : green/yellow/red
@@ -71,10 +69,15 @@ TODOs :
           
   -->
   - add coverage summary ?
-    - modify original coverage (xml/html) summary to MD *or*
     - export coverage to MD ?    
+    - modify original coverage (xml/html) summary to MD *or*
 
 
+
+related
+==
+ python : 
+     python : https://github.com/cicirello/jacoco-badge-generator?tab=readme-ov-file (badge samples)
 
 <!--
 javascript github action that implements the following :
