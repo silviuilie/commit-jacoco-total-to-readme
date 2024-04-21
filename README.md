@@ -21,7 +21,6 @@ commits (as `${GITHUB_ACTOR}`) the latest svg doc/badges/coverage.svg file or co
 
 TODOs
 ===  
-  - clean config
   - txt,badge support (update readme/commit), svg (update svg readme/commit)
   - commit coverage to wiki ?
       - extract md (separate action?) ?
