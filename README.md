@@ -30,6 +30,7 @@ TODOs
       svg : green/yellow/red
       - badge green:url/yellow:url/red:url (defaults)
       - text : coverage : 
+  - add badge default (if not found - default path : doc/badges/coverage.svg, last coverage %) ?
 ```diff
 - 00.00% 
 + 99.00%
@@ -43,7 +44,6 @@ coverage : \[ ${\textsf{\color{red}00.00}}$ % \]
 coverage : \[ ${\textsf{\color{yellow}62.00}}$ % \]
 coverage : \[ ${\textsf{\color{green}99.00}}$ % \]
      
-  - add badge default (if not found - default path : doc/badges/coverage.svg, last coverage %) ?
 
 <!-- use github context : 
 
