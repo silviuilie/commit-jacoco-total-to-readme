@@ -42,8 +42,7 @@ or
 coverage : \[ ${\textsf{\color{red}00.00}}$ % \]
 coverage : \[ ${\textsf{\color{yellow}62.00}}$ % \]
 coverage : \[ ${\textsf{\color{green}99.00}}$ % \]
-    
-TODOs :
+     
   - add badge default (if not found - default path : doc/badges/coverage.svg, last coverage %) ?
 
 <!-- use github context : 
