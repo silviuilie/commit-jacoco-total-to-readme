@@ -25,12 +25,15 @@ TODOs
   - commit coverage to wiki ?
       - extract md (separate action?) ?
       - jacoco-md report ? (https://github.com/silviuilie/jacoco-md-ReportTask)
+  - add badge default (if not found - default path : doc/badges/coverage.svg, last coverage %) ?
+  - add coverage summary ?
+    - export coverage to MD ?    
+    - modify original coverage (xml/html) summary to MD *or*
   - svg/badge should have same threshold for coverage style (green/yellow/red)
       - default minimum coverage : `0.6`; coverage badge will be 'green' when the total coverage > 'minim' configured value and total coverage >= from previous coverage value
       svg : green/yellow/red
       - badge green:url/yellow:url/red:url (defaults)
       - text : coverage : 
-  - add badge default (if not found - default path : doc/badges/coverage.svg, last coverage %) ?
 ```diff
 - 00.00% 
 + 99.00%
@@ -64,9 +67,6 @@ coverage : \[ ${\textsf{\color{green}99.00}}$ % \]
           },
           
   -->
-  - add coverage summary ?
-    - export coverage to MD ?    
-    - modify original coverage (xml/html) summary to MD *or*
 
 
 
