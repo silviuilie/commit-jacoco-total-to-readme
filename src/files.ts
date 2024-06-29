@@ -1,13 +1,12 @@
-import * as core from "@actions/core";
-import glob from "glob";
-import * as fs from "fs";
-import path from "path";
-import { error } from "@actions/core";
-
+import * as core from '@actions/core'
+import glob from 'glob'
+import * as fs from 'fs'
+import path from 'path'
+import { error } from '@actions/core'
 
 export function printFile(fileName: string): void {
-  const content = fs.readFileSync(fileName, "utf-8");
-  core.info(`#printFile ${fileName} : ${content}`);
+  const content = fs.readFileSync(fileName, 'utf-8')
+  core.info(`#printFile ${fileName} : ${content}`)
 }
 
 /**
@@ -16,24 +15,25 @@ export function printFile(fileName: string): void {
  */
 
 export const push = async (): Promise<void> => {
-  const spawn = require("child_process").spawn;
-  const path = require("path");
+  const spawn = require('child_process').spawn
+  const path = require('path')
 
-  const exec = (cmd: string, args: string[] = []) => new Promise((resolve, reject) => {
-    core.info(`Started: ${cmd} ${args.join(" ")}`);
-    const app = spawn(cmd, args, { stdio: "inherit" });
+  const exec = (cmd: string, args: string[] = []) =>
+    new Promise((resolve, reject) => {
+      core.info(`Started: ${cmd} ${args.join(' ')}`)
+      const app = spawn(cmd, args, { stdio: 'inherit' })
 
-    app.on("close", (code: number, signal: string) => {
-      if (code !== 0) {
-        var err = new Error(`Invalid status code: ${code}`);
-        err.cause = code;
-        return reject(err);
-      }
+      app.on('close', (code: number, signal: string) => {
+        if (code !== 0) {
+          var err = new Error(`Invalid status code: ${code}`)
+          err.cause = code
+          return reject(err)
+        }
 
-      return resolve(code);
-    });
-    app.on("error", reject);
-  });
+        return resolve(code)
+      })
+      app.on('error', reject)
+    })
   // event.commits[0].author.email/name
   // event.commits[0].committer.email/name :
   /*
@@ -52,16 +52,15 @@ export const push = async (): Promise<void> => {
           },
    */
 
-  core.info("exec");
-  core.info(`-js-push-----[`);
+  core.info('exec')
+  core.info(`-js-push-----[`)
   // core.info(`-add file-----[`);
   // printFile("./add.sh");
   // core.info(`]-add file-----`);
 
+  await exec('bash', [path.join(__dirname, './push.sh')])
 
-  await exec("bash", [path.join(__dirname, "./push.sh")]);
-
-  core.info(`]-js-push-----`);
+  core.info(`]-js-push-----`)
   // exec(`./push.sh`);
   // exec("cat push.out");
   // core.info(`test read context ${process.env["context"]}`);
@@ -75,44 +74,44 @@ export const push = async (): Promise<void> => {
   // exec("git commit -m \"coverage update\"");
   // exec("git push");
   // core.info(`git push ${fileName} done`);
-
-};
+}
 
 function append(fileName: string, content: string, done: () => Promise<void>) {
   fs.appendFile(fileName, content, () => {
-    done();
-  });
+    done()
+  })
 }
 
 export function replace(
   fileName: string,
-  findPattern: string, replacePattern: string,
+  findPattern: string,
+  replacePattern: string,
   commit: boolean = false
 ) {
+  core.info(
+    `#replaceInFile replace : ${findPattern} with ${replacePattern} in ${fileName}`
+  )
 
-  core.info(`#replaceInFile replace : ${findPattern} with ${replacePattern} in ${fileName}`);
-
-  fs.readFile(fileName, "utf8", function(err, data) {
+  fs.readFile(fileName, 'utf8', function (err, data) {
     if (err) {
-      return core.error(err);
+      return core.error(err)
     }
-    var result = data.replace(new RegExp(`${findPattern}`, "g"), replacePattern);
+    var result = data.replace(new RegExp(`${findPattern}`, 'g'), replacePattern)
 
-    fs.writeFile(fileName, result, "utf8", function(err) {
+    fs.writeFile(fileName, result, 'utf8', function (err) {
       if (err) {
-        return core.error(err);
+        return core.error(err)
       } else {
-        core.info("#replace : write done, print and push");
-        printFile(fileName);
-        core.info("#replace : new coverage replaced; now push");
+        core.info('#replace : write done, print and push')
+        printFile(fileName)
+        core.info('#replace : new coverage replaced; now push')
         // push(fileName);
-        core.info("#replace : new coverage replaced/pushed");
+        core.info('#replace : new coverage replaced/pushed')
       }
-    });
+    })
 
     //createFile(fileName+"2", result);
-
-  });
+  })
 }
 
 /**
@@ -125,47 +124,50 @@ export function findInFile(
 ): string {
   core.info(
     `find coverage for [${fileName}] and patterns L: [${leftPattern}] and R: [${rightPattern}]`
-  );
-  const content = fs.readFileSync(fileName, "utf-8");
+  )
+  const content = fs.readFileSync(fileName, 'utf-8')
 
-  const start = content.lastIndexOf(leftPattern);
+  const start = content.lastIndexOf(leftPattern)
   const foundCoverage = content.substring(
     start + leftPattern.length,
     content.indexOf(rightPattern, start)
-  );
+  )
 
-  core.info(`foundCoverage.length : [${foundCoverage.length}]`);
-  core.info(`e : [${foundCoverage}]`);
+  core.info(`foundCoverage.length : [${foundCoverage.length}]`)
+  core.info(`e : [${foundCoverage}]`)
 
-  return foundCoverage;
+  return foundCoverage
 }
 
-export async function createFile(path: string, content: string): Promise<boolean> {
+export async function createFile(
+  path: string,
+  content: string
+): Promise<boolean> {
   return new Promise((resolve, reject) => {
     fs.writeFile(path, content, callback => {
       if (callback) {
-        reject(callback);
+        reject(callback)
       } else {
-        resolve(true);
+        resolve(true)
       }
-    });
-  });
+    })
+  })
 }
 
 export async function exists(pattern: string): Promise<boolean> {
   const globOptions = {
     follow: !(
-      (core.getInput("follow_symlinks") || "true").toUpperCase() === "FALSE"
+      (core.getInput('follow_symlinks') || 'true').toUpperCase() === 'FALSE'
     ),
-    nocase: (core.getInput("ignore_case") || "false").toUpperCase() === "TRUE"
-  };
+    nocase: (core.getInput('ignore_case') || 'false').toUpperCase() === 'TRUE'
+  }
   return new Promise((resolve, reject) => {
     glob(pattern, globOptions, (err: unknown, files: string[]) => {
       if (err) {
-        reject(err);
+        reject(err)
       } else {
-        resolve(files.length > 0);
+        resolve(files.length > 0)
       }
-    });
-  });
+    })
+  })
 }
