@@ -73,7 +73,7 @@ coverage : \[ ${\textsf{\color{green}99.00}}$ % \]
 related
 ==
  python : 
-     python : https://github.com/cicirello/jacoco-badge-generator?tab=readme-ov-file (badge samples)
+     https://github.com/cicirello/jacoco-badge-generator?tab=readme-ov-file (badge samples)
 
 <!--
 javascript github action that implements the following :
