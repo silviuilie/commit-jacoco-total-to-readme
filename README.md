@@ -129,18 +129,13 @@ javascript github action that implements the following :
          git commit -m "coverage update"
          git push 
 
-
-
-
-
+ 
 
 ------
 
 
 -->
-
-
-
+ 
 
 
 <!--
